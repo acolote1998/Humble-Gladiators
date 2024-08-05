@@ -1,0 +1,9 @@
+.inputs {
+  width: 200px;
+  text-align: center;
+}
+.extraDie {
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: lightgreen;
+}
