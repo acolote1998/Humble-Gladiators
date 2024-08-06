@@ -1,9 +1,19 @@
+/* Styling for input elements */
 .inputs {
-  width: 200px;
-  text-align: center;
+  width: 200px; /* Sets the width of input fields to 200 pixels */
+  text-align: center; /* Centers the text within the input fields */
 }
+
+/* Styling for dice elements that are available to use */
 .extraDie {
-  border: 2px solid black;
-  border-radius: 10px;
-  background-color: lightgreen;
+  border: 2px solid black; /* Adds a black border with 2px thickness */
+  border-radius: 10px; /* Rounds the corners of the border with a 10px radius */
+  background-color: lightgreen; /* Sets the background color to light green */
+}
+
+/* Styling for dice elements that are out of use */
+.outExtraDie {
+  border: 2px solid black; /* Adds a black border with 2px thickness */
+  border-radius: 10px; /* Rounds the corners of the border with a 10px radius */
+  background-color: red; /* Sets the background color to red */
 }

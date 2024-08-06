@@ -3,100 +3,138 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bootstrap Template</title>
-    <!-- Bootstrap CSS -->
+    <title>Gladiator Forge</title>
+
+    <!-- Bootstrap CSS for styling and responsive layout -->
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- My CSS -->
+
+    <!-- Custom CSS for additional styling -->
     <link href="style.css" rel="stylesheet" />
   </head>
 
   <body>
-    <!-- Container for your content -->
+    <!-- Container for the entire content of the page -->
     <div class="container">
-      <div class="row" style="text-align: center">
+      <!-- Row for displaying randomizer dice -->
+      <div class="row text-center">
+        <!-- Individual dice elements for randomizing stats -->
         <div id="extraDie1" class="col-sm extraDie">Randomize Die</div>
         <div id="extraDie2" class="col-sm extraDie">Randomize Die</div>
         <div id="extraDie3" class="col-sm extraDie">Randomize Die</div>
       </div>
+
+      <!-- Row for gladiator input fields and stats -->
       <div class="row">
+        <!-- Column for inputs related to the gladiator -->
         <div
-          id="gladiatorImputs"
+          id="gladiatorInputs"
           class="col d-flex flex-column justify-content-center align-items-center"
         >
           <h2>Gladiator's Core</h2>
+
+          <!-- Input fields for entering gladiator properties -->
           <h3>Name:</h3>
           <input class="inputs" id="heroName" />
+
           <h3>Height:</h3>
           <div>
             <input class="inputs" readonly id="heroHeight" />
             <button id="heroHeightDie" class="randomizerDie">X</button>
           </div>
+
           <h3>Weight:</h3>
           <div>
             <input class="inputs" readonly id="heroWeight" />
             <button id="heroWeightDie" class="randomizerDie">X</button>
           </div>
+
           <h3>Somatotype:</h3>
           <div>
             <input class="inputs" readonly id="heroSomatotype" />
             <button id="heroSomatotypeDie" class="randomizerDie">X</button>
           </div>
+
           <h3>Weapon:</h3>
           <div>
             <input class="inputs" readonly id="heroWeapon" />
             <button id="heroWeaponDie" class="randomizerDie">X</button>
           </div>
+
           <h3>Constitution:</h3>
           <div>
             <input class="inputs" readonly id="heroConstitution" />
             <button id="heroConstitutionDie" class="randomizerDie">X</button>
           </div>
+
           <h3>Luck:</h3>
           <div>
             <input class="inputs" readonly id="heroLuck" />
             <button id="heroLuckDie" class="randomizerDie">X</button>
           </div>
+
           <h3>Speed:</h3>
           <div>
             <input class="inputs" readonly id="heroSpeed" />
             <button id="heroSpeedDie" class="randomizerDie">X</button>
           </div>
+
+          <!-- Button to forge a new gladiator -->
+          <br />
+          <button id="btnForgeGladiator">Forge Gladiator</button>
         </div>
+
+        <!-- Column for displaying calculated gladiator stats -->
         <div
-          class="col"
           id="gladiatorStats"
           class="col d-flex flex-column justify-content-center align-items-center"
         >
           <h2>Gladiator's Stats:</h2>
-          <h3>Strenght:</h3>
+          <h3>Strength:</h3>
           <div>
-            <input class="inputs" readonly id="heroStrenght" />
+            <input class="inputs" readonly id="heroStrength" />
           </div>
+
           <h3>Dexterity:</h3>
           <div>
             <input class="inputs" readonly id="heroDexterity" />
           </div>
+
           <h3>HP:</h3>
           <div>
             <input class="inputs" readonly id="heroHP" />
           </div>
         </div>
+
+        <!-- Column for displaying the gladiator's visual result -->
         <div
-          class="col"
           id="gladiatorResult"
+          class="col"
           style="background-color: darkgray"
         >
           <h2>Gladiator Result Here</h2>
+          <!-- Row for displaying the gladiator's face image -->
+          <div
+            class="row"
+            id="heroFace"
+            style="background-size: cover; background-size: 100% 100%"
+          ></div>
+          <!-- Row for displaying the gladiator's body image -->
+          <div
+            class="row"
+            id="heroBody"
+            style="background-size: cover; background-size: 100% 100%"
+          ></div>
         </div>
       </div>
     </div>
 
-    <!-- My JS -->
+    <!-- Custom JavaScript for functionality -->
     <script src="script.js"></script>
-    <!-- Bootstrap JS and dependencies -->
+
+    <!-- Bootstrap JS and dependencies for additional functionality -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
