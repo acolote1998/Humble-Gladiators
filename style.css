@@ -6,14 +6,29 @@
 
 /* Styling for dice elements that are available to use */
 .extraDie {
-  border: 2px solid black; /* Adds a black border with 2px thickness */
-  border-radius: 10px; /* Rounds the corners of the border with a 10px radius */
-  background-color: lightgreen; /* Sets the background color to light green */
+  width: 100px;
+  height: 100px;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  background-image: url(img/extraDieOn.png);
+  border: none;
 }
 
 /* Styling for dice elements that are out of use */
 .outExtraDie {
-  border: 2px solid black; /* Adds a black border with 2px thickness */
-  border-radius: 10px; /* Rounds the corners of the border with a 10px radius */
-  background-color: red; /* Sets the background color to red */
+  width: 100px;
+  height: 100px;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  background-image: url(img/extraDieOff.png);
+  border: none;
+}
+
+.randomizerDie {
+  width: 35px;
+  height: 35px;
+  background-size: 100% 100%;
+
+  background-image: url(img/d20.png);
+  border: none;
 }

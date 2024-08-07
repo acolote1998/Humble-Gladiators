@@ -75,33 +75,45 @@ function forgeHeroGladiator() {
     document.getElementById("heroConstitution").value;
   let gladiatorsLuck = document.getElementById("heroLuck").value;
   let gladiatorsSpeed = document.getElementById("heroSpeed").value;
+  if (
+    gladiatorsName != "" &&
+    gladiatorsHeight != "" &&
+    gladiatorsWeight != "" &&
+    gladiatorsSomatotype != "" &&
+    gladiatorsWeapon != "" &&
+    gladiatorsConstitution != "" &&
+    gladiatorsLuck != "" &&
+    gladiatorsSpeed != ""
+  ) {
+    // Create a new Gladiator object
+    var gladiatorObject = new Gladiator(
+      gladiatorsName,
+      gladiatorsHeight,
+      gladiatorsWeight,
+      gladiatorsSomatotype,
+      gladiatorsWeapon,
+      gladiatorsConstitution,
+      gladiatorsLuck,
+      gladiatorsSpeed
+    );
 
-  // Create a new Gladiator object
-  var gladiatorObject = new Gladiator(
-    gladiatorsName,
-    gladiatorsHeight,
-    gladiatorsWeight,
-    gladiatorsSomatotype,
-    gladiatorsWeapon,
-    gladiatorsConstitution,
-    gladiatorsLuck,
-    gladiatorsSpeed
-  );
+    // Add the new gladiator to the array
+    gladiators.push(gladiatorObject);
 
-  // Add the new gladiator to the array
-  gladiators.push(gladiatorObject);
+    // Update the HTML with the new gladiator's attributes
+    document.getElementById("heroStrength").value = String(
+      gladiatorObject.strength
+    );
+    document.getElementById("heroDexterity").value = String(
+      gladiatorObject.dexterity
+    );
+    document.getElementById("heroHP").value = String(gladiatorObject.hp);
 
-  // Update the HTML with the new gladiator's attributes
-  document.getElementById("heroStrength").value = String(
-    gladiatorObject.strength
-  );
-  document.getElementById("heroDexterity").value = String(
-    gladiatorObject.dexterity
-  );
-  document.getElementById("heroHP").value = String(gladiatorObject.hp);
-
-  // Draw the gladiator on the HTML page
-  drawHero();
+    // Draw the gladiator on the HTML page
+    drawHero();
+  } else {
+    alert("Please generate all the attributes before forging the gladiator.");
+  }
 }
 
 // Function to validate and update the state of randomizing dice
@@ -110,11 +122,11 @@ function validatingRandomisingDice() {
   // Check if there are any dice left to use
   if (amountRandomiserDiceLeft >= 1) {
     amountRandomiserDiceLeft -= 1; // Decrement the number of dice left
-    console.log("One die consumed");
-    console.log("Dice left: " + amountRandomiserDiceLeft);
+    // console.log("One die consumed");
+    // console.log("Dice left: " + amountRandomiserDiceLeft);
     result = true;
   } else {
-    console.log("Out of dice");
+    // console.log("Out of dice");
     result = false;
   }
   // Update the UI based on the remaining dice
@@ -159,28 +171,28 @@ function randomiseNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Function to randomize somatotype based on a number
-function randomiseSomatotype(number) {
-  let somatotype = "";
-  // Map number to somatotype
-  if (number == 1) {
-    somatotype = "Ectomorph";
-  } else if (number == 2) {
-    somatotype = "Mesomorph";
-  } else if (number == 3) {
-    somatotype = "Endomorph";
-  }
-  return somatotype;
-}
-
-// Function to randomize weapon based on a number
-function randomiseWeapon(number) {
-  let weapon = "";
-  // Map number to weapon
-  if (number == 1) {
-    weapon = "Sword";
-  } else if (number == 2) {
-    weapon = "Bow";
+// Function to calculate hero Weapon, with randomization and dice validation
+function calculateHeroWeapon(number) {
+  let weapon = document.getElementById("heroWeapon").value;
+  // Generate random Weapon if not already generated or if dice are available
+  if (isWeaponGenerated == false) {
+    // Map number to Weapon
+    if (number == 1) {
+      weapon = "Sword";
+    } else if (number == 2) {
+      weapon = "Bow";
+    }
+    isWeaponGenerated = true;
+  } else {
+    if (isWeaponGenerated && validatingRandomisingDice()) {
+      // Map number to Weapon
+      // Map number to weapon
+      if (number == 1) {
+        weapon = "Sword";
+      } else if (number == 2) {
+        weapon = "Bow";
+      }
+    }
   }
   return weapon;
 }
@@ -200,6 +212,140 @@ function calculateHeroHeight() {
   return height;
 }
 
+// Function to calculate hero Weight, with randomization and dice validation
+function calculateHeroWeight() {
+  let Weight = document.getElementById("heroWeight").value;
+  // Generate random Weight if not already generated or if dice are available
+  if (isWeightGenerated == false) {
+    Weight = randomiseNumber(50, 140); //Generate a random weight between 50 and 140 kg
+    isWeightGenerated = true;
+  } else {
+    if (isWeightGenerated && validatingRandomisingDice()) {
+      Weight = randomiseNumber(50, 140); //Generate a random weight between 50 and 140 kg
+    }
+  }
+  return Weight;
+}
+
+// Function to calculate hero Constitution, with randomization and dice validation
+function calculateHeroConstitution() {
+  let Constitution = document.getElementById("heroConstitution").value;
+  // Generate random Constitution if not already generated or if dice are available
+  if (isConstitutionGenerated == false) {
+    Constitution = randomiseNumber(12, 18); //Generate a random Constitution between 12 and 18
+    isConstitutionGenerated = true;
+  } else {
+    if (isConstitutionGenerated && validatingRandomisingDice()) {
+      Constitution = randomiseNumber(12, 18); //Generate a random Constitution between 12 and 18
+    }
+  }
+  return Constitution;
+}
+
+// Function to calculate hero Luck, with randomization and dice validation
+function calculateHeroLuck() {
+  let Luck = document.getElementById("heroLuck").value; // Get the initial Luck value from the HTML element with id "heroLuck"
+  let extraLuck = 1; // Initialize extraLuck to control the luck increment process
+  let extraLuckModifier = 1; // Initialize extraLuckModifier to determine how much extra luck to add each iteration
+
+  // Generate random Luck if not already generated or if dice are available
+  if (isLuckGenerated == false) {
+    // Generate a random Luck between 12 and 18
+    // Then there is a 50% chance of getting extra luck points, and 50% chance of keeping the initial luck
+    Luck = randomiseNumber(12, 18);
+    while (extraLuck == 1) {
+      // Continue to add extra luck while extraLuck is 1 (indicating a 50% chance)
+      Luck = Luck + extraLuckModifier; // Increment Luck by the current value of extraLuckModifier
+      extraLuckModifier = extraLuckModifier + 1; // Increment the extraLuckModifier for the next potential iteration
+      extraLuck = randomiseNumber(0, 1); // Randomly set extraLuck to either 0 or 1, simulating a 50% chance
+
+      if (extraLuck == 0) {
+        // If extraLuck is 0, break out of the loop
+        break;
+      }
+    }
+    isLuckGenerated = true; // Mark that Luck has been generated to prevent re-generation
+  } else {
+    // If Luck is already generated and dice validation passes, re-generate Luck
+    if (isLuckGenerated && validatingRandomisingDice()) {
+      // Generate a random Luck between 12 and 18
+      // Then there is a 50% chance of getting extra luck points, and 50% chance of keeping the initial luck
+      Luck = randomiseNumber(12, 18);
+      while (extraLuck == 1) {
+        // Continue to add extra luck while extraLuck is 1 (indicating a 50% chance)
+        Luck = Luck + extraLuckModifier; // Increment Luck by the current value of extraLuckModifier
+        extraLuckModifier = extraLuckModifier + 1; // Increment the extraLuckModifier for the next potential iteration
+        extraLuck = randomiseNumber(0, 1); // Randomly set extraLuck to either 0 or 1, simulating a 50% chance
+
+        if (extraLuck == 0) {
+          // If extraLuck is 0, break out of the loop
+          break;
+        }
+      }
+    }
+  }
+  return Luck; // Return the final calculated Luck value
+}
+
+// Function to calculate hero Speed, with randomization and dice validation
+function calculateHeroSpeed() {
+  let somatotypeSpeedModifier = 0;
+  if (
+    document.getElementById("heroSomatotype").value.toLowerCase() == "endomorph"
+  ) {
+    //if the gladiator is endomorph, will be slower, -1 speed
+    somatotypeSpeedModifier = 0;
+  } else if (
+    document.getElementById("heroSomatotype").value.toLowerCase() == "mesomorph" //if the gladiator is mesomorph, will be "normal", no speed modification
+  ) {
+    somatotypeSpeedModifier = 0;
+  } else if (
+    document.getElementById("heroSomatotype").value.toLowerCase() == "ectomorph" //if the gladiator is ectomorph, will be faster, +1 speed
+  ) {
+    somatotypeSpeedModifier = 1;
+  }
+  let Speed = document.getElementById("heroSpeed").value;
+  // Generate random Speed if not already generated or if dice are available
+  if (isSpeedGenerated == false) {
+    Speed = randomiseNumber(12, 18) + somatotypeSpeedModifier; //Generate a random Speed between 12 and 18 and adds the body type speed modifier to it
+    isSpeedGenerated = true;
+  } else {
+    if (isSpeedGenerated && validatingRandomisingDice()) {
+      Speed = randomiseNumber(12, 18) + somatotypeSpeedModifier; //Generate a random Speed between 12 and 18 and adds the body type speed modifier to it
+    }
+  }
+  return Speed;
+}
+
+// Function to calculate hero Somatotype, with randomization and dice validation
+function calculateHeroSomatotype(number) {
+  let somatotype = document.getElementById("heroSomatotype").value;
+  // Generate random Somatotype if not already generated or if dice are available
+  if (isSomatotypeGenerated == false) {
+    // Map number to somatotype
+    if (number == 1) {
+      somatotype = "Ectomorph";
+    } else if (number == 2) {
+      somatotype = "Mesomorph";
+    } else if (number == 3) {
+      somatotype = "Endomorph";
+    }
+    isSomatotypeGenerated = true;
+  } else {
+    if (isSomatotypeGenerated && validatingRandomisingDice()) {
+      // Map number to somatotype
+      if (number == 1) {
+        somatotype = "Ectomorph";
+      } else if (number == 2) {
+        somatotype = "Mesomorph";
+      } else if (number == 3) {
+        somatotype = "Endomorph";
+      }
+    }
+  }
+  return somatotype;
+}
+
 // Function to randomize stat based on the clicked element
 function randomizeStat(event) {
   let textBoxStat = "";
@@ -209,22 +355,22 @@ function randomizeStat(event) {
     textBoxStat.value = calculateHeroHeight(); // Generates a random height between 100cm and 210cm
   } else if (event.target.id == "heroWeightDie") {
     textBoxStat = document.getElementById(event.target.id.slice(0, -3));
-    textBoxStat.value = randomiseNumber(50, 140); // Generates a random weight between 50 and 140 kg
+    textBoxStat.value = calculateHeroWeight(); // Generates a random weight between 50 and 140 kg
   } else if (event.target.id == "heroSomatotypeDie") {
     textBoxStat = document.getElementById(event.target.id.slice(0, -3));
-    textBoxStat.value = randomiseSomatotype(randomiseNumber(1, 3)); // Randomize somatotype
+    textBoxStat.value = calculateHeroSomatotype(randomiseNumber(1, 3)); // Randomize somatotype
   } else if (event.target.id == "heroWeaponDie") {
     textBoxStat = document.getElementById(event.target.id.slice(0, -3));
-    textBoxStat.value = randomiseWeapon(randomiseNumber(1, 2)); // Randomize weapon
+    textBoxStat.value = calculateHeroWeapon(randomiseNumber(1, 2)); // Randomize weapon
   } else if (event.target.id == "heroConstitutionDie") {
     textBoxStat = document.getElementById(event.target.id.slice(0, -3));
-    textBoxStat.value = randomiseNumber(12, 18); // Randomize constitution
+    textBoxStat.value = calculateHeroConstitution(); // Randomize constitution
   } else if (event.target.id == "heroLuckDie") {
     textBoxStat = document.getElementById(event.target.id.slice(0, -3));
-    textBoxStat.value = randomiseNumber(12, 18); // Randomize luck
+    textBoxStat.value = calculateHeroLuck(); // Randomize luck
   } else if (event.target.id == "heroSpeedDie") {
     textBoxStat = document.getElementById(event.target.id.slice(0, -3));
-    textBoxStat.value = randomiseNumber(12, 18); // Randomize speed
+    textBoxStat.value = calculateHeroSpeed(0); // Randomize speed, we are passing the main gladiator as parameter (0 is main hero)
   }
 }
 
