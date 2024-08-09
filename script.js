@@ -25,6 +25,10 @@ var isConstitutionGenerated = false; // Tracks if constitution has been generate
 var isLuckGenerated = false; // Tracks if luck has been generated
 var isSpeedGenerated = false; // Tracks if speed has been generated
 var amountRandomiserDiceLeft = 3; // Number of dice available
+var gameStarting = true;
+var username = "";
+var gladiatorID = "";
+var gameScenario = 0; //initializes a variable that indicates in which "level" or "scenario" the user is currently on
 
 // Array to store gladiators
 var gladiators = []; // List of created gladiators
@@ -32,6 +36,65 @@ var gladiators = []; // List of created gladiators
 // ---------------------------
 // Functions
 // ---------------------------
+
+//Adds delay in MS
+function addingDelay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Gives the "Loading Effect"
+async function loadingEffect(color, howlong) {
+  document.querySelector("body").style.backgroundColor = color;
+  document.querySelector("body").style.cursor = "wait";
+  await addingDelay(howlong);
+  document.querySelector("body").style.backgroundColor = "white";
+  document.querySelector("body").style.cursor = "default";
+}
+
+//Start Game Function
+//After user pressed "New Game"
+async function startGame() {
+  //Wait 700 ms before starting the game
+  await loadingEffect("darkgray", 700);
+
+  document.getElementById("homeScreen").innerHTML = ""; // Erases the Home Screen
+  document
+    .getElementById("characterCreationScreen")
+    .classList.remove("notDisplaying");
+} // It Removes the "hiding" attribute to the character creation screen
+
+//Login Function
+async function loginFunction() {
+  await loadingEffect("darkgray", 300);
+  username = document.getElementById("userNameInput").value; //Gets the username input from the input field
+
+  gladiatorID = randomiseNumber(1000000, 9999999); //Generates a pretty much "unique" gladiator ID
+
+  if (username != "" && gladiatorID != "") {
+    //Checks that the username and gladiator ID are not blank
+    document.getElementById("login").className = ""; // Hides the inputs of the login
+    document.getElementById("login").classList.add("notDisplaying"); // Hides the inputs of the login
+    document
+      .getElementById("homeScreenSelections")
+      .classList.remove("notDisplaying"); // Brings back the
+  } else {
+    alert("Username or Gladiator ID are blank!");
+  }
+}
+
+// If game starting, automatically hide all the Divs and only display the starting screen
+
+(function rungameStarting() {
+  if (gameStarting == true) {
+    document
+      .getElementById("characterCreationScreen")
+      .classList.add("notDisplaying"); //Hides the Character Creation Screen automatically
+
+    document
+      .getElementById("homeScreenSelections")
+      .classList.add("notDisplaying"); //Hides the "New Game" and so selections from the home screen automatically
+  }
+})();
 
 // Function to draw the gladiator on the HTML page based on height and weight
 function drawHero() {
@@ -65,54 +128,70 @@ function addEventListenerRandomizer(element) {
 
 // Function to forge a new gladiator and add them to the list
 function forgeHeroGladiator() {
-  // Retrieve values from input fields
-  let gladiatorsName = document.getElementById("heroName").value;
-  let gladiatorsHeight = document.getElementById("heroHeight").value;
-  let gladiatorsWeight = document.getElementById("heroWeight").value;
-  let gladiatorsSomatotype = document.getElementById("heroSomatotype").value;
-  let gladiatorsWeapon = document.getElementById("heroWeapon").value;
-  let gladiatorsConstitution =
-    document.getElementById("heroConstitution").value;
-  let gladiatorsLuck = document.getElementById("heroLuck").value;
-  let gladiatorsSpeed = document.getElementById("heroSpeed").value;
-  if (
-    gladiatorsName != "" &&
-    gladiatorsHeight != "" &&
-    gladiatorsWeight != "" &&
-    gladiatorsSomatotype != "" &&
-    gladiatorsWeapon != "" &&
-    gladiatorsConstitution != "" &&
-    gladiatorsLuck != "" &&
-    gladiatorsSpeed != ""
-  ) {
-    // Create a new Gladiator object
-    var gladiatorObject = new Gladiator(
-      gladiatorsName,
-      gladiatorsHeight,
-      gladiatorsWeight,
-      gladiatorsSomatotype,
-      gladiatorsWeapon,
-      gladiatorsConstitution,
-      gladiatorsLuck,
-      gladiatorsSpeed
+  let wantsToGenerate = ""; //Variable that will check if the user is sure and wants to generate the gladiator with the given stats
+  if (amountRandomiserDiceLeft >= 1) {
+    alert(
+      "You still have at least one extra randomizer die to be used. It is wise to have an extra look to your generated attributes before forging your gladiator."
     );
+  }
+  wantsToGenerate = prompt(
+    "Are you sure that you want to forge your gladiator with the generated attributes? Type 'No' to cancel the forging of the gladiator",
+    "Yes"
+  );
+  if (wantsToGenerate.toLowerCase() != "no") {
+    // If the user typed "no", the gladiator will not generate, otherwise it will
 
-    // Add the new gladiator to the array
-    gladiators.push(gladiatorObject);
+    // Retrieve values from input fields
+    let gladiatorsName = document.getElementById("heroName").value;
+    let gladiatorsHeight = document.getElementById("heroHeight").value;
+    let gladiatorsWeight = document.getElementById("heroWeight").value;
+    let gladiatorsSomatotype = document.getElementById("heroSomatotype").value;
+    let gladiatorsWeapon = document.getElementById("heroWeapon").value;
+    let gladiatorsConstitution =
+      document.getElementById("heroConstitution").value;
+    let gladiatorsLuck = document.getElementById("heroLuck").value;
+    let gladiatorsSpeed = document.getElementById("heroSpeed").value;
+    if (
+      gladiatorsName != "" &&
+      gladiatorsHeight != "" &&
+      gladiatorsWeight != "" &&
+      gladiatorsSomatotype != "" &&
+      gladiatorsWeapon != "" &&
+      gladiatorsConstitution != "" &&
+      gladiatorsLuck != "" &&
+      gladiatorsSpeed != ""
+    ) {
+      // Create a new Gladiator object
+      var gladiatorObject = new Gladiator(
+        gladiatorsName,
+        gladiatorsHeight,
+        gladiatorsWeight,
+        gladiatorsSomatotype,
+        gladiatorsWeapon,
+        gladiatorsConstitution,
+        gladiatorsLuck,
+        gladiatorsSpeed,
+        username,
+        gladiatorID
+      );
 
-    // Update the HTML with the new gladiator's attributes
-    document.getElementById("heroStrength").value = String(
-      gladiatorObject.strength
-    );
-    document.getElementById("heroDexterity").value = String(
-      gladiatorObject.dexterity
-    );
-    document.getElementById("heroHP").value = String(gladiatorObject.hp);
+      // Add the new gladiator to the array
+      gladiators.push(gladiatorObject);
 
-    // Draw the gladiator on the HTML page
-    drawHero();
-  } else {
-    alert("Please generate all the attributes before forging the gladiator.");
+      // Update the HTML with the new gladiator's attributes
+      document.getElementById("heroStrength").value = String(
+        gladiatorObject.strength
+      );
+      document.getElementById("heroDexterity").value = String(
+        gladiatorObject.dexterity
+      );
+      document.getElementById("heroHP").value = String(gladiatorObject.hp);
+
+      // Draw the gladiator on the HTML page
+      drawHero();
+    } else {
+      alert("Please generate all the attributes before forging the gladiator.");
+    }
   }
 }
 
@@ -389,7 +468,9 @@ class Gladiator {
     weapon,
     constitution,
     luck,
-    speed
+    speed,
+    username,
+    gladiatorid
   ) {
     // Initialize instance properties
     this.name = String(name); // Name of the gladiator
@@ -400,16 +481,30 @@ class Gladiator {
     this.constitution = Number(constitution); // Constitution of the gladiator
     this.luck = Number(luck); // Luck of the gladiator
     this.speed = Number(speed); // Speed of the gladiator
+    this.username = String(username); // Username of who is using the gladiator
+    this.id = Number(gladiatorid); // Unique Gladiator ID
 
     // Calculate and assign attributes based on methods
     this.hp = this.calculateHP(); // Health Points
+    this.maxHP = this.calculateMaxHP(); // Max HP, initially same as the HP
     this.strength = this.calculateStrength(); // Strength
     this.dexterity = this.calculateDexterity(); // Dexterity
+  }
+
+  // Method to make the gladiato's lose HP due to potential damage
+  sufferDmg(number) {
+    this.hp = this.hp - number;
   }
 
   // Method to calculate the gladiator's HP
   calculateHP() {
     return randomiseNumber(13, 18) * this.constitution; // HP is based on constitution
+  }
+
+  // Method to calculate the gladiator's maximum HP
+  calculateMaxHP() {
+    // Set maxHP to be the same as hp for now
+    return this.hp; // Return the value, don’t set it directly
   }
 
   // Method to calculate the gladiator's strength

@@ -16,8 +16,45 @@
   </head>
 
   <body>
-    <!-- Container for the entire content of the page -->
-    <div class="container">
+    <div id="homeScreen" class="container">
+      <div class="row">
+        <div
+          class="col d-flex flex-column justify-content-center align-items-center"
+        >
+          <br />
+          <br />
+          <br />
+          <br />
+          <h1>Gladiator's Forge</h1>
+          <br />
+          <div id="homeScreenSelections">
+            <!-- Will be automatically hidden by rungameStarting() when game is starting-->
+            <div class="row" onclick="startGame()"><h2>New Game</h2></div>
+            <div class="row"><h2>Podium</h2></div>
+            <div class="row"><h2>How to play</h2></div>
+          </div>
+          <div
+            id="login"
+            class="col d-flex flex-column justify-content-center align-items-center"
+          >
+            <div class="row" style="text-align: center">
+              <h3>
+                Username<br /><input
+                  id="userNameInput"
+                  type="text"
+                  value="Test"
+                />
+              </h3>
+            </div>
+            <button onclick="loginFunction()" id="btnLogin">
+              Create Gladiator
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container for the entire content of the creating character screen -->
+    <div id="characterCreationScreen" class="container">
       <!-- Row for displaying randomizer dice -->
       <div class="row text-center">
         <!-- Individual dice elements for randomizing stats -->
@@ -37,47 +74,52 @@
 
           <!-- Input fields for entering gladiator properties -->
           <h3>Name:</h3>
-          <input class="inputs" id="heroName" value="Test"/>
+          <input class="inputs" id="heroName" value="Test" />
 
           <h3>Height:</h3>
           <div>
-            <input class="inputs" readonly id="heroHeight" value="200"/>
+            <input class="inputs" readonly id="heroHeight" value="200" />
             <button id="heroHeightDie" class="randomizerDie"></button>
           </div>
 
           <h3>Weight:</h3>
           <div>
-            <input class="inputs" readonly id="heroWeight" value="100"/>
+            <input class="inputs" readonly id="heroWeight" value="100" />
             <button id="heroWeightDie" class="randomizerDie"></button>
           </div>
 
           <h3>Somatotype:</h3>
           <div>
-            <input class="inputs" readonly id="heroSomatotype" value="Mesomorph"/>
+            <input
+              class="inputs"
+              readonly
+              id="heroSomatotype"
+              value="Mesomorph"
+            />
             <button id="heroSomatotypeDie" class="randomizerDie"></button>
           </div>
 
           <h3>Weapon:</h3>
           <div>
-            <input class="inputs" readonly id="heroWeapon"  value="Sword"/>
+            <input class="inputs" readonly id="heroWeapon" value="Sword" />
             <button id="heroWeaponDie" class="randomizerDie"></button>
           </div>
 
           <h3>Constitution:</h3>
           <div>
-            <input class="inputs" readonly id="heroConstitution" value="18"/>
+            <input class="inputs" readonly id="heroConstitution" value="18" />
             <button id="heroConstitutionDie" class="randomizerDie"></button>
           </div>
 
           <h3>Luck:</h3>
           <div>
-            <input class="inputs" readonly id="heroLuck" value="18"/>
+            <input class="inputs" readonly id="heroLuck" value="18" />
             <button id="heroLuckDie" class="randomizerDie"></button>
           </div>
 
           <h3>Speed:</h3>
           <div>
-            <input class="inputs" readonly id="heroSpeed" value="18"/>
+            <input class="inputs" readonly id="heroSpeed" value="18" />
             <button id="heroSpeedDie" class="randomizerDie"></button>
           </div>
 
@@ -111,10 +153,9 @@
         <!-- Column for displaying the gladiator's visual result -->
         <div
           id="gladiatorResult"
-          class="col  d-flex flex-column justify-content-center align-items-center"
+          class="col d-flex flex-column justify-content-center align-items-center"
           style="background-color: darkgray"
         >
-          <h2</h2>
           <!-- Row for displaying the gladiator's face image -->
           <div
             class="row"

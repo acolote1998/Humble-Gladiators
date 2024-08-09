@@ -32,3 +32,11 @@
   background-image: url(img/d20.png);
   border: none;
 }
+
+.characterCreationScreenOn {
+  display: block;
+}
+
+.notDisplaying {
+  display: none;
+}
