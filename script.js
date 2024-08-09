@@ -104,21 +104,23 @@ function drawHero() {
   // Set dimensions for the body and head based on the gladiator's height and weight
   bodyHTMLStyle.height = gladiators[0].height * 2 + "px"; // Body height
   bodyHTMLStyle.width = gladiators[0].weight * 2 + "px"; // Body width
-
-  headHTMLStyle.width = bodyHTMLStyle.width; // Match head width to body width
+  headHTMLStyle.width = gladiators[0].weight + "px"; // Heads width is 50% of bodies width
   headHTMLStyle.height = ((15 * gladiators[0].height) / 90) * 3 + "px"; // Adjust head height based on body height
 
   // Set background image based on the gladiator's somatotype
   if (gladiators[0].somatotype.toLowerCase() == "endomorph") {
-    bodyHTMLStyle.backgroundImage = "url('img/endomorph.png')";
+    bodyHTMLStyle.backgroundImage =
+      "url('img/bodies/endomorph/" + randomiseNumber(1, 10) + ".png')";
   } else if (gladiators[0].somatotype.toLowerCase() == "ectomorph") {
-    bodyHTMLStyle.backgroundImage = "url('img/ectomorph.png')";
+    bodyHTMLStyle.backgroundImage =
+      "url('img/bodies/ectomorph/" + randomiseNumber(1, 10) + ".png')";
   } else if (gladiators[0].somatotype.toLowerCase() == "mesomorph") {
-    bodyHTMLStyle.backgroundImage = "url('img/mesomorph.png')";
+    bodyHTMLStyle.backgroundImage =
+      "url('img/bodies/mesomorph/" + randomiseNumber(1, 10) + ".png')";
   }
 
   // Set a default background image for the head
-  headHTMLStyle.backgroundImage = "url('img/head.png')";
+  headHTMLStyle.backgroundImage = "url('img/defaulthead.png')";
 }
 
 // Function to add event listener to each randomizer die
