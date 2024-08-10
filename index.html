@@ -16,36 +16,46 @@
   </head>
 
   <body>
+    <!-- Home Screen -->
     <div id="homeScreen" class="container">
       <div class="row">
         <div
           class="col d-flex flex-column justify-content-center align-items-center"
         >
-          <br />
-          <br />
-          <br />
-          <br />
+          <!-- Spacer for positioning -->
+          <br /><br /><br /><br />
+
+          <!-- Title -->
           <h1>Gladiator's Forge</h1>
           <br />
+
+          <!-- Game selection options -->
           <div id="homeScreenSelections">
-            <!-- Will be automatically hidden by rungameStarting() when game is starting-->
-            <div class="row" onclick="startGame()"><h2>New Game</h2></div>
-            <div class="row"><h2>Podium</h2></div>
-            <div class="row"><h2>How to play</h2></div>
+            <!-- Will be automatically hidden by rungameStarting() when game is starting -->
+            <div class="row" onclick="startGame()">
+              <h2>New Game</h2>
+            </div>
+            <div class="row">
+              <h2>Podium</h2>
+            </div>
+            <div class="row">
+              <h2>How to play</h2>
+            </div>
           </div>
+
+          <!-- Login Section -->
           <div
             id="login"
             class="col d-flex flex-column justify-content-center align-items-center"
           >
             <div class="row" style="text-align: center">
               <h3>
-                Username<br /><input
-                  id="userNameInput"
-                  type="text"
-                  value="Test"
-                />
+                Username<br />
+                <input id="userNameInput" type="text" value="Test" />
               </h3>
             </div>
+
+            <!-- Button to create a gladiator -->
             <button onclick="loginFunction()" id="btnLogin">
               Create Gladiator
             </button>
@@ -53,11 +63,11 @@
         </div>
       </div>
     </div>
-    <!-- Container for the entire content of the creating character screen -->
+
+    <!-- Character Creation Screen -->
     <div id="characterCreationScreen" class="container">
       <!-- Row for displaying randomizer dice -->
       <div class="row text-center">
-        <!-- Individual dice elements for randomizing stats -->
         <div id="extraDie1" class="col-sm extraDie"></div>
         <div id="extraDie2" class="col-sm extraDie"></div>
         <div id="extraDie3" class="col-sm extraDie"></div>
@@ -65,14 +75,14 @@
 
       <!-- Row for gladiator input fields and stats -->
       <div class="row">
-        <!-- Column for inputs related to the gladiator -->
+        <!-- Column for gladiator input fields -->
         <div
           id="gladiatorInputs"
           class="col d-flex flex-column justify-content-center align-items-center"
         >
           <h2>Gladiator's Core</h2>
 
-          <!-- Input fields for entering gladiator properties -->
+          <!-- Input fields for gladiator properties -->
           <h3>Name:</h3>
           <input class="inputs" id="heroName" value="Test" />
 
@@ -128,12 +138,13 @@
           <button id="btnForgeGladiator">Forge Gladiator</button>
         </div>
 
-        <!-- Column for displaying calculated gladiator stats -->
+        <!-- Column for gladiator stats -->
         <div
           id="gladiatorStats"
           class="col d-flex flex-column justify-content-center align-items-center"
         >
           <h2>Gladiator's Stats:</h2>
+
           <h3>Strength:</h3>
           <div>
             <input class="inputs" readonly id="heroStrength" />
@@ -156,13 +167,29 @@
           class="col d-flex flex-column justify-content-center align-items-center"
           style="background-color: darkgray"
         >
-          <!-- Row for displaying the gladiator's face image -->
+          <!-- Row for gladiator's HP bar -->
+          <div
+            class="row"
+            id="divheroHPBarCreationScreen"
+            style="background-size: cover; background-size: 100% 100%"
+          >
+            <input
+              id="heroHPBarCreationScreen"
+              style="background-color: lightcoral; text-align: center"
+              class="notDisplaying"
+              readonly
+            />
+            <br />
+          </div>
+
+          <!-- Row for gladiator's face -->
           <div
             class="row"
             id="heroFace"
             style="background-size: cover; background-size: 100% 100%"
           ></div>
-          <!-- Row for displaying the gladiator's body image -->
+
+          <!-- Row for gladiator's body -->
           <div
             class="row"
             id="heroBody"

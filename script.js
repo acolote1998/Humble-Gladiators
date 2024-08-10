@@ -27,7 +27,6 @@ var isSpeedGenerated = false; // Tracks if speed has been generated
 var amountRandomiserDiceLeft = 3; // Number of dice available
 var gameStarting = true;
 var username = "";
-var gladiatorID = "";
 var gameScenario = 0; //initializes a variable that indicates in which "level" or "scenario" the user is currently on
 
 // Array to store gladiators
@@ -68,9 +67,7 @@ async function loginFunction() {
   await loadingEffect("darkgray", 300);
   username = document.getElementById("userNameInput").value; //Gets the username input from the input field
 
-  gladiatorID = randomiseNumber(1000000, 9999999); //Generates a pretty much "unique" gladiator ID
-
-  if (username != "" && gladiatorID != "") {
+  if (username != "") {
     //Checks that the username and gladiator ID are not blank
     document.getElementById("login").className = ""; // Hides the inputs of the login
     document.getElementById("login").classList.add("notDisplaying"); // Hides the inputs of the login
@@ -98,6 +95,10 @@ async function loginFunction() {
 
 // Function to draw the gladiator on the HTML page based on height and weight
 function drawHero() {
+  let hpHeroBar = document.getElementById("heroHPBarCreationScreen"); //gets the HP bar element from the document
+  hpHeroBar.classList.remove("notDisplaying"); // makes the HP bar visible
+  hpHeroBar.value = gladiators[0].hp + " / " + gladiators[0].maxHP; // displays the current HP on the bar
+
   let bodyHTMLStyle = document.getElementById("heroBody").style;
   let headHTMLStyle = document.getElementById("heroFace").style;
 
@@ -107,20 +108,11 @@ function drawHero() {
   headHTMLStyle.width = gladiators[0].weight + "px"; // Heads width is 50% of bodies width
   headHTMLStyle.height = ((15 * gladiators[0].height) / 90) * 3 + "px"; // Adjust head height based on body height
 
-  // Set background image based on the gladiator's somatotype
-  if (gladiators[0].somatotype.toLowerCase() == "endomorph") {
-    bodyHTMLStyle.backgroundImage =
-      "url('img/bodies/endomorph/" + randomiseNumber(1, 10) + ".png')";
-  } else if (gladiators[0].somatotype.toLowerCase() == "ectomorph") {
-    bodyHTMLStyle.backgroundImage =
-      "url('img/bodies/ectomorph/" + randomiseNumber(1, 10) + ".png')";
-  } else if (gladiators[0].somatotype.toLowerCase() == "mesomorph") {
-    bodyHTMLStyle.backgroundImage =
-      "url('img/bodies/mesomorph/" + randomiseNumber(1, 10) + ".png')";
-  }
+  // Set background image based on the gladiator's id
+  bodyHTMLStyle.backgroundImage = gladiators[0].bodyURL;
 
   // Set a default background image for the head
-  headHTMLStyle.backgroundImage = "url('img/defaulthead.png')";
+  headHTMLStyle.backgroundImage = gladiators[0].headURL;
 }
 
 // Function to add event listener to each randomizer die
@@ -173,8 +165,7 @@ function forgeHeroGladiator() {
         gladiatorsConstitution,
         gladiatorsLuck,
         gladiatorsSpeed,
-        username,
-        gladiatorID
+        username
       );
 
       // Add the new gladiator to the array
@@ -471,8 +462,7 @@ class Gladiator {
     constitution,
     luck,
     speed,
-    username,
-    gladiatorid
+    username
   ) {
     // Initialize instance properties
     this.name = String(name); // Name of the gladiator
@@ -484,15 +474,54 @@ class Gladiator {
     this.luck = Number(luck); // Luck of the gladiator
     this.speed = Number(speed); // Speed of the gladiator
     this.username = String(username); // Username of who is using the gladiator
-    this.id = Number(gladiatorid); // Unique Gladiator ID
 
     // Calculate and assign attributes based on methods
+    this.id = this.generateGladiatorID(); // Unique Gladiator ID
+    this.bodyURL = this.drawGladiatorBody(); //Calls the method that assigns the matching body depending on the last digit of the Gladiator ID
+    this.headURL = this.drawGladiatorHead(); //Calls the method that assigns the matching head depending on the digit 5 + 6 of the Gladiator ID
     this.hp = this.calculateHP(); // Health Points
     this.maxHP = this.calculateMaxHP(); // Max HP, initially same as the HP
     this.strength = this.calculateStrength(); // Strength
     this.dexterity = this.calculateDexterity(); // Dexterity
   }
 
+  //Calculate Gladiator id
+  generateGladiatorID() {
+    //Generates a pretty much "unique" gladiator ID. If the 5th and 6th digit are >19, then it re-rolls again (only 20 heads avaiable, and 5+6 digits represent the head graphic)
+    let gladiatorID = randomiseNumber(1000000, 9999999);
+    while (Number(gladiatorID.toString().slice(4, 6)) >= 20) {
+      //If the Head ID generated is 20 or more, then it generates new ones in a loop until one matches the wanted criteria
+      gladiatorID = randomiseNumber(1000000, 9999999);
+      if (Number(gladiatorID.toString().slice(4, 6)) <= 19) {
+        //If the Head ID generated is between 00 and 19, then it keeps it and breaks the loop
+
+        break;
+      }
+    }
+    return Number(gladiatorID);
+  }
+
+  // Draw Body
+  drawGladiatorBody() {
+    let idToString = this.id.toString(); //Obtains the Gladiators ID and passes it to a string
+    let idBody = idToString.slice(6, 7); //Last Digit of the Gladiator ID represents its body type (from 0 to 9, 10 options)
+    let finalBody = ""; //Variable that will return the body graphic
+
+    if (this.somatotype.toLowerCase() == "ectomorph") {
+      return (finalBody = "url('img/bodies/ectomorph/" + idBody + ".png')");
+    } else if (this.somatotype.toLowerCase() == "mesomorph") {
+      return (finalBody = "url('img/bodies/mesomorph/" + idBody + ".png')");
+    } else if (this.somatotype.toLowerCase() == "endomorph") {
+      return (finalBody = "url('img/bodies/endomorph/" + idBody + ".png')");
+    }
+  }
+  //Draw Head
+  drawGladiatorHead() {
+    let idToString = this.id.toString(); //Obtains the Gladiators ID and passes it to a string
+    let idHead = idToString.slice(4, 6); //Digit 5 and 6 of the Gladiator ID represents its head type (from 0 to 19, 20 options)
+    let finalHead = ""; //Variable that will return the head graphic
+    return (finalHead = "url('img/heads/" + idHead + ".png')");
+  }
   // Method to make the gladiato's lose HP due to potential damage
   sufferDmg(number) {
     this.hp = this.hp - number;
@@ -515,16 +544,18 @@ class Gladiator {
 
     // Determine the body type modifier based on somatotype
     if (this.somatotype.toLowerCase() == "ectomorph") {
-      bodyTypeModifier = 0.6; // Ectomorphs have a lower strength modifier
+      bodyTypeModifier = -1; // Ectomorphs have a lower strength modifier
     } else if (this.somatotype.toLowerCase() == "mesomorph") {
       bodyTypeModifier = 1; // Mesomorphs have a standard strength modifier
     } else if (this.somatotype.toLowerCase() == "endomorph") {
-      bodyTypeModifier = 1.4; // Endomorphs have a higher strength modifier
+      bodyTypeModifier = 3; // Endomorphs have a higher strength modifier
     }
 
     // Calculate strength
     return Math.ceil(
-      randomiseNumber(13, 18) + this.weight / this.height + bodyTypeModifier
+      randomiseNumber(13, 18) +
+        (this.weight / this.height) * randomiseNumber(2, 5) +
+        bodyTypeModifier
     );
   }
 
@@ -534,16 +565,18 @@ class Gladiator {
 
     // Determine the body type modifier based on somatotype
     if (this.somatotype.toLowerCase() == "ectomorph") {
-      bodyTypeModifier = 1.4; // Ectomorphs have a higher dexterity modifier
+      bodyTypeModifier = 3; // Ectomorphs have a higher dexterity modifier
     } else if (this.somatotype.toLowerCase() == "mesomorph") {
       bodyTypeModifier = 1; // Mesomorphs have a standard dexterity modifier
     } else if (this.somatotype.toLowerCase() == "endomorph") {
-      bodyTypeModifier = 0.6; // Endomorphs have a lower dexterity modifier
+      bodyTypeModifier = -1; // Endomorphs have a lower dexterity modifier
     }
 
     // Calculate dexterity
     return Math.ceil(
-      randomiseNumber(13, 18) + this.weight / this.height + bodyTypeModifier
+      randomiseNumber(13, 18) +
+        (this.weight / this.height) * randomiseNumber(2, 5) +
+        bodyTypeModifier
     );
   }
 }
