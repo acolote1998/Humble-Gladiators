@@ -60,6 +60,10 @@ async function startGame() {
   document
     .getElementById("characterCreationScreen")
     .classList.remove("notDisplaying");
+
+  document.getElementById("imageHeader").style = ""; // Hides the header saying "Gladiator's Forge"
+
+  document.getElementById("imageHeader").classList.add("notDisplaying"); // Hides the header saying "Gladiator's Forge"
 } // It Removes the "hiding" attribute to the character creation screen
 
 //Login Function
@@ -93,10 +97,16 @@ async function loginFunction() {
   }
 })();
 
+//
+function startPlaying() {
+  console.log("Game should start now");
+}
+
 // Function to draw the gladiator on the HTML page based on height and weight
 function drawHero() {
   let hpHeroBar = document.getElementById("heroHPBarCreationScreen"); //gets the HP bar element from the document
   hpHeroBar.classList.remove("notDisplaying"); // makes the HP bar visible
+  document.getElementById("heroStats").classList.remove("notDisplaying"); //Makes the hero stats visible
   hpHeroBar.value = gladiators[0].hp + " / " + gladiators[0].maxHP; // displays the current HP on the bar
 
   let bodyHTMLStyle = document.getElementById("heroBody").style;
@@ -121,7 +131,9 @@ function addEventListenerRandomizer(element) {
 }
 
 // Function to forge a new gladiator and add them to the list
-function forgeHeroGladiator() {
+async function forgeHeroGladiator() {
+  //
+
   let wantsToGenerate = ""; //Variable that will check if the user is sure and wants to generate the gladiator with the given stats
   if (amountRandomiserDiceLeft >= 1) {
     alert(
@@ -156,7 +168,7 @@ function forgeHeroGladiator() {
       gladiatorsSpeed != ""
     ) {
       // Create a new Gladiator object
-      var gladiatorObject = new Gladiator(
+      let gladiatorObject = new Gladiator(
         gladiatorsName,
         gladiatorsHeight,
         gladiatorsWeight,
@@ -172,16 +184,50 @@ function forgeHeroGladiator() {
       gladiators.push(gladiatorObject);
 
       // Update the HTML with the new gladiator's attributes
-      document.getElementById("heroStrength").value = String(
-        gladiatorObject.strength
+      document.getElementById("heroStrenghtCreationScrenText").innerText =
+        String(gladiatorObject.strength);
+      document.getElementById("heroDexterityCreationScrenText").innerText =
+        String(gladiatorObject.dexterity);
+      document.getElementById("heroConstitutionCreationScrenText").innerText =
+        String(gladiatorObject.constitution);
+      document.getElementById("heroSpeedCreationScrenText").innerText = String(
+        gladiatorObject.speed
       );
-      document.getElementById("heroDexterity").value = String(
-        gladiatorObject.dexterity
+      document.getElementById("heroLuckCreationScrenText").innerText = String(
+        gladiatorObject.luck
       );
-      document.getElementById("heroHP").value = String(gladiatorObject.hp);
+
+      document.getElementById(
+        "heroWeaponCreationScrenText"
+      ).style.backgroundImage = String(gladiatorObject.weaponURL);
 
       // Draw the gladiator on the HTML page
       drawHero();
+
+      document
+        .getElementById("btnForgeGladiator")
+        .classList.add("notDisplaying"); // Hides the button that allows the user generate the Hero
+
+      await loadingEffect("white", 3000); // Waits 3s
+
+      document.getElementById("gladiatorInputs").classList = ""; // Removes all classes from the Gladiator Input Hero Column
+      document.getElementById("gladiatorInputs").classList.add("notDisplaying"); // Hides the column that allows the user generate the Hero (generated inputs and so)
+
+      await loadingEffect("white", 2000); // Waits 2s
+
+      document
+        .getElementById("extraDieContainerRow")
+        .classList.add("notDisplaying"); // Removes the row that contains the extra dice
+
+      document.getElementById("imageHeader").classList.remove("notDisplaying"); //Brings back the header displaying "Gladiator's Forge"
+      document.getElementById("imageHeader").style =
+        "display: flex; justify-content: center;align-items: center;border-bottom: solid 2px black;";
+
+      await loadingEffect("white", 1500); // Waits 1s
+
+      document
+        .getElementById("startPlayingColumn")
+        .classList.remove("notDisplaying"); // Shows the row that provides the button that allows the player start the game
     } else {
       alert("Please generate all the attributes before forging the gladiator.");
     }
@@ -479,6 +525,7 @@ class Gladiator {
     this.id = this.generateGladiatorID(); // Unique Gladiator ID
     this.bodyURL = this.drawGladiatorBody(); //Calls the method that assigns the matching body depending on the last digit of the Gladiator ID
     this.headURL = this.drawGladiatorHead(); //Calls the method that assigns the matching head depending on the digit 5 + 6 of the Gladiator ID
+    this.weaponURL = this.drawWeapon(); // Calls the method that returns the url of the weapons image
     this.hp = this.calculateHP(); // Health Points
     this.maxHP = this.calculateMaxHP(); // Max HP, initially same as the HP
     this.strength = this.calculateStrength(); // Strength
@@ -499,6 +546,13 @@ class Gladiator {
       }
     }
     return Number(gladiatorID);
+  }
+
+  //Draw Weapon
+  drawWeapon() {
+    let wpn = String(this.weapon.toLowerCase());
+    let weaponURL = ""; //Variable that will weapon the body graphic
+    return (weaponURL = "url('img/weapons/" + wpn + ".png')");
   }
 
   // Draw Body

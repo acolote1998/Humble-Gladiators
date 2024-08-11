@@ -16,19 +16,28 @@
   </head>
 
   <body>
+    <!-- Stes up the header image  -->
+    <div
+      id="imageHeader"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: solid 2px black;
+      "
+    >
+      <img
+        src="img/header.png"
+        alt="Header Image"
+        style="max-width: 100%; max-height: 100%"
+      />
+    </div>
     <!-- Home Screen -->
     <div id="homeScreen" class="container">
       <div class="row">
         <div
           class="col d-flex flex-column justify-content-center align-items-center"
         >
-          <!-- Spacer for positioning -->
-          <br /><br /><br /><br />
-
-          <!-- Title -->
-          <h1>Gladiator's Forge</h1>
-          <br />
-
           <!-- Game selection options -->
           <div id="homeScreenSelections">
             <!-- Will be automatically hidden by rungameStarting() when game is starting -->
@@ -65,9 +74,13 @@
     </div>
 
     <!-- Character Creation Screen -->
-    <div id="characterCreationScreen" class="container">
+    <div
+      id="characterCreationScreen"
+      class="container"
+      style="padding-top: 25px"
+    >
       <!-- Row for displaying randomizer dice -->
-      <div class="row text-center">
+      <div class="row text-center" id="extraDieContainerRow">
         <div id="extraDie1" class="col-sm extraDie"></div>
         <div id="extraDie2" class="col-sm extraDie"></div>
         <div id="extraDie3" class="col-sm extraDie"></div>
@@ -138,7 +151,7 @@
           <button id="btnForgeGladiator">Forge Gladiator</button>
         </div>
 
-        <!-- Column for gladiator stats -->
+        <!-- Column for gladiator stats 
         <div
           id="gladiatorStats"
           class="col d-flex flex-column justify-content-center align-items-center"
@@ -160,22 +173,31 @@
             <input class="inputs" readonly id="heroHP" />
           </div>
         </div>
+        -->
 
         <!-- Column for displaying the gladiator's visual result -->
         <div
           id="gladiatorResult"
-          class="col d-flex flex-column justify-content-center align-items-center"
-          style="background-color: darkgray"
+          class="col d-flex flex-column justify-content-center align-items-center niceBorder"
         >
           <!-- Row for gladiator's HP bar -->
           <div
             class="row"
             id="divheroHPBarCreationScreen"
-            style="background-size: cover; background-size: 100% 100%"
+            style="
+              background-size: cover;
+              background-size: 100% 100%;
+              padding: 10px;
+            "
           >
             <input
               id="heroHPBarCreationScreen"
-              style="background-color: lightcoral; text-align: center"
+              style="
+                background-color: lightcoral;
+                text-align: center;
+                font-family: fantasy;
+                font-size: 30px;
+              "
               class="notDisplaying"
               readonly
             />
@@ -195,6 +217,70 @@
             id="heroBody"
             style="background-size: cover; background-size: 100% 100%"
           ></div>
+          <!-- Row for Gladiators stats-->
+          <div
+            class="row niceBorder notDisplaying"
+            id="heroStats"
+            style="
+              background-size: cover;
+              background-size: 100% 100%;
+              width: 95%;
+            "
+          >
+            <div class="col-sm" style="display: flex" id="heroWeaponScreen">
+              <div class="creatingScreenStats">WPN:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroWeaponCreationScrenText"
+                style="background-size: cover"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroStrenghtScreen">
+              <div class="creatingScreenStats">STR:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroStrenghtCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroDexterityScreen">
+              <div class="creatingScreenStats">DEX:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroDexterityCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroConstScreen">
+              <div class="creatingScreenStats">CNS:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroConstitutionCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroLuckScreen">
+              <div class="creatingScreenStats">LCK:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroLuckCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroSpeedScreen">
+              <div class="creatingScreenStats">SPD:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroSpeedCreationScrenText"
+              ></div>
+            </div>
+          </div>
+          <!-- Adds a row that is initially hidden. Once the hero is created, the column appears and lets the player start the game -->
+          <div
+            id="startPlayingColumn"
+            class="row notDisplaying"
+            style="padding: 15px"
+          >
+            <button id="startPlayingButton" onclick="startPlaying()">
+              Start Playing
+            </button>
+          </div>
         </div>
       </div>
     </div>
