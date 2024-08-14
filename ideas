@@ -1,0 +1,16 @@
+- Combat System:
+
+  - Attack
+    -> Performs an attack with the eqquiped weapon
+  - Deffend
+    -> If the enemy attacks the user while the user is defending, the user will only lose 50% of the HP that would initiall lose due to this attack
+    -> If the enemy does not attack while the user is defending, the user will also recover HP equal to it's constitution \* its level
+  - Focus
+    -> Charges energy, pases turn, and this way the next turn, the user will have 50% extra chance of crit
+
+  -Attribute modifiers:
+
+  -> Luck : It affects the crit % chance
+  -> Strenght: It affecks the attack value of the weapons modified by strength
+  -> Dexterity: It affects the attack value of the weapons modified by dexterity
+  -> Speed: The gladiator with the highest speed will act first in the combat

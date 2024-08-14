@@ -99,7 +99,180 @@ async function loginFunction() {
 
 //
 function startPlaying() {
-  console.log("Game should start now");
+  //Gives a start to the game after the first gladiator got created
+
+  // Removes the "startPlayingColumn"
+  document.getElementById("startPlayingColumn").classList = "";
+  document.getElementById("startPlayingColumn").classList.add = "notDisplaying";
+  // Removes the "gladiatorResult" column
+  document.getElementById("gladiatorResult").classList = "";
+  document.getElementById("gladiatorResult").classList.add("notDisplaying");
+  // Removes the character creation screen
+  document.getElementById("characterCreationScreen").innerHTML = "";
+  document.getElementById("characterCreationScreen").style = "";
+  document.getElementById("characterCreationScreen").classList = "";
+  // Shows the "Level Container" div
+  document.getElementById("levelContainer").classList.remove("notDisplaying");
+  // Shows the first level
+  document.getElementById("firstLevel").classList.remove("notDisplaying");
+}
+
+// Function to calculate a Gladiators Speed
+function calculateGladiatorsSpeed(somatotypeGenerated) {
+  let somatotypeSpeedModifier = 0;
+  if (somatotypeGenerated == "endomorph") {
+    //if the gladiator is endomorph, will be slower, -1 speed
+    somatotypeSpeedModifier = -1;
+  } else if (
+    somatotypeGenerated == "mesomorph" //if the gladiator is mesomorph, will be "normal", no speed modification
+  ) {
+    somatotypeSpeedModifier = 0;
+  } else if (
+    somatotypeGenerated == "ectomorph" //if the gladiator is ectomorph, will be faster, +1 speed
+  ) {
+    somatotypeSpeedModifier = 1;
+  }
+  let Speed = 0;
+  Speed = randomiseNumber(12, 18) + somatotypeSpeedModifier; //Generate a random Speed between 12 and 18 and adds the body type speed modifier to it
+
+  return Speed;
+}
+
+// Function that returns a random weapon
+function generateARandomWeapon() {
+  let randomIndex = randomiseNumber(1, 2);
+  if (randomIndex == 1) {
+    return "sword";
+  } else if (randomIndex == 2) {
+    return "bow";
+  }
+}
+
+// Function to calculate a Gladiators Luck
+function calculateRandomGladiatorsLuck() {
+  let extraLuck = 1; // Initialize extraLuck to control the luck increment process
+  let extraLuckModifier = 1; // Initialize extraLuckModifier to determine how much extra luck to add each iteration
+
+  // Generate a random Luck between 12 and 18
+  // Then there is a 50% chance of getting extra luck points, and 50% chance of keeping the initial luck
+  Luck = randomiseNumber(12, 18);
+  while (extraLuck == 1) {
+    // Continue to add extra luck while extraLuck is 1 (indicating a 50% chance)
+    Luck = Luck + extraLuckModifier; // Increment Luck by the current value of extraLuckModifier
+    extraLuckModifier = extraLuckModifier + 1; // Increment the extraLuckModifier for the next potential iteration
+    extraLuck = randomiseNumber(0, 1); // Randomly set extraLuck to either 0 or 1, simulating a 50% chance
+
+    if (extraLuck == 0) {
+      // If extraLuck is 0, break out of the loop
+      break;
+    }
+  }
+  return Luck; // Return the final calculated Luck value
+}
+
+// Function that returns a gladiator with random values
+function createRandomGladiator(name) {
+  let somatotype = "";
+  let Rndnumber = randomiseNumber(1, 3);
+  // Generate random Somatotype if not already generated or if dice are available
+
+  // Map number to somatotype
+  if (Rndnumber == 1) {
+    somatotype = "ectomorph";
+  } else if (Rndnumber == 2) {
+    somatotype = "mesomorph";
+  } else if (Rndnumber == 3) {
+    somatotype = "endomorph";
+  }
+
+  let newGladiator = new Gladiator(
+    name,
+    randomiseNumber(100, 210),
+    randomiseNumber(50, 140),
+    somatotype,
+    generateARandomWeapon(),
+    randomiseNumber(12, 18),
+    calculateRandomGladiatorsLuck(),
+    calculateGladiatorsSpeed(somatotype),
+    username
+  );
+  console.log(newGladiator);
+  gladiators.push(newGladiator);
+}
+
+//Update Graphic Content in the Battle Scene
+function updateGraphicsBattle(gladiatorIndex, currentlevel, heroorEnemy) {
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "Level"
+  ).innerHTML = gladiators[gladiatorIndex].level; //Updates the Level in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "Name"
+  ).innerHTML = gladiators[gladiatorIndex].name; //Updates the Name in HTML for the provided gladiator
+  console.log(String(currentlevel) + "HPBar" + String(heroorEnemy));
+  console.log(String(currentlevel) + "HPBar" + String(heroorEnemy).value);
+  document.getElementById(
+    String(currentlevel) + "HPBar" + String(heroorEnemy)
+  ).value =
+    gladiators[gladiatorIndex].hp + " / " + gladiators[gladiatorIndex].maxHP; //Updates the HP in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "WeaponBattleStatIMG"
+  ).src = gladiators[gladiatorIndex].weaponSRC; //Updates the Weapon in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "HeightBattleStat"
+  ).innerHTML = gladiators[gladiatorIndex].height; //Updates the Height in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "WeightBattleStat"
+  ).innerHTML = gladiators[gladiatorIndex].weight; //Updates the Height in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "SpeedBattleStat"
+  ).innerHTML = gladiators[gladiatorIndex].speed; //Updates the Speed in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "StrenghtBattleStat"
+  ).innerHTML = gladiators[gladiatorIndex].strength; //Updates the Strenght in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "DexterityBattleStat"
+  ).innerHTML = gladiators[gladiatorIndex].dexterity; //Updates the Dexterity in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "ImgBody"
+  ).src = gladiators[gladiatorIndex].bodySRC; //Updates the Body in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "ImgBody"
+  ).style.height = String(gladiators[gladiatorIndex].height) + "px"; //Updates the Body height with the gladiators height in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "ImgBody"
+  ).style.width =
+    String((gladiators[gladiatorIndex].weight / 140) * 124) + "px"; //Updates the Body width with the gladiators height in HTML for the provided gladiator. Max width is 124 px, so it scales it down to that
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "ImgHead"
+  ).style.width =
+    (String(gladiators[gladiatorIndex].weight / 140) * 124) / 2 + "px"; //Updates the Head width with 50% of the gladiators height in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "ImgHead"
+  ).style.height = "40px"; //Updates the Head height to 40px in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "ImgHead"
+  ).src = gladiators[gladiatorIndex].headSRC; //Updates the Body in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "ConstitutionBattleStat"
+  ).innerHTML = gladiators[gladiatorIndex].constitution; //Updates the Constitution in HTML for the provided gladiator
+
+  document.getElementById(
+    String(currentlevel) + String(heroorEnemy) + "LuckBattleStat"
+  ).innerHTML = gladiators[gladiatorIndex].luck; //Updates the Luck in HTML for the provided gladiator
 }
 
 // Function to draw the gladiator on the HTML page based on height and weight
@@ -412,7 +585,7 @@ function calculateHeroSpeed() {
     document.getElementById("heroSomatotype").value.toLowerCase() == "endomorph"
   ) {
     //if the gladiator is endomorph, will be slower, -1 speed
-    somatotypeSpeedModifier = 0;
+    somatotypeSpeedModifier = -1;
   } else if (
     document.getElementById("heroSomatotype").value.toLowerCase() == "mesomorph" //if the gladiator is mesomorph, will be "normal", no speed modification
   ) {
@@ -523,9 +696,13 @@ class Gladiator {
 
     // Calculate and assign attributes based on methods
     this.id = this.generateGladiatorID(); // Unique Gladiator ID
-    this.bodyURL = this.drawGladiatorBody(); //Calls the method that assigns the matching body depending on the last digit of the Gladiator ID
-    this.headURL = this.drawGladiatorHead(); //Calls the method that assigns the matching head depending on the digit 5 + 6 of the Gladiator ID
-    this.weaponURL = this.drawWeapon(); // Calls the method that returns the url of the weapons image
+    this.level = 1; // All Gladiators aree created by default at level 1
+    this.bodyURL = this.drawGladiatorBodyURL(); //Calls the method that assigns the matching body depending on the last digit of the Gladiator ID
+    this.headURL = this.drawGladiatorHeadURL(); //Calls the method that assigns the matching head depending on the digit 5 + 6 of the Gladiator ID
+    this.weaponURL = this.drawWeaponURL(); // Calls the method that returns the url of the weapons image
+    this.bodySRC = this.drawGladiatorBodySRC(); //Calls the method that assigns the matching body depending on the last digit of the Gladiator ID
+    this.headSRC = this.drawGladiatorHeadSRC(); //Calls the method that assigns the matching head depending on the digit 5 + 6 of the Gladiator ID
+    this.weaponSRC = this.drawWeaponSRC(); // Calls the method that returns the url of the weapons image
     this.hp = this.calculateHP(); // Health Points
     this.maxHP = this.calculateMaxHP(); // Max HP, initially same as the HP
     this.strength = this.calculateStrength(); // Strength
@@ -548,15 +725,15 @@ class Gladiator {
     return Number(gladiatorID);
   }
 
-  //Draw Weapon
-  drawWeapon() {
+  //Draw Weapon URL
+  drawWeaponURL() {
     let wpn = String(this.weapon.toLowerCase());
     let weaponURL = ""; //Variable that will weapon the body graphic
     return (weaponURL = "url('img/weapons/" + wpn + ".png')");
   }
 
-  // Draw Body
-  drawGladiatorBody() {
+  // Draw Body URL
+  drawGladiatorBodyURL() {
     let idToString = this.id.toString(); //Obtains the Gladiators ID and passes it to a string
     let idBody = idToString.slice(6, 7); //Last Digit of the Gladiator ID represents its body type (from 0 to 9, 10 options)
     let finalBody = ""; //Variable that will return the body graphic
@@ -569,13 +746,43 @@ class Gladiator {
       return (finalBody = "url('img/bodies/endomorph/" + idBody + ".png')");
     }
   }
-  //Draw Head
-  drawGladiatorHead() {
+  //Draw Head URL
+  drawGladiatorHeadURL() {
     let idToString = this.id.toString(); //Obtains the Gladiators ID and passes it to a string
     let idHead = idToString.slice(4, 6); //Digit 5 and 6 of the Gladiator ID represents its head type (from 0 to 19, 20 options)
     let finalHead = ""; //Variable that will return the head graphic
     return (finalHead = "url('img/heads/" + idHead + ".png')");
   }
+
+  //Draw Weapon SRC
+  drawWeaponSRC() {
+    let wpn = String(this.weapon.toLowerCase());
+    let weaponSRC = ""; //Variable that will weapon the body graphic
+    return (weaponSRC = "img/weapons/" + wpn + ".png");
+  }
+
+  // Draw Body SRC
+  drawGladiatorBodySRC() {
+    let idToString = this.id.toString(); //Obtains the Gladiators ID and passes it to a string
+    let idBody = idToString.slice(6, 7); //Last Digit of the Gladiator ID represents its body type (from 0 to 9, 10 options)
+    let finalBody = ""; //Variable that will return the body graphic
+
+    if (this.somatotype.toLowerCase() == "ectomorph") {
+      return (finalBody = "img/bodies/ectomorph/" + idBody + ".png");
+    } else if (this.somatotype.toLowerCase() == "mesomorph") {
+      return (finalBody = "img/bodies/mesomorph/" + idBody + ".png");
+    } else if (this.somatotype.toLowerCase() == "endomorph") {
+      return (finalBody = "img/bodies/endomorph/" + idBody + ".png");
+    }
+  }
+  //Draw Head SRC
+  drawGladiatorHeadSRC() {
+    let idToString = this.id.toString(); //Obtains the Gladiators ID and passes it to a string
+    let idHead = idToString.slice(4, 6); //Digit 5 and 6 of the Gladiator ID represents its head type (from 0 to 19, 20 options)
+    let finalHead = ""; //Variable that will return the head graphic
+    return (finalHead = "img/heads/" + idHead + ".png");
+  }
+
   // Method to make the gladiato's lose HP due to potential damage
   sufferDmg(number) {
     this.hp = this.hp - number;

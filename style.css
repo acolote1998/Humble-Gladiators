@@ -57,3 +57,83 @@
   border-style: solid;
   border-radius: 30px;
 }
+
+.battleStats {
+  background-color: rgb(233, 233, 233);
+  border-style: outset;
+  border-radius: 15px;
+  width: 100px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-family: fantasy;
+  margin-bottom: 60px;
+}
+
+.hpBarBattle {
+  background-color: lightcoral;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.battleGladiatorsName {
+  font-size: 35px;
+  font-style: oblique;
+  margin-bottom: 20px;
+}
+
+.battleActionButtons {
+  background-color: rgba(182, 182, 182, 0.774);
+  border-style: outset;
+  border-radius: 15px;
+  width: 100px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-family: fantasy;
+  margin-bottom: 60px;
+  margin-right: 30px;
+}
+
+.battleLog {
+  margin-top: 50px;
+  width: 400px;
+  height: 100px;
+}
+
+.wpnBattleDisplay {
+  width: 35px;
+  height: 35px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.lvlbattleStats {
+  background-color: rgb(233, 233, 233);
+  border-style: outset;
+  border-radius: 15px;
+  width: 100px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-family: fantasy;
+}
+
+.character-image-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* This pushes the content to the bottom */
+  align-items: center; /* This centers the images horizontally */
+  height: 100%; /* Make sure the container takes the full height */
+}
+
+.character-image-column img {
+  display: block; /* Ensure the images are block elements */
+  margin: 0; /* Remove any default margins */
+}

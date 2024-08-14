@@ -284,6 +284,246 @@
         </div>
       </div>
     </div>
+    <!-- LEVEL CONTAINER ELEMENTS-->
+    <div
+      class="container-fluid notDisplaying"
+      id="levelContainer"
+      style="height: 80vh; width: 90vw; padding: 20px"
+    >
+      <!--FIRST LEVEL -->
+      <div
+        class="row niceBorder notDisplaying"
+        id="firstLevel"
+        style="
+          height: 80vh;
+          background-image: url(img/arenabg.png);
+          background-size: cover;
+        "
+      >
+        <!-- COLUMN FOR THE HERO -->
+        <div
+          class="col d-flex flex-column justify-content-center align-items-center h-100"
+        >
+          <!-- Level and HP Bar Row -->
+          <div class="row w-100 my-2">
+            <div class="col text-center">
+              <div class="lvlbattleStats">
+                LVL <span id="1heroLevel">---</span>
+              </div>
+            </div>
+            <div class="col d-flex justify-content-center">
+              <input
+                id="1HPBarhero"
+                readonly
+                class="hpBarBattle"
+                value="XXX"
+                type="text"
+              />
+            </div>
+            <div class="col"></div>
+          </div>
+          <!-- Hero Name Row -->
+          <div
+            class="row battleGladiatorsName w-100 text-center d-flex align-items-center justify-content-center"
+            id="1nameHero"
+          >
+            <span id="1heroName">HERO'S NAME</span>
+          </div>
+          <!-- Stats and Image Row -->
+          <div class="row w-100">
+            <!-- Left Stats Column -->
+            <div
+              class="col d-flex flex-column justify-content-center align-items-center"
+            >
+              <div class="battleStats">
+                WPN:
+                <img
+                  class="wpnBattleDisplay"
+                  id="1heroWeaponBattleStatIMG"
+                  src="img/weapons/sword.png"
+                />
+              </div>
+              <div class="battleStats">
+                HGT: <span id="1heroHeightBattleStat">---</span> cm
+              </div>
+              <div class="battleStats">
+                WGT: <span id="1heroWeightBattleStat">---</span> kg
+              </div>
+              <div class="battleStats">
+                SPD: <span id="1heroSpeedBattleStat">---</span>
+              </div>
+            </div>
+
+            <!-- Hero Image Column -->
+            <div
+              class="col d-flex flex-column justify-content-center align-items-center character-image-column"
+            >
+              <div class="row">
+                <img
+                  class="headBattleGraphic"
+                  id="1heroImgHead"
+                  src="img/heads/00.png"
+                  style="height: 40px; width: 40px"
+                />
+              </div>
+              <div class="row">
+                <img
+                  id="1heroImgBody"
+                  src="img/bodies/ectomorph/0.png"
+                  style="height: 130px; width: 40px"
+                />
+              </div>
+            </div>
+
+            <!-- Right Stats Column -->
+            <div
+              class="col d-flex flex-column justify-content-center align-items-center"
+            >
+              <div class="battleStats">
+                STR: <span id="1heroStrenghtBattleStat">---</span>
+              </div>
+              <div class="battleStats">
+                DEX: <span id="1heroDexterityBattleStat">---</span>
+              </div>
+              <div class="battleStats">
+                CNT: <span id="1heroConstitutionBattleStat">---</span>
+              </div>
+              <div class="battleStats">
+                LCK: <span id="1heroLuckBattleStat">---</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- COLUMN FOR THE HERO -->
+
+        <!-- COLUMN FOR ACTIONS / BATTLE LOG -->
+        <div
+          class="col d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="row">
+            <div class="col battleActionButtons" id="1AttackButton">ATTACK</div>
+            <div class="col battleActionButtons" id="1DefendButton">DEFEND</div>
+            <div class="col battleActionButtons" id="1FocusButton">FOCUS</div>
+          </div>
+          <div class="row">
+            <div
+              class="col"
+              style="width: 200px; height: 200px; background-color: red"
+              id="1HeroAnimationCombatDiv"
+            ></div>
+            <div
+              class="col"
+              style="width: 200px; height: 200px; background-color: yellow"
+              id="1EnemyAnimationCombatDiv"
+            ></div>
+          </div>
+          <div class="row">
+            <textarea class="battleLog" id="1battleLog" readonly></textarea>
+          </div>
+          <div class="row" id="1BtnStartBattle">
+            <button style="margin-top: 15px">Find Oponent</button>
+          </div>
+        </div>
+        <!-- COLUMN FOR ACTIONS / BATTLE LOG -->
+        <!-- COLUMN FOR THE ENEMY -->
+        <div
+          class="col d-flex flex-column justify-content-center align-items-center h-100"
+        >
+          <!-- Level and HP Bar Row -->
+          <div class="row w-100 my-2">
+            <div class="col text-center">
+              <div class="lvlbattleStats">
+                LVL <span id="1EnemyLevel">---</span>
+              </div>
+            </div>
+            <div class="col d-flex justify-content-center">
+              <input
+                id="1HPBarEnemy"
+                readonly
+                class="hpBarBattle"
+                value="XXX"
+                type="text"
+              />
+            </div>
+            <div class="col"></div>
+          </div>
+          <!-- Enemy Name Row -->
+          <div
+            class="row battleGladiatorsName w-100 text-center d-flex align-items-center justify-content-center"
+            id="1nameEnemy"
+          >
+            <span id="1EnemyName">ENEMYS'S NAME</span>
+          </div>
+          <!-- Stats and Image Row -->
+          <div class="row w-100">
+            <!-- Left Stats Column -->
+            <div
+              class="col d-flex flex-column justify-content-center align-items-center"
+            >
+              <div class="battleStats">
+                WPN:
+                <img
+                  id="1EnemyWeaponBattleStatIMG"
+                  class="wpnBattleDisplay"
+                  src="img/weapons/bow.png"
+                />
+              </div>
+              <div class="battleStats">
+                HGT: <span id="1EnemyHeightBattleStat">---</span> cm
+              </div>
+              <div class="battleStats">
+                WGT: <span id="1EnemyWeightBattleStat">---</span> kg
+              </div>
+              <div class="battleStats">
+                SPD: <span id="1EnemySpeedBattleStat">---</span>
+              </div>
+            </div>
+
+            <!-- Enemy Image Column -->
+            <div
+              class="col d-flex flex-column justify-content-center align-items-center character-image-column"
+            >
+              <div class="row">
+                <img
+                  class="headBattleGraphic"
+                  id="1EnemyImgHead"
+                  src="img/heads/01.png"
+                  style="height: 40px; width: 40px"
+                />
+              </div>
+              <div class="row">
+                <img
+                  id="1EnemyImgBody"
+                  src="img/bodies/ectomorph/1.png"
+                  style="height: 130px; width: 40px"
+                />
+              </div>
+            </div>
+
+            <!-- Right Stats Column -->
+            <div
+              class="col d-flex flex-column justify-content-center align-items-center"
+            >
+              <div class="battleStats">
+                STR: <span id="1EnemyStrenghtBattleStat">---</span>
+              </div>
+              <div class="battleStats">
+                DEX: <span id="1EnemyDexterityBattleStat">---</span>
+              </div>
+              <div class="battleStats">
+                CNT: <span id="1EnemyConstitutionBattleStat">---</span>
+              </div>
+              <div class="battleStats">
+                LCK: <span id="1EnemyLuckBattleStat">---</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- COLUMN FOR THE ENEMY -->
+      </div>
+      <!--FIRST LEVEL -->
+    </div>
+    <!-- LEVEL CONTAINER ELEMENTS-->
 
     <!-- Custom JavaScript for functionality -->
     <script src="script.js"></script>
