@@ -99,6 +99,11 @@
   margin-right: 30px;
 }
 
+.battleActionButtonsBTN {
+  background-color: transparent;
+  border: none;
+}
+
 .battleLog {
   margin-top: 50px;
   width: 400px;
@@ -136,4 +141,8 @@
 .character-image-column img {
   display: block; /* Ensure the images are block elements */
   margin: 0; /* Remove any default margins */
+}
+
+.focusText {
+  color: greenyellow;
 }

@@ -97,7 +97,7 @@
 
           <!-- Input fields for gladiator properties -->
           <h3>Name:</h3>
-          <input class="inputs" id="heroName" value="Test" />
+          <input class="inputs" id="heroName" value="Random" />
 
           <h3>Height:</h3>
           <div>
@@ -359,6 +359,9 @@
               class="col d-flex flex-column justify-content-center align-items-center character-image-column"
             >
               <div class="row">
+                <span id="1heroFocus" class="focusText">XXX</span>
+              </div>
+              <div class="row">
                 <img
                   class="headBattleGraphic"
                   id="1heroImgHead"
@@ -401,9 +404,37 @@
           class="col d-flex flex-column justify-content-center align-items-center"
         >
           <div class="row">
-            <div class="col battleActionButtons" id="1AttackButton">ATTACK</div>
-            <div class="col battleActionButtons" id="1DefendButton">DEFEND</div>
-            <div class="col battleActionButtons" id="1FocusButton">FOCUS</div>
+            <h2 id="1textWhossTurn" class="textWhossTurn">XXX's Turn</h2>
+          </div>
+
+          <div class="row">
+            <div class="col battleActionButtons">
+              <button
+                class="battleActionButtonsBTN"
+                id="1AttackButton"
+                onclick="herosActionClick(this)"
+              >
+                ATTACK
+              </button>
+            </div>
+            <div class="col battleActionButtons">
+              <button
+                class="battleActionButtonsBTN"
+                id="1DefendButton"
+                onclick="herosActionClick(this)"
+              >
+                DEFEND
+              </button>
+            </div>
+            <div class="col battleActionButtons">
+              <button
+                class="battleActionButtonsBTN"
+                id="1FocusButton"
+                onclick="herosActionClick(this)"
+              >
+                FOCUS
+              </button>
+            </div>
           </div>
           <div class="row">
             <div
@@ -421,7 +452,9 @@
             <textarea class="battleLog" id="1battleLog" readonly></textarea>
           </div>
           <div class="row" id="1BtnStartBattle">
-            <button style="margin-top: 15px">Find Oponent</button>
+            <button style="margin-top: 15px" onclick="settingBattlefield()">
+              Find Oponent
+            </button>
           </div>
         </div>
         <!-- COLUMN FOR ACTIONS / BATTLE LOG -->
@@ -483,6 +516,9 @@
             <div
               class="col d-flex flex-column justify-content-center align-items-center character-image-column"
             >
+              <div class="row">
+                <span id="1EnemyFocus" class="focusText">XXX</span>
+              </div>
               <div class="row">
                 <img
                   class="headBattleGraphic"

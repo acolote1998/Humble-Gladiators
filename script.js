@@ -27,14 +27,531 @@ var isSpeedGenerated = false; // Tracks if speed has been generated
 var amountRandomiserDiceLeft = 3; // Number of dice available
 var gameStarting = true;
 var username = "";
-var gameScenario = 0; //initializes a variable that indicates in which "level" or "scenario" the user is currently on
+var gameScenario = 1; //initializes a variable that indicates in which "level" or "scenario" the user is currently on
+var WhosTurn = 0; //If 0, it is the Heroes turn, if 1, it is the enemys turn, 3 if it is the turn resolution
+var turnNumber = 1;
+var heroFocused = false;
+var enemyFocused = false;
+var herosAction = "";
+var EnemysAction = "";
+var battleState = ""; // Detects if one of the gladiators dies. Can be "ongoing" or "victory" or "defeat"
 
 // Array to store gladiators
 var gladiators = []; // List of created gladiators
 
+// Array to store random Names
+var randomNames = [
+  "Maximus",
+  "Thrasher",
+  "Valeria",
+  "Gaius",
+  "Brutus the Bold",
+  "Ferox",
+  "Decimus",
+  "Vindex",
+  "Imperator",
+  "Cassius",
+  "Silvanus",
+  "Rex the Ruthless",
+  "Vulcanus",
+  "Dominus",
+  "Severus",
+  "Galba",
+  "Bratenus",
+  "Diminus",
+  "Akinux",
+  "Ezenar",
+  "Josefus",
+  "Pablon",
+  "Rodricus",
+  "Julios",
+  "Misaro",
+  "Miskar",
+  "Angelica the Fierce",
+  "Teresyara",
+  "Yiyon",
+  "Titan",
+  "Magnus",
+  "Merciless",
+  "Claudius",
+  "Furius",
+  "Thorne",
+  "Seraph",
+  "Legion",
+  "Nero",
+  "Aurelia",
+  "Taurus",
+  "Lysander",
+  "Dracon",
+  "Ravager",
+  "Scylla",
+  "Orpheus",
+  "Victor",
+  "Ajax the Mighty",
+  "Viridia",
+  "Typhon",
+  "Octavius",
+  "Valkor",
+  "Cassia",
+  "Cerberus",
+  "Marcus",
+  "Tempest",
+  "Helios",
+  "Corvus",
+  "Gladiatrix",
+  "Vulcan",
+  "Ursus",
+  "Nyx",
+  "Valeria the Vicious",
+  "Crixus",
+  "Leonidas",
+  "Ignis",
+  "Astra",
+  "Spartacus",
+  "Orion",
+  "Brutus",
+  "Juggernaut",
+  "Minerva",
+  "Phalanx",
+  "Magnus the Unyielding",
+  "Valkyrie",
+  "Zeno",
+  "Attila",
+  "Ragnar",
+  "Velox",
+  "Theron",
+  "Nemesis",
+  "Perseus",
+  "Falco",
+  "Fenrir",
+  "Cerelia",
+  "Praetor",
+  "Talon",
+  "Bellator",
+  "Vindictus",
+  "Darius",
+  "Krios",
+  "Draven",
+  "Aurelian",
+  "Lupus",
+  "Sable",
+  "Magnus the Destroyer",
+  "Ravonna",
+  "Gorgon",
+  "Bronn",
+  "Valiant",
+  "Tiberius",
+];
+
 // ---------------------------
 // Functions
 // ---------------------------
+
+//Function that logs in console general information about the battle
+function battleStatus() {
+  if (WhosTurn == 0) {
+    console.log("Whoses turn:", "Hero");
+  }
+  if (WhosTurn == 1) {
+    console.log("Whoses turn:", "Enemy");
+  }
+  if (WhosTurn == 3) {
+    console.log("Whoses turn:", "Turn Resolution");
+  }
+
+  console.log("Enemys Action:", EnemysAction);
+  console.log("Is enemy focused?", gladiators[gameScenario].focused);
+  console.log("Heros Action:", herosAction);
+  console.log("Is Hero focused?", gladiators[0].focused);
+  console.log("Turn number", turnNumber);
+}
+
+async function settingBattlefield() {
+  createRandomGladiator(randomNames[randomiseNumber(0, 99)]); // Creates a Random Gladiator that will be the enemy of the player. Gets a random name from the randomNames array (100 random names)
+  whoStartsCombat(); //Designate Whoses turn it is
+  updateGraphicsBattle(0, gameScenario, "hero"); //Puts up the Heros graphic in the current game scenario
+  updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); //Puts up the Enemie graphic in the current game scenario
+
+  await loadingEffect("transparent", 3000); // Waiting 3 seconds for the battle to start
+
+  if (WhosTurn == 1) {
+    // if it is the Enemys turn, then call it
+    enemysTurn();
+  }
+}
+
+// Function that makes the turns update and eventually resolve into battle
+function turnUpdate() {
+  // If the enemy has taken action already but not the hero, then is is the usersTurn
+  if (EnemysAction != "" && herosAction == "") {
+    return usersTurn();
+  }
+  // If the Hero has taken action already but not the enemy, then it is the enemys turn
+  if (herosAction != "" && EnemysAction == "") {
+    return enemysTurn();
+  }
+
+  if (herosAction != "" && EnemysAction != "") {
+    return turnResolution(); // Calls the function that resolves the turn
+  }
+}
+
+async function turnResolution() {
+  document.getElementById(gameScenario + "textWhossTurn").innerText =
+    "Turn Resolution";
+  WhosTurn = 3;
+  console.log("Time to resolve the actions");
+  await loadingEffect("transparent", 3000); //Takes time to resolve the turn
+  // Function that resolves the turn
+  let actsFirst = 0; // Default to hero acting first
+  let actsNow = 0;
+
+  if (gladiators[0].speed > gladiators[gameScenario].speed) {
+    actsFirst = 0; // Hero acts first
+  } else if (gladiators[0].speed < gladiators[gameScenario].speed) {
+    actsFirst = 1; // Enemy acts first
+  } else if (gladiators[0].speed === gladiators[gameScenario].speed) {
+    // If speeds are the same, check maxHP
+    if (gladiators[0].maxHP < gladiators[gameScenario].maxHP) {
+      actsFirst = 0; // Hero acts first
+    } else {
+      actsFirst = 1; // Enemy acts first
+    }
+  }
+  actsNow = actsFirst; // The character which resolves first, is the person with the highest speed and lowest hp
+
+  if (actsNow == 0) {
+    //If the hero starts attacking
+    // Play animation of Hero attacking
+    if (herosAction == "attack") {
+      console.log("Hero attacks");
+      let damage = gladiators[0].dealDamage();
+      console.log("The intended damage is ", damage);
+      if (EnemysAction == "defend") {
+        if (gladiators[gameScenario].focused == true) {
+          console.log("Enemy resisted the damage");
+          gladiators[gameScenario].focused = false;
+        } else if (gladiators[gameScenario].focused == false) {
+          gladiators[gameScenario].hp =
+            gladiators[gameScenario].hp - damage / 2;
+          console.log("Enemy got reduced damage", damage / 2);
+        }
+      } else {
+        console.log("Enemy got full damage", damage);
+        gladiators[gameScenario].hp = gladiators[gameScenario].hp - damage;
+      }
+    }
+
+    if (gladiators[gameScenario].hp <= 0) {
+      updateGraphicsBattle(0, gameScenario, "hero"); //Updates graphics and hp bars of the hero
+      updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); // Update graphics and hp bars of the enemy
+      //If the enemy has 0 hp or lower
+      return console.log("Victory for the hero");
+    }
+
+    // Play animation of enemy attacking
+
+    // If enemy attacks back
+
+    if (EnemysAction == "attack") {
+      console.log("Enemy attacks");
+      let damage = gladiators[gameScenario].dealDamage();
+      console.log("Intended damage", damage);
+      if (herosAction == "defend") {
+        if (gladiators[0].focused == true) {
+          console.log("Hero resisted the damage");
+          gladiators[0].focused = false;
+        } else if (gladiators[0].focused == false) {
+          gladiators[0].hp = gladiators[0].hp - damage / 2;
+          console.log("Hero got reduced damage", damage / 2);
+        }
+      } else {
+        console.log("Hero got full damage", damage);
+        gladiators[0].hp = gladiators[0].hp - damage;
+      }
+    }
+    if (gladiators[0].hp <= 0) {
+      updateGraphicsBattle(0, gameScenario, "hero"); //Updates graphics and hp bars of the hero
+      updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); // Update graphics and hp bars of the enemy
+      //If the Hero has 0 hp or lower
+      return console.log("Victory for the enemy");
+    }
+  }
+
+  if (actsNow == 1) {
+    //If the Enemy starts attacking
+    // Play animation of Hero attacking
+    if (EnemysAction == "attack") {
+      console.log("Enemy attacks");
+      let damage = gladiators[gameScenario].dealDamage();
+      console.log("The intended damage is ", damage);
+      if (herosAction == "defend") {
+        if (gladiators[0].focused == true) {
+          console.log("Hero resisted the damage");
+          gladiators[0].focused = false;
+        } else if (gladiators[0].focused == false) {
+          gladiators[0].hp = gladiators[0].hp - damage / 2;
+          console.log("Hero got reduced damage", damage / 2);
+        }
+      } else {
+        console.log("Hero got full damage", damage);
+        gladiators[0].hp = gladiators[0].hp - damage;
+      }
+    }
+
+    if (gladiators[0].hp <= 0) {
+      //If the hero has 0 hp or lower
+      return console.log("Victory for the enemy");
+    }
+
+    // Play animation of hero attacking
+
+    // If hero attacks back
+
+    if (herosAction == "attack") {
+      console.log("Hero attacks");
+      let damage = gladiators[0].dealDamage();
+      console.log("Intended damage", damage);
+      if (EnemysAction == "defend") {
+        if (gladiators[gameScenario].focused == true) {
+          console.log("Enemy resisted the damage");
+          gladiators[gameScenario].focused = false;
+        } else if (gladiators[gameScenario].focused == false) {
+          gladiators[gameScenario].hp =
+            gladiators[gameScenario].hp - damage / 2;
+          console.log("Enemy got reduced damage", damage / 2);
+        }
+      } else {
+        console.log("Enemy got full damage", damage);
+        gladiators[gameScenario].hp = gladiators[gameScenario].hp - damage;
+      }
+    }
+    if (gladiators[gameScenario].hp <= 0) {
+      //If the Hero has 0 hp or lower
+      return console.log("Victory for the enemy");
+    }
+  }
+
+  if (herosAction != "attack" && EnemysAction != "attack") {
+    //If none of them are attacking
+
+    //Hero Defending
+    if (herosAction == "defend") {
+      console.log("The hero will heal from his defending position");
+      //if the hero is defending
+      let heal = gladiators[0].healDefending();
+      let focusModifier = 1;
+
+      if (gladiators[0].focused == true) {
+        console.log("The hero will use his focus to heal more");
+        //if the hero is focused, it removes the focus and adds the heal modifier
+        focusModifier = 2;
+        gladiators[0].focused = false;
+      }
+      console.log("The hero will heal", heal * focusModifier);
+      gladiators[0].hp = gladiators[0].hp + heal * focusModifier;
+
+      if (gladiators[0].hp > gladiators[0].maxHP) {
+        // if the hero has max HP, after the heal, then it caps it to the max
+        gladiators[0].hp = gladiators[0].maxHP;
+        console.log("The hero has now Max HP!");
+      }
+      console.log("The hero HP is now ", gladiators[0].hp);
+    }
+    // Hero Focusing
+    if (gladiators[0].focused == "focus") {
+      console.log("The hero is now focused");
+      gladiators[0].focused = true;
+    }
+
+    //Enemy Defending
+    if (EnemysAction == "defend") {
+      console.log("The enemy will heal from his defending position");
+      //if the enemy is defending
+      let heal = gladiators[gameScenario].healDefending();
+      let focusModifier = 1;
+
+      if (gladiators[gameScenario].focused == true) {
+        console.log("The enemy will use his focus to heal more");
+        //if the enemy is focused, it removes the focus and adds the heal modifier
+        focusModifier = 2;
+        gladiators[gameScenario].focused = false;
+      }
+      console.log("The enemy will heal", heal * focusModifier);
+      gladiators[gameScenario].hp =
+        gladiators[gameScenario].hp + heal * focusModifier;
+
+      if (gladiators[gameScenario].hp > gladiators[gameScenario].maxHP) {
+        // if the enemy has max HP, after the heal, then it caps it to the max
+        gladiators[gameScenario].hp = gladiators[gameScenario].maxHP;
+        console.log("The enemy has now Max HP!");
+      }
+      console.log("The enemy HP is now ", gladiators[gameScenario].hp);
+    }
+    // Enemy Focusing
+    if (EnemysAction == "focus") {
+      console.log("The enemy is now focused");
+      gladiators[gameScenario].focused = true;
+    }
+  }
+  EnemysAction = ""; //Resets the Enemys Action
+  herosAction = ""; // Resets the Heros Action
+  turnNumber++; // Adds one more turn
+  updateGraphicsBattle(0, gameScenario, "hero"); //Updates graphics and hp bars of the hero
+  updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); // Update graphics and hp bars of the enemy
+  if (actsFirst == 0) {
+    //If the Hero has higher speed, then it is the hero's turn again
+    usersTurn();
+  } else if (actsFirst == 1) {
+    // If the enemy has higher speed, then it is the enemy's turn again
+    enemysTurn();
+  }
+}
+
+// Function that makes the user able to play their turn
+function usersTurn() {
+  console.log("It is the Heros Turn");
+
+  document.getElementById(
+    String(gameScenario) + "AttackButton"
+  ).disabled = false;
+  document.getElementById(
+    String(gameScenario) + "DefendButton"
+  ).disabled = false;
+  document.getElementById(
+    String(gameScenario) + "FocusButton"
+  ).disabled = false;
+
+  document.getElementById(gameScenario + "textWhossTurn").innerText =
+    "Your turn";
+}
+
+function herosActionClick(target) {
+  //Depending on the action that the user took when clicking the action button, then the action of the heros variable gets updated
+  if (target.innerText.toLowerCase() == "attack") {
+    herosAction = "attack";
+  }
+  if (target.innerText.toLowerCase() == "defend") {
+    herosAction = "defend";
+  }
+  if (target.innerText.toLowerCase() == "focus") {
+    herosAction = "focus";
+    gladiators[0].focused = true;
+  }
+  console.log("Hero action", herosAction);
+  WhosTurn = 1; // Gives the turn to the enemy
+  turnUpdate(); // Calls the turnUpdate function which will at some point settle the turn and go to the next one
+}
+
+// Function that makes the enemy play their turn
+async function enemysTurn() {
+  console.log("It is the Enemys Turn");
+
+  //Disables acting buttons, shows that it is the enemys turn
+  document.getElementById(
+    String(gameScenario) + "AttackButton"
+  ).disabled = true;
+  document.getElementById(
+    String(gameScenario) + "DefendButton"
+  ).disabled = true;
+  document.getElementById(String(gameScenario) + "FocusButton").disabled = true;
+
+  document.getElementById(gameScenario + "textWhossTurn").innerText =
+    "Enemy's turn";
+
+  await loadingEffect("transparent", 3000); // Waiting 3 seconds for the enemy to act
+
+  // If the Hero has 50% or less HP and the Enemy has 50% or more HP, the enemy will only attack
+  if (
+    gladiators[0].hp <= gladiators[0].maxHP / 2 &&
+    gladiators[gameScenario].hp >= gladiators[gameScenario].maxHP / 2
+  ) {
+    return (EnemysAction = "attack");
+  } else {
+    // If the enemy is already focused, it will choose between attack or defend
+    if (gladiators[gameScenario].focused) {
+      let action = randomiseNumber(0, 1); // Randomly choose between attack (1) or defend (0)
+      if (action == 0) {
+        EnemysAction = "defend";
+      } else if (action == 1) {
+        EnemysAction = "attack";
+      }
+    }
+    // If the enemy is not focused, it will choose between attack, defend, or focus
+    else {
+      let action = randomiseNumber(0, 2); // Randomly choose between attack (1), defend (0), or focus (2)
+      if (action == 0) {
+        EnemysAction = "defend";
+      } else if (action == 1) {
+        EnemysAction = "attack";
+      } else if (action == 2) {
+        EnemysAction = "focus";
+        gladiators[gameScenario].focused = true;
+      }
+    }
+  }
+  console.log("Enemys action", EnemysAction);
+  turnUpdate(); // Calls the turnUpdate function which will at some point settle the turn and go to the next one
+  WhosTurn = 0; // Makes the Users Turn
+}
+
+// Function that calculates who starts the combate
+function whoStartsCombat() {
+  // If they have the same Speed and HP, then whoever starts is random
+  if (
+    gladiators[0].speed == gladiators[gameScenario].speed &&
+    gladiators[0].hp == gladiators[gameScenario].hp
+  ) {
+    WhosTurn = randomiseNumber(0, 1);
+  } else {
+    // Check if the hero's speed is greater than the enemy's speed
+    if (gladiators[0].speed > gladiators[gameScenario].speed) {
+      WhosTurn = 0; // Hero's turn
+    }
+    // Check if the hero and enemy have the same speed but different HP
+    else if (gladiators[0].speed == gladiators[gameScenario].speed) {
+      // If hero's health is greater, it's the enemy's turn
+      if (gladiators[0].hp > gladiators[gameScenario].hp) {
+        WhosTurn = 1;
+      } else {
+        WhosTurn = 0; // Otherwise, hero's turn
+      }
+    }
+    // If the hero's speed is less, it's the enemy's turn
+    else {
+      WhosTurn = 1;
+    }
+  }
+
+  if (WhosTurn == 0) {
+    //If the hero starts combat, his turn actions are enabled, otherwise disabled
+    document.getElementById(
+      String(gameScenario) + "AttackButton"
+    ).disabled = false;
+    document.getElementById(
+      String(gameScenario) + "DefendButton"
+    ).disabled = false;
+    document.getElementById(
+      String(gameScenario) + "FocusButton"
+    ).disabled = false;
+
+    document.getElementById(gameScenario + "textWhossTurn").innerText =
+      "Your turn";
+  } else if (WhosTurn == 1) {
+    document.getElementById(
+      String(gameScenario) + "AttackButton"
+    ).disabled = true;
+    document.getElementById(
+      String(gameScenario) + "DefendButton"
+    ).disabled = true;
+    document.getElementById(
+      String(gameScenario) + "FocusButton"
+    ).disabled = true;
+
+    document.getElementById(gameScenario + "textWhossTurn").innerText =
+      "Enemy's turn";
+  }
+}
 
 //Adds delay in MS
 function addingDelay(ms) {
@@ -196,12 +713,19 @@ function createRandomGladiator(name) {
     calculateGladiatorsSpeed(somatotype),
     username
   );
-  console.log(newGladiator);
   gladiators.push(newGladiator);
 }
 
 //Update Graphic Content in the Battle Scene
 function updateGraphicsBattle(gladiatorIndex, currentlevel, heroorEnemy) {
+  if (gladiators[gladiatorIndex].focused == false) {
+    document.getElementById(currentlevel + heroorEnemy + "Focus").innerText =
+      "";
+  } else {
+    document.getElementById(currentlevel + heroorEnemy + "Focus").innerText =
+      "Focused";
+  }
+
   document.getElementById(
     String(currentlevel) + String(heroorEnemy) + "Level"
   ).innerHTML = gladiators[gladiatorIndex].level; //Updates the Level in HTML for the provided gladiator
@@ -209,8 +733,6 @@ function updateGraphicsBattle(gladiatorIndex, currentlevel, heroorEnemy) {
   document.getElementById(
     String(currentlevel) + String(heroorEnemy) + "Name"
   ).innerHTML = gladiators[gladiatorIndex].name; //Updates the Name in HTML for the provided gladiator
-  console.log(String(currentlevel) + "HPBar" + String(heroorEnemy));
-  console.log(String(currentlevel) + "HPBar" + String(heroorEnemy).value);
   document.getElementById(
     String(currentlevel) + "HPBar" + String(heroorEnemy)
   ).value =
@@ -322,6 +844,9 @@ async function forgeHeroGladiator() {
 
     // Retrieve values from input fields
     let gladiatorsName = document.getElementById("heroName").value;
+    if (gladiatorsName == "Random") {
+      gladiatorsName = randomNames[randomiseNumber(0, 99)]; //If the user left the Name input as "Random", it will pick a random name from the array
+    }
     let gladiatorsHeight = document.getElementById("heroHeight").value;
     let gladiatorsWeight = document.getElementById("heroWeight").value;
     let gladiatorsSomatotype = document.getElementById("heroSomatotype").value;
@@ -413,11 +938,9 @@ function validatingRandomisingDice() {
   // Check if there are any dice left to use
   if (amountRandomiserDiceLeft >= 1) {
     amountRandomiserDiceLeft -= 1; // Decrement the number of dice left
-    // console.log("One die consumed");
-    // console.log("Dice left: " + amountRandomiserDiceLeft);
+
     result = true;
   } else {
-    // console.log("Out of dice");
     result = false;
   }
   // Update the UI based on the remaining dice
@@ -693,6 +1216,7 @@ class Gladiator {
     this.luck = Number(luck); // Luck of the gladiator
     this.speed = Number(speed); // Speed of the gladiator
     this.username = String(username); // Username of who is using the gladiator
+    this.focused = false; //Initialize the gladiators focus as false
 
     // Calculate and assign attributes based on methods
     this.id = this.generateGladiatorID(); // Unique Gladiator ID
@@ -707,6 +1231,29 @@ class Gladiator {
     this.maxHP = this.calculateMaxHP(); // Max HP, initially same as the HP
     this.strength = this.calculateStrength(); // Strength
     this.dexterity = this.calculateDexterity(); // Dexterity
+  }
+
+  //Healing due to defending function
+  healDefending() {
+    let heal = this.constitution * gameScenario;
+    return heal;
+  }
+
+  //Damage Dealing Function
+  dealDamage() {
+    let modifier = 0; //variable that modifies the final damage depending on the equiped weapon
+    let weaponDmg = 0; // depending on the weapon, is the calculated damage
+    let finalDmg = 0; // variable that will be returned by this method, returning the final dmg to be dealt
+    if (this.weapon.toLowerCase() == "sword") {
+      modifier = this.strength;
+      weaponDmg = randomiseNumber(10, 15);
+    }
+    if (this.weapon.toLowerCase() == "bow") {
+      modifier = this.dexterity;
+      weaponDmg = randomiseNumber(10, 15);
+    }
+
+    return (finalDmg = modifier + weaponDmg);
   }
 
   //Calculate Gladiator id
