@@ -167,6 +167,7 @@ function battleStatus() {
 }
 
 async function settingBattlefield() {
+  document.getElementById(gameScenario + "BtnStartBattle").outerHTML = ""; //Removes the "Find Oponent" button from the battle scene
   createRandomGladiator(randomNames[randomiseNumber(0, 99)]); // Creates a Random Gladiator that will be the enemy of the player. Gets a random name from the randomNames array (100 random names)
   whoStartsCombat(); //Designate Whoses turn it is
   updateGraphicsBattle(0, gameScenario, "hero"); //Puts up the Heros graphic in the current game scenario
@@ -201,6 +202,37 @@ async function turnResolution() {
     "Turn Resolution";
   WhosTurn = 3;
   console.log("Time to resolve the actions");
+
+  //Sets the action icon to blank for a moment
+  document.getElementById(gameScenario + "heroActionIcon").src = "";
+  document.getElementById(gameScenario + "EnemyActionIcon").src = "";
+
+  await loadingEffect("transparent", 1600); //Adds a little wait
+
+  //Sets the correct icon based on the action the enemy took
+  if (herosAction == "attack") {
+    document.getElementById(gameScenario + "heroActionIcon").src =
+      "img/icons/iconAttack.png";
+  } else if (herosAction == "defend") {
+    document.getElementById(gameScenario + "heroActionIcon").src =
+      "img/icons/iconDefend.png";
+  } else if (herosAction == "focus") {
+    document.getElementById(gameScenario + "heroActionIcon").src =
+      "img/icons/iconFocus.png";
+  }
+
+  //Sets the correct icon based on the action the enemy took
+  if (EnemysAction == "attack") {
+    document.getElementById(gameScenario + "EnemyActionIcon").src =
+      "img/icons/iconAttack.png";
+  } else if (EnemysAction == "defend") {
+    document.getElementById(gameScenario + "EnemyActionIcon").src =
+      "img/icons/iconDefend.png";
+  } else if (EnemysAction == "focus") {
+    document.getElementById(gameScenario + "EnemyActionIcon").src =
+      "img/icons/iconFocus.png";
+  }
+
   await loadingEffect("transparent", 3000); //Takes time to resolve the turn
   // Function that resolves the turn
   let actsFirst = 0; // Default to hero acting first
@@ -399,6 +431,9 @@ async function turnResolution() {
   turnNumber++; // Adds one more turn
   updateGraphicsBattle(0, gameScenario, "hero"); //Updates graphics and hp bars of the hero
   updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); // Update graphics and hp bars of the enemy
+
+  await loadingEffect("transparent", 1300); //Adds a little wait
+
   if (actsFirst == 0) {
     //If the Hero has higher speed, then it is the hero's turn again
     usersTurn();
@@ -426,19 +461,28 @@ function usersTurn() {
     "Your turn";
 }
 
-function herosActionClick(target) {
+async function herosActionClick(target) {
   //Depending on the action that the user took when clicking the action button, then the action of the heros variable gets updated
   if (target.innerText.toLowerCase() == "attack") {
     herosAction = "attack";
+    document.getElementById(gameScenario + "heroActionIcon").src =
+      "img/icons/iconAttack.png"; //Sets the users action icon
   }
   if (target.innerText.toLowerCase() == "defend") {
     herosAction = "defend";
+    document.getElementById(gameScenario + "heroActionIcon").src =
+      "img/icons/iconDefend.png"; //Sets the users action icon
   }
   if (target.innerText.toLowerCase() == "focus") {
     herosAction = "focus";
     gladiators[0].focused = true;
+    document.getElementById(gameScenario + "heroActionIcon").src =
+      "img/icons/iconFocus.png"; //Sets the users action icon
   }
   console.log("Hero action", herosAction);
+
+  await loadingEffect("transparent", 1600); //Adds a little wait
+
   WhosTurn = 1; // Gives the turn to the enemy
   turnUpdate(); // Calls the turnUpdate function which will at some point settle the turn and go to the next one
 }
@@ -446,6 +490,12 @@ function herosActionClick(target) {
 // Function that makes the enemy play their turn
 async function enemysTurn() {
   console.log("It is the Enemys Turn");
+
+  await loadingEffect("transparent", 1000); //Adds a little wait
+
+  //It gives the enemy the "thinking" icon
+  document.getElementById(gameScenario + "EnemyActionIcon").src =
+    "img/icons/iconThinking.png";
 
   //Disables acting buttons, shows that it is the enemys turn
   document.getElementById(
@@ -490,7 +540,15 @@ async function enemysTurn() {
       }
     }
   }
+
+  //After the enemy has decided its action, then we update the action taken icon
+  document.getElementById(gameScenario + "EnemyActionIcon").src =
+    "img/icons/iconActionTaken.png";
+
   console.log("Enemys action", EnemysAction);
+
+  await loadingEffect("transparent", 2000); //Waits a bit giving the user the chance to see that the enemy took his action
+
   turnUpdate(); // Calls the turnUpdate function which will at some point settle the turn and go to the next one
   WhosTurn = 0; // Makes the Users Turn
 }
@@ -547,6 +605,9 @@ function whoStartsCombat() {
     document.getElementById(
       String(gameScenario) + "FocusButton"
     ).disabled = true;
+
+    document.getElementById(gameScenario + "EnemyActionIcon").src =
+      "img/icons/iconThinking.png"; //Sets the action icon
 
     document.getElementById(gameScenario + "textWhossTurn").innerText =
       "Enemy's turn";
@@ -718,6 +779,9 @@ function createRandomGladiator(name) {
 
 //Update Graphic Content in the Battle Scene
 function updateGraphicsBattle(gladiatorIndex, currentlevel, heroorEnemy) {
+  //It moves the action icons to blank
+  document.getElementById(gameScenario + heroorEnemy + "ActionIcon").src = "";
+
   if (gladiators[gladiatorIndex].focused == false) {
     document.getElementById(currentlevel + heroorEnemy + "Focus").innerText =
       "";
@@ -728,7 +792,7 @@ function updateGraphicsBattle(gladiatorIndex, currentlevel, heroorEnemy) {
 
   document.getElementById(
     String(currentlevel) + String(heroorEnemy) + "Level"
-  ).innerHTML = gladiators[gladiatorIndex].level; //Updates the Level in HTML for the provided gladiator
+  ).innerText = "LVL " + String(gladiators[gladiatorIndex].level); //Updates the Level in HTML for the provided gladiator
 
   document.getElementById(
     String(currentlevel) + String(heroorEnemy) + "Name"
