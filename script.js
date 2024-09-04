@@ -175,6 +175,8 @@ async function settingBattlefield() {
 
   await loadingEffect("transparent", 3000); // Waiting 3 seconds for the battle to start
 
+  battleState = "ongoing";
+
   if (WhosTurn == 1) {
     // if it is the Enemys turn, then call it
     enemysTurn();
@@ -198,248 +200,415 @@ function turnUpdate() {
 }
 
 async function turnResolution() {
-  document.getElementById(gameScenario + "textWhossTurn").innerText =
-    "Turn Resolution";
-  WhosTurn = 3;
-  console.log("Time to resolve the actions");
+  if (battleState == "ongoing") {
+    document.getElementById(gameScenario + "textWhossTurn").innerText =
+      "Turn Resolution";
+    WhosTurn = 3;
+    console.log("Time to resolve the actions");
 
-  //Sets the action icon to blank for a moment
-  document.getElementById(gameScenario + "heroActionIcon").src = "";
-  document.getElementById(gameScenario + "EnemyActionIcon").src = "";
+    //Sets the action icon to blank for a moment
+    document.getElementById(gameScenario + "heroActionIcon").src = "";
+    document.getElementById(gameScenario + "EnemyActionIcon").src = "";
 
-  await loadingEffect("transparent", 1600); //Adds a little wait
+    await loadingEffect("transparent", 1600); //Adds a little wait
 
-  //Sets the correct icon based on the action the enemy took
-  if (herosAction == "attack") {
-    document.getElementById(gameScenario + "heroActionIcon").src =
-      "img/icons/iconAttack.png";
-  } else if (herosAction == "defend") {
-    document.getElementById(gameScenario + "heroActionIcon").src =
-      "img/icons/iconDefend.png";
-  } else if (herosAction == "focus") {
-    document.getElementById(gameScenario + "heroActionIcon").src =
-      "img/icons/iconFocus.png";
-  }
+    //Sets the correct icon based on the action the enemy took
+    if (herosAction == "attack") {
+      document.getElementById(gameScenario + "heroActionIcon").src =
+        "img/icons/iconAttack.png";
+    } else if (herosAction == "defend") {
+      document.getElementById(gameScenario + "heroActionIcon").src =
+        "img/icons/iconDefend.png";
+    } else if (herosAction == "focus") {
+      document.getElementById(gameScenario + "heroActionIcon").src =
+        "img/icons/iconFocus.png";
+    }
 
-  //Sets the correct icon based on the action the enemy took
-  if (EnemysAction == "attack") {
-    document.getElementById(gameScenario + "EnemyActionIcon").src =
-      "img/icons/iconAttack.png";
-  } else if (EnemysAction == "defend") {
-    document.getElementById(gameScenario + "EnemyActionIcon").src =
-      "img/icons/iconDefend.png";
-  } else if (EnemysAction == "focus") {
-    document.getElementById(gameScenario + "EnemyActionIcon").src =
-      "img/icons/iconFocus.png";
-  }
+    //Sets the correct icon based on the action the enemy took
+    if (EnemysAction == "attack") {
+      document.getElementById(gameScenario + "EnemyActionIcon").src =
+        "img/icons/iconAttack.png";
+    } else if (EnemysAction == "defend") {
+      document.getElementById(gameScenario + "EnemyActionIcon").src =
+        "img/icons/iconDefend.png";
+    } else if (EnemysAction == "focus") {
+      document.getElementById(gameScenario + "EnemyActionIcon").src =
+        "img/icons/iconFocus.png";
+    }
 
-  await loadingEffect("transparent", 3000); //Takes time to resolve the turn
-  // Function that resolves the turn
-  let actsFirst = 0; // Default to hero acting first
-  let actsNow = 0;
+    await loadingEffect("transparent", 3000); //Takes time to resolve the turn
+    // Function that resolves the turn
+    var actsFirst = 0; // Default to hero acting first
+    var actsNow = 0;
 
-  if (gladiators[0].speed > gladiators[gameScenario].speed) {
-    actsFirst = 0; // Hero acts first
-  } else if (gladiators[0].speed < gladiators[gameScenario].speed) {
-    actsFirst = 1; // Enemy acts first
-  } else if (gladiators[0].speed === gladiators[gameScenario].speed) {
-    // If speeds are the same, check maxHP
-    if (gladiators[0].maxHP < gladiators[gameScenario].maxHP) {
+    if (gladiators[0].speed > gladiators[gameScenario].speed) {
       actsFirst = 0; // Hero acts first
-    } else {
+    } else if (gladiators[0].speed < gladiators[gameScenario].speed) {
       actsFirst = 1; // Enemy acts first
-    }
-  }
-  actsNow = actsFirst; // The character which resolves first, is the person with the highest speed and lowest hp
-
-  if (actsNow == 0) {
-    //If the hero starts attacking
-    // Play animation of Hero attacking
-    if (herosAction == "attack") {
-      console.log("Hero attacks");
-      let damage = gladiators[0].dealDamage();
-      console.log("The intended damage is ", damage);
-      if (EnemysAction == "defend") {
-        if (gladiators[gameScenario].focused == true) {
-          console.log("Enemy resisted the damage");
-          gladiators[gameScenario].focused = false;
-        } else if (gladiators[gameScenario].focused == false) {
-          gladiators[gameScenario].hp =
-            gladiators[gameScenario].hp - damage / 2;
-          console.log("Enemy got reduced damage", damage / 2);
-        }
+    } else if (gladiators[0].speed === gladiators[gameScenario].speed) {
+      // If speeds are the same, check maxHP
+      if (gladiators[0].maxHP < gladiators[gameScenario].maxHP) {
+        actsFirst = 0; // Hero acts first
       } else {
-        console.log("Enemy got full damage", damage);
-        gladiators[gameScenario].hp = gladiators[gameScenario].hp - damage;
+        actsFirst = 1; // Enemy acts first
+      }
+    }
+    actsNow = actsFirst; // The character which resolves first, is the person with the highest speed and lowest hp
+
+    if (actsNow == 0) {
+      //If the hero starts attacking
+      // Play animation of Hero attacking
+      if (herosAction == "attack") {
+        console.log("Hero attacks");
+        let damage = gladiators[0].dealDamage();
+        let isCritical = gladiators[0].critic;
+        console.log("The intended damage is ", damage);
+
+        if (EnemysAction == "defend") {
+          if (gladiators[gameScenario].focused) {
+            // Enemy is focused and defending
+            if (isCritical) {
+              // Critical hit on focused and defending enemy
+              gladiators[gameScenario].hp -= damage / 2;
+              console.log(
+                "Enemy was defending and focused, but the hero hit a critical blow. Enemy takes reduced damage:",
+                damage / 2
+              );
+              gladiators[0].focused = false; // Removes the attackers focused state
+            } else {
+              // Normal hit on focused and defending enemy
+              console.log(
+                "Enemy was defending and focused, and resisted the attack. No damage taken."
+              );
+            }
+            gladiators[gameScenario].focused = false; // Lose focus after resisting
+          } else {
+            // Enemy is not focused but defending
+            if (isCritical) {
+              // Critical hit on defending but not focused enemy
+              gladiators[gameScenario].hp -= damage;
+              console.log(
+                "Enemy was defending, but the hero hit a critical blow. Enemy takes full damage:",
+                damage
+              );
+              gladiators[0].focused = false; // Removes the attackers focused state
+            } else {
+              // Normal hit on defending but not focused enemy
+              gladiators[gameScenario].hp -= damage / 2;
+              console.log(
+                "Enemy was defending but not focused. Enemy takes reduced damage:",
+                damage / 2
+              );
+            }
+          }
+        } else {
+          // Enemy is not defending
+          if (isCritical) {
+            console.log(
+              "Hero is hitting a critical blow. Enemy takes full damage:",
+              damage
+            );
+            gladiators[0].focused = false; // Removes the attackers focused state
+          } else {
+            console.log("Enemy takes full damage:", damage);
+          }
+          gladiators[gameScenario].hp -= damage;
+        }
+        gladiators[0].critic = false; // Reset the critical state after the hit
+      }
+
+      // Play animation of enemy attacking
+
+      // If enemy attacks back
+      if (EnemysAction == "attack") {
+        console.log("Enemy attacks");
+        let damage = gladiators[gameScenario].dealDamage();
+        let isCritical = gladiators[gameScenario].critic;
+        console.log("Intended damage", damage);
+
+        if (herosAction == "defend") {
+          if (gladiators[0].focused) {
+            // Hero is focused and defending
+            if (isCritical) {
+              // Critical hit on focused and defending hero
+              gladiators[0].hp -= damage / 2;
+              console.log(
+                "Hero is defending and focused, but the enemy hit a critical blow. Hero takes reduced damage:",
+                damage / 2
+              );
+              gladiators[gameScenario].focused = false; // Removes the attackers focused state
+            } else {
+              // Normal hit on focused and defending hero
+              console.log(
+                "Hero is defending and focused, and resisted the attack. No damage taken."
+              );
+            }
+            gladiators[0].focused = false; // Hero loses focus after resisting the attack
+          } else {
+            // Hero is defending but not focused
+            if (isCritical) {
+              // Critical hit on defending but not focused hero
+              gladiators[0].hp -= damage;
+              console.log(
+                "Hero is defending, but the enemy hit a critical blow. Hero takes full damage:",
+                damage
+              );
+              gladiators[gameScenario].focused = false; // Removes the attackers focused state
+            } else {
+              // Normal hit on defending but not focused hero
+              gladiators[0].hp -= damage / 2;
+              console.log(
+                "Hero is defending but not focused. Hero takes reduced damage:",
+                damage / 2
+              );
+            }
+          }
+        } else {
+          // Hero is not defending
+          if (isCritical) {
+            console.log(
+              "Enemy is hitting a critical blow. Hero takes full damage:",
+              damage
+            );
+            gladiators[gameScenario].focused = false; // Removes the attackers focused state
+          } else {
+            console.log("Hero takes full damage:", damage);
+          }
+          gladiators[0].hp -= damage;
+        }
+        gladiators[gameScenario].critic = false; // Reset the critical state after the hit
       }
     }
 
-    if (gladiators[gameScenario].hp <= 0) {
-      updateGraphicsBattle(0, gameScenario, "hero"); //Updates graphics and hp bars of the hero
-      updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); // Update graphics and hp bars of the enemy
-      //If the enemy has 0 hp or lower
-      return console.log("Victory for the hero");
+    if (actsNow == 1) {
+      //If the Enemy starts attacking
+
+      if (EnemysAction == "attack") {
+        console.log("Enemy attacks");
+        let damage = gladiators[gameScenario].dealDamage();
+        let isCritical = gladiators[gameScenario].critic;
+        console.log("Intended damage", damage);
+
+        if (herosAction == "defend") {
+          if (gladiators[0].focused) {
+            // Hero is focused and defending
+            if (isCritical) {
+              // Critical hit on focused and defending hero
+              gladiators[0].hp -= damage / 2;
+              console.log(
+                "Hero is defending and focused, but the enemy hit a critical blow. Hero takes reduced damage:",
+                damage / 2
+              );
+              gladiators[gameScenario].focused = false; // Removes the attackers focused state
+            } else {
+              // Normal hit on focused and defending hero
+              console.log(
+                "Hero is defending and focused, and resisted the attack. No damage taken."
+              );
+            }
+            gladiators[0].focused = false; // Hero loses focus after resisting the attack
+          } else {
+            // Hero is defending but not focused
+            if (isCritical) {
+              // Critical hit on defending but not focused hero
+              gladiators[0].hp -= damage;
+              console.log(
+                "Hero is defending, but the enemy hit a critical blow. Hero takes full damage:",
+                damage
+              );
+              gladiators[gameScenario].focused = false; // Removes the attackers focused state
+            } else {
+              // Normal hit on defending but not focused hero
+              gladiators[0].hp -= damage / 2;
+              console.log(
+                "Hero is defending but not focused. Hero takes reduced damage:",
+                damage / 2
+              );
+            }
+          }
+        } else {
+          // Hero is not defending
+          if (isCritical) {
+            console.log(
+              "Enemy is hitting a critical blow. Hero takes full damage:",
+              damage
+            );
+            gladiators[gameScenario].focused = false; // Removes the attackers focused state
+          } else {
+            console.log("Hero takes full damage:", damage);
+          }
+          gladiators[0].hp -= damage;
+        }
+        gladiators[gameScenario].critic = false; // Reset the critical state after the hit
+      }
+
+      // Play animation of hero attacking
+
+      // If hero attacks back
+
+      if (herosAction == "attack") {
+        console.log("Hero attacks");
+        let damage = gladiators[0].dealDamage();
+        let isCritical = gladiators[0].critic;
+        console.log("The intended damage is ", damage);
+
+        if (EnemysAction == "defend") {
+          if (gladiators[gameScenario].focused) {
+            // Enemy is focused and defending
+            if (isCritical) {
+              // Critical hit on focused and defending enemy
+              gladiators[gameScenario].hp -= damage / 2;
+              console.log(
+                "Enemy was defending and focused, but the hero hit a critical blow. Enemy takes reduced damage:",
+                damage / 2
+              );
+              gladiators[gameScenario].focused = false; // Removes the attackers focused state
+            } else {
+              // Normal hit on focused and defending enemy
+              console.log(
+                "Enemy was defending and focused, and resisted the attack. No damage taken."
+              );
+            }
+            gladiators[gameScenario].focused = false; // Lose focus after resisting
+          } else {
+            // Enemy is not focused but defending
+            if (isCritical) {
+              // Critical hit on defending but not focused enemy
+              gladiators[gameScenario].hp -= damage;
+              console.log(
+                "Enemy was defending, but the hero hit a critical blow. Enemy takes full damage:",
+                damage
+              );
+              gladiators[gameScenario].focused = false; // Removes the attackers focused state
+            } else {
+              // Normal hit on defending but not focused enemy
+              gladiators[gameScenario].hp -= damage / 2;
+              console.log(
+                "Enemy was defending but not focused. Enemy takes reduced damage:",
+                damage / 2
+              );
+            }
+          }
+        } else {
+          // Enemy is not defending
+          if (isCritical) {
+            console.log(
+              "Hero is hitting a critical blow. Enemy takes full damage:",
+              damage
+            );
+            gladiators[gameScenario].focused = false; // Removes the attackers focused state
+          } else {
+            console.log("Enemy takes full damage:", damage);
+          }
+          gladiators[gameScenario].hp -= damage;
+        }
+        gladiators[0].critic = false; // Reset the critical state after the hit
+      }
     }
 
-    // Play animation of enemy attacking
+    if (herosAction != "attack" && EnemysAction != "attack") {
+      //If none of them are attacking
 
-    // If enemy attacks back
-
-    if (EnemysAction == "attack") {
-      console.log("Enemy attacks");
-      let damage = gladiators[gameScenario].dealDamage();
-      console.log("Intended damage", damage);
+      //Hero Defending
       if (herosAction == "defend") {
+        console.log("The hero will heal from his defending position");
+        //if the hero is defending
+        let heal = gladiators[0].healDefending();
+        let focusModifier = 1;
+
         if (gladiators[0].focused == true) {
-          console.log("Hero resisted the damage");
+          console.log("The hero will use his focus to heal more");
+          //if the hero is focused, it removes the focus and adds the heal modifier
+          focusModifier = 2;
           gladiators[0].focused = false;
-        } else if (gladiators[0].focused == false) {
-          gladiators[0].hp = gladiators[0].hp - damage / 2;
-          console.log("Hero got reduced damage", damage / 2);
         }
-      } else {
-        console.log("Hero got full damage", damage);
-        gladiators[0].hp = gladiators[0].hp - damage;
-      }
-    }
-    if (gladiators[0].hp <= 0) {
-      updateGraphicsBattle(0, gameScenario, "hero"); //Updates graphics and hp bars of the hero
-      updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); // Update graphics and hp bars of the enemy
-      //If the Hero has 0 hp or lower
-      return console.log("Victory for the enemy");
-    }
-  }
+        console.log("The hero will heal", heal * focusModifier);
+        gladiators[0].hp = gladiators[0].hp + heal * focusModifier;
 
-  if (actsNow == 1) {
-    //If the Enemy starts attacking
-    // Play animation of Hero attacking
-    if (EnemysAction == "attack") {
-      console.log("Enemy attacks");
-      let damage = gladiators[gameScenario].dealDamage();
-      console.log("The intended damage is ", damage);
-      if (herosAction == "defend") {
-        if (gladiators[0].focused == true) {
-          console.log("Hero resisted the damage");
-          gladiators[0].focused = false;
-        } else if (gladiators[0].focused == false) {
-          gladiators[0].hp = gladiators[0].hp - damage / 2;
-          console.log("Hero got reduced damage", damage / 2);
+        if (gladiators[0].hp > gladiators[0].maxHP) {
+          // if the hero has max HP, after the heal, then it caps it to the max
+          gladiators[0].hp = gladiators[0].maxHP;
+          console.log("The hero has now Max HP!");
         }
-      } else {
-        console.log("Hero got full damage", damage);
-        gladiators[0].hp = gladiators[0].hp - damage;
+        console.log("The hero HP is now ", gladiators[0].hp);
       }
-    }
+      // Hero Focusing
+      if (gladiators[0].focused == "focus") {
+        console.log("The hero is now focused");
+        gladiators[0].focused = true;
+      }
 
-    if (gladiators[0].hp <= 0) {
-      //If the hero has 0 hp or lower
-      return console.log("Victory for the enemy");
-    }
-
-    // Play animation of hero attacking
-
-    // If hero attacks back
-
-    if (herosAction == "attack") {
-      console.log("Hero attacks");
-      let damage = gladiators[0].dealDamage();
-      console.log("Intended damage", damage);
+      //Enemy Defending
       if (EnemysAction == "defend") {
+        console.log("The enemy will heal from his defending position");
+        //if the enemy is defending
+        let heal = gladiators[gameScenario].healDefending();
+        let focusModifier = 1;
+
         if (gladiators[gameScenario].focused == true) {
-          console.log("Enemy resisted the damage");
+          console.log("The enemy will use his focus to heal more");
+          //if the enemy is focused, it removes the focus and adds the heal modifier
+          focusModifier = 2;
           gladiators[gameScenario].focused = false;
-        } else if (gladiators[gameScenario].focused == false) {
-          gladiators[gameScenario].hp =
-            gladiators[gameScenario].hp - damage / 2;
-          console.log("Enemy got reduced damage", damage / 2);
         }
-      } else {
-        console.log("Enemy got full damage", damage);
-        gladiators[gameScenario].hp = gladiators[gameScenario].hp - damage;
+        console.log("The enemy will heal", heal * focusModifier);
+        gladiators[gameScenario].hp =
+          gladiators[gameScenario].hp + heal * focusModifier;
+
+        if (gladiators[gameScenario].hp > gladiators[gameScenario].maxHP) {
+          // if the enemy has max HP, after the heal, then it caps it to the max
+          gladiators[gameScenario].hp = gladiators[gameScenario].maxHP;
+          console.log("The enemy has now Max HP!");
+        }
+        console.log("The enemy HP is now ", gladiators[gameScenario].hp);
+      }
+      // Enemy Focusing
+      if (EnemysAction == "focus") {
+        console.log("The enemy is now focused");
+        gladiators[gameScenario].focused = true;
       }
     }
-    if (gladiators[gameScenario].hp <= 0) {
-      //If the Hero has 0 hp or lower
-      return console.log("Victory for the enemy");
+
+    EnemysAction = ""; //Resets the Enemys Action
+    herosAction = ""; // Resets the Heros Action
+    turnNumber++; // Adds one more turn
+    updateGraphicsBattle(0, gameScenario, "hero"); //Updates graphics and hp bars of the hero
+    updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); // Update graphics and hp bars of the enemy
+
+    await loadingEffect("transparent", 1300); //Adds a little wait
+    checkBattleState();
+    if (battleState == "ongoing") {
+      if (actsFirst == 0) {
+        //If the Hero has higher speed, then it is the hero's turn again
+        usersTurn();
+      } else if (actsFirst == 1) {
+        // If the enemy has higher speed, then it is the enemy's turn again
+        enemysTurn();
+      }
     }
   }
+}
 
-  if (herosAction != "attack" && EnemysAction != "attack") {
-    //If none of them are attacking
-
-    //Hero Defending
-    if (herosAction == "defend") {
-      console.log("The hero will heal from his defending position");
-      //if the hero is defending
-      let heal = gladiators[0].healDefending();
-      let focusModifier = 1;
-
-      if (gladiators[0].focused == true) {
-        console.log("The hero will use his focus to heal more");
-        //if the hero is focused, it removes the focus and adds the heal modifier
-        focusModifier = 2;
-        gladiators[0].focused = false;
-      }
-      console.log("The hero will heal", heal * focusModifier);
-      gladiators[0].hp = gladiators[0].hp + heal * focusModifier;
-
-      if (gladiators[0].hp > gladiators[0].maxHP) {
-        // if the hero has max HP, after the heal, then it caps it to the max
-        gladiators[0].hp = gladiators[0].maxHP;
-        console.log("The hero has now Max HP!");
-      }
-      console.log("The hero HP is now ", gladiators[0].hp);
+function checkBattleState() {
+  if (gladiators[0].hp <= 0 && gladiators[gameScenario].hp <= 0) {
+    if (gladiators[0].speed >= gladiators[gameScenario].speed) {
+      console.log("Victory for the hero");
+      battleState = "victory";
+    } else {
+      console.log("Victory for the enemy");
+      battleState = "defeat";
     }
-    // Hero Focusing
-    if (gladiators[0].focused == "focus") {
-      console.log("The hero is now focused");
-      gladiators[0].focused = true;
-    }
-
-    //Enemy Defending
-    if (EnemysAction == "defend") {
-      console.log("The enemy will heal from his defending position");
-      //if the enemy is defending
-      let heal = gladiators[gameScenario].healDefending();
-      let focusModifier = 1;
-
-      if (gladiators[gameScenario].focused == true) {
-        console.log("The enemy will use his focus to heal more");
-        //if the enemy is focused, it removes the focus and adds the heal modifier
-        focusModifier = 2;
-        gladiators[gameScenario].focused = false;
-      }
-      console.log("The enemy will heal", heal * focusModifier);
-      gladiators[gameScenario].hp =
-        gladiators[gameScenario].hp + heal * focusModifier;
-
-      if (gladiators[gameScenario].hp > gladiators[gameScenario].maxHP) {
-        // if the enemy has max HP, after the heal, then it caps it to the max
-        gladiators[gameScenario].hp = gladiators[gameScenario].maxHP;
-        console.log("The enemy has now Max HP!");
-      }
-      console.log("The enemy HP is now ", gladiators[gameScenario].hp);
-    }
-    // Enemy Focusing
-    if (EnemysAction == "focus") {
-      console.log("The enemy is now focused");
-      gladiators[gameScenario].focused = true;
+  } else {
+    if (gladiators[0].hp <= 0) {
+      console.log("Victory for the enemy");
+      battleState = "defeat";
+    } else if (gladiators[gameScenario].hp <= 0) {
+      console.log("Victory for the hero");
+      battleState = "victory";
     }
   }
-  EnemysAction = ""; //Resets the Enemys Action
-  herosAction = ""; // Resets the Heros Action
-  turnNumber++; // Adds one more turn
-  updateGraphicsBattle(0, gameScenario, "hero"); //Updates graphics and hp bars of the hero
-  updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); // Update graphics and hp bars of the enemy
-
-  await loadingEffect("transparent", 1300); //Adds a little wait
-
-  if (actsFirst == 0) {
-    //If the Hero has higher speed, then it is the hero's turn again
-    usersTurn();
-  } else if (actsFirst == 1) {
-    // If the enemy has higher speed, then it is the enemy's turn again
-    enemysTurn();
+  if (gladiators[0].hp >= 1 && gladiators[gameScenario].hp >= 1) {
+    battleState = "ongoing";
   }
 }
 
@@ -487,17 +656,16 @@ async function herosActionClick(target) {
   turnUpdate(); // Calls the turnUpdate function which will at some point settle the turn and go to the next one
 }
 
-// Function that makes the enemy play their turn
 async function enemysTurn() {
-  console.log("It is the Enemys Turn");
+  console.log("It is the Enemy's Turn");
 
-  await loadingEffect("transparent", 1000); //Adds a little wait
+  await loadingEffect("transparent", 1000);
 
-  //It gives the enemy the "thinking" icon
+  // Show the "thinking" icon for the enemy
   document.getElementById(gameScenario + "EnemyActionIcon").src =
     "img/icons/iconThinking.png";
 
-  //Disables acting buttons, shows that it is the enemys turn
+  // Disable hero's action buttons since it's the enemy's turn
   document.getElementById(
     String(gameScenario) + "AttackButton"
   ).disabled = true;
@@ -506,51 +674,50 @@ async function enemysTurn() {
   ).disabled = true;
   document.getElementById(String(gameScenario) + "FocusButton").disabled = true;
 
+  // Indicate it's the enemy's turn
   document.getElementById(gameScenario + "textWhossTurn").innerText =
     "Enemy's turn";
 
-  await loadingEffect("transparent", 3000); // Waiting 3 seconds for the enemy to act
+  await loadingEffect("transparent", 3000);
 
-  // If the Hero has 50% or less HP and the Enemy has 50% or more HP, the enemy will only attack
+  // Determine the enemy's action
   if (
     gladiators[0].hp <= gladiators[0].maxHP / 2 &&
     gladiators[gameScenario].hp >= gladiators[gameScenario].maxHP / 2
   ) {
-    return (EnemysAction = "attack");
+    console.log("The enemy identifies your weakness and will attack!");
+    EnemysAction = "attack";
+  } else if (gladiators[gameScenario].focused) {
+    let action = randomiseNumber(0, 1); // Randomly choose between attack or defend
+    EnemysAction = action === 0 ? "defend" : "attack";
   } else {
-    // If the enemy is already focused, it will choose between attack or defend
-    if (gladiators[gameScenario].focused) {
-      let action = randomiseNumber(0, 1); // Randomly choose between attack (1) or defend (0)
-      if (action == 0) {
-        EnemysAction = "defend";
-      } else if (action == 1) {
-        EnemysAction = "attack";
-      }
-    }
-    // If the enemy is not focused, it will choose between attack, defend, or focus
-    else {
-      let action = randomiseNumber(0, 2); // Randomly choose between attack (1), defend (0), or focus (2)
-      if (action == 0) {
-        EnemysAction = "defend";
-      } else if (action == 1) {
-        EnemysAction = "attack";
-      } else if (action == 2) {
-        EnemysAction = "focus";
-        gladiators[gameScenario].focused = true;
-      }
+    let action = randomiseNumber(0, 2); // Randomly choose between attack, defend, or focus
+    if (action === 0) {
+      EnemysAction = "defend";
+    } else if (action === 1) {
+      EnemysAction = "attack";
+    } else if (action === 2) {
+      EnemysAction = "focus";
+      gladiators[gameScenario].focused = true;
     }
   }
 
-  //After the enemy has decided its action, then we update the action taken icon
+  console.log("Enemy's action", EnemysAction);
   document.getElementById(gameScenario + "EnemyActionIcon").src =
     "img/icons/iconActionTaken.png";
 
-  console.log("Enemys action", EnemysAction);
+  await loadingEffect("transparent", 2000);
 
-  await loadingEffect("transparent", 2000); //Waits a bit giving the user the chance to see that the enemy took his action
+  // After the enemy's action, update the turn and check if the hero is still alive
+  turnUpdate();
 
-  turnUpdate(); // Calls the turnUpdate function which will at some point settle the turn and go to the next one
-  WhosTurn = 0; // Makes the Users Turn
+  // Check if the hero is still alive
+  if (gladiators[0].hp > 0) {
+    WhosTurn = 0; // Make it the hero's turn if they are still alive
+  } else {
+    console.log("The hero has been defeated!");
+    // Handle end of game, e.g., show a defeat screen or reset the game state
+  }
 }
 
 // Function that calculates who starts the combate
@@ -1281,6 +1448,7 @@ class Gladiator {
     this.speed = Number(speed); // Speed of the gladiator
     this.username = String(username); // Username of who is using the gladiator
     this.focused = false; //Initialize the gladiators focus as false
+    this.critic = false; //Initialize the crit as false. When hitting a crit, it will be turned to TRUE and then back to false by the battleground
 
     // Calculate and assign attributes based on methods
     this.id = this.generateGladiatorID(); // Unique Gladiator ID
@@ -1306,18 +1474,54 @@ class Gladiator {
   //Damage Dealing Function
   dealDamage() {
     let modifier = 0; //variable that modifies the final damage depending on the equiped weapon
-    let weaponDmg = 0; // depending on the weapon, is the calculated damage
+    let weaponDmg = 0; // depending on the weapon, is the calculated damage. as of right now, the dmg for both swords and bow is 10,15 ideally
+    //in the future when having more weapons, different weapons could have different damage
+    let critChance = this.luck; //The critical chance % by default is the characters luck. If the character is focused, then it i the luck*2
+    let critChanceIndicator = 0; //Variable that will randomly be 0 to 100, if your crit chance is within that number, then we hit a critical hit
+
     let finalDmg = 0; // variable that will be returned by this method, returning the final dmg to be dealt
     if (this.weapon.toLowerCase() == "sword") {
-      modifier = this.strength;
+      modifier = this.strength; //Sword scales with strength
       weaponDmg = randomiseNumber(10, 15);
     }
     if (this.weapon.toLowerCase() == "bow") {
+      //Bow scales with dexterity
       modifier = this.dexterity;
       weaponDmg = randomiseNumber(10, 15);
     }
 
-    return (finalDmg = modifier + weaponDmg);
+    //Check if it will be a critical hit
+    if (this.focused == true) {
+      critChance = critChance * 2; //Gives double crit change when the gladiator is focused
+    }
+
+    critChanceIndicator = randomiseNumber(0, 100);
+
+    if (critChanceIndicator <= critChance) {
+      //If the crit chance indicator (from 0 to 100) is equal or smaller than the crit chance, the final damage is times 1,5
+      finalDmg = modifier + weaponDmg;
+      finalDmg = finalDmg * 1.5;
+      //And we indicate to our battlefield, that our character just hit a crit
+      this.critic = true;
+    } else {
+      /*
+
+      //Otherwise, if the number is bigger than our crit chance, then we hit "normal" damage
+      finalDmg = modifier + weaponDmg;
+      this.critic = false;
+
+
+*/
+
+      ///////////ALWAYS CRIT TEST      //If the crit chance indicator (from 0 to 100) is equal or smaller than the crit chance, the final damage is times 1,5
+      finalDmg = modifier + weaponDmg;
+      finalDmg = finalDmg * 1.5;
+      //And we indicate to our battlefield, that our character just hit a crit
+      this.critic = true;
+      /////////////
+    }
+
+    return finalDmg;
   }
 
   //Calculate Gladiator id
@@ -1402,7 +1606,7 @@ class Gladiator {
   // Method to calculate the gladiator's HP
   calculateHP() {
     let hp = 0;
-    hp = (randomiseNumber(6, 11) * this.constitution) / 2; // HP is based on constitution
+    hp = (randomiseNumber(6, 11) * this.constitution) / 1.5; // HP is based on constitution
     hp = Math.floor(hp);
     return hp;
   }
