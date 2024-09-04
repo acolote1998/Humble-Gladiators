@@ -1401,7 +1401,10 @@ class Gladiator {
 
   // Method to calculate the gladiator's HP
   calculateHP() {
-    return randomiseNumber(13, 18) * this.constitution; // HP is based on constitution
+    let hp = 0;
+    hp = (randomiseNumber(6, 11) * this.constitution) / 2; // HP is based on constitution
+    hp = Math.floor(hp);
+    return hp;
   }
 
   // Method to calculate the gladiator's maximum HP

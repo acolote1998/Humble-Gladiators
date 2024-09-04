@@ -21,8 +21,6 @@
 
 - Make the "waiting" functions a bit of random waiting times during the turns (to create dynamism effect)
 
--Maybe instead of a text saying "focused" we can have some sort of icon indicating it? (or not?)
-
 -Characters seem to have a looot of hp when just created lv 1, update the formula so they start with lower hp?
 
 - Implement Crit Hit System
@@ -33,3 +31,5 @@
 
 - Maybe make a little "presentation" scene / animation before a battle will start? (maybe put both gladiators next to each other, with a similar 
 BG image of the one the game scenario represents and so, and then kick off the battle by adding the overlays and so? maybe?)
+
+- Deactivate the action buttons when the turn is resolving!!!
