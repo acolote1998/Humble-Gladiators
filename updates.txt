@@ -1,0 +1,6 @@
+-Characters seem to have a looot of hp when just created lv 1, update the formula so they start with lower hp?
+        - Modified the formula that calculates HP, now it is lower
+
+- Implemented Crit Hit System
+
+-Added victory system function checkBattleState()
