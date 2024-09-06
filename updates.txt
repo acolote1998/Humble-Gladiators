@@ -1,16 +1,5 @@
-- Added new attributes to the gladiators:
-        Now the constructor includes the desired gladiators level
-        localvictories
-        onlineVictories
-        totalVictoies
-        defeatedEnemies (array of Gladiators)
-        diedAgainst (array of Gladiators)
+- Made the gladiator ID longer to minimize the chances of two IDs being the same
 
--Modified checkBattleState()
-        -Now we have a victory counter
-        -This function manages our gladiator to keep track of our previous enemies and so
-        -This function will show who killed our gladiator if we lose a battle
+- Made a levelUp method in the gladitors class that increases stats
 
-- Added new logic for enemys behavior, they are now more likely to attack
-
-- New function to activate/deactivate users action buttons in a more organised way
+- Whenever we create a gladiator, it will automatically level up stats as many times as we would need depending on the created level

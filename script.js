@@ -593,18 +593,14 @@ async function turnResolution() {
 function checkBattleState() {
   if (gladiators[0].hp <= 0 && gladiators[gameScenario].hp <= 0) {
     if (gladiators[0].speed >= gladiators[gameScenario].speed) {
-      console.log("Victory for the hero");
       battleState = "victory";
     } else {
-      console.log("Victory for the enemy");
       battleState = "defeat";
     }
   } else {
     if (gladiators[0].hp <= 0) {
-      console.log("Victory for the enemy");
       battleState = "defeat";
     } else if (gladiators[gameScenario].hp <= 0) {
-      console.log("Victory for the hero");
       battleState = "victory";
     }
   }
@@ -612,6 +608,12 @@ function checkBattleState() {
     battleState = "ongoing";
   }
 
+  if (battleState == "victory" || battleState == "defeat") {
+    battleResultsContent();
+  }
+}
+
+function battleResultsContent() {
   if (battleState == "victory") {
     console.log(
       "You have successfuly defeated " +
@@ -626,6 +628,9 @@ function checkBattleState() {
     console.log(
       "Your gladiator has won " + gladiators[0].totalVictoies + " battles"
     );
+    gameScenario++; //It moves the player to the next scenario
+    gladiators[0].level = gameScenario;
+    gladiators[0].levelingUpStats();
   }
   if (battleState == "defeat") {
     gladiators[0].diedAgainst.push(gladiators[gameScenario]); //If we lose, it adds to our gladiator who killed us
@@ -1476,6 +1481,48 @@ class Gladiator {
     this.maxHP = this.calculateMaxHP(); // Max HP, initially same as the HP
     this.strength = this.calculateStrength(); // Strength
     this.dexterity = this.calculateDexterity(); // Dexterity
+    this.setUpCorrectLevel(); //When a new Gladiator is created, it runs the levelingUp method as many times as the level of the gladiator
+  }
+
+  showStats() {
+    console.log("MAX HP: ", this.maxHP);
+    console.log("HP: ", this.hp);
+    console.log("Weapon: ", this.weapon);
+    console.log("Height: ", this.height);
+    console.log("Weight: ", this.weight);
+    console.log("Speed: ", this.speed);
+    console.log("Strenght: ", this.strength);
+    console.log("Dexterity: ", this.dexterity);
+    console.log("Constitution: ", this.constitution);
+    console.log("Luck: ", this.luck);
+  }
+
+  setUpCorrectLevel() {
+    //Sets up the correct stats of the gladiator when it is created
+    for (let i = 1; i < this.level; i++) {
+      this.levelingUpStats();
+      console.log("Level " + (i + 1));
+    }
+  }
+
+  //Function that updates the stats upon the gladiators leveling up
+  levelingUpStats() {
+    console.log("Leveling up Executed");
+    console.log("Increased stats based on gladiators level");
+    let hpModifier = randomiseNumber(110, 115); //The HP grows from a 10 to 15 % every time we level up
+    let spdModifier = randomiseNumber(2, 6); //The Speed grows from 2 to 6 points every time we level up
+    let strModifier = randomiseNumber(2, 6); //The strength grows from 2 to 6 points every time we level up
+    let dexModifier = randomiseNumber(2, 6); //The dexterity grows from 2 to 6 points every time we level up
+    let constModifier = randomiseNumber(2, 6); //The constitution grows from 2 to 6 points every time we level up
+    let luckModifier = randomiseNumber(0, 7); //The luck gros from 0 (no growth) to 7 points every time we level up
+    this.maxHP = Math.ceil((hpModifier * this.maxHP) / 100); //It grows the HP based on the HP modifier
+    this.hp = this.maxHP; //Full HP when leveling up
+    //Adds the modifiers to the attributes
+    this.speed = this.speed + spdModifier;
+    this.strength = this.strength + strModifier;
+    this.dexterity = this.dexterity + dexModifier;
+    this.constitution = this.constitution + constModifier;
+    this.luck = this.luck + luckModifier;
   }
 
   //Healing due to defending function scaling with constitution and the gladiators level
@@ -1528,10 +1575,12 @@ class Gladiator {
   //Calculate Gladiator id
   generateGladiatorID() {
     //Generates a pretty much "unique" gladiator ID. If the 5th and 6th digit are >19, then it re-rolls again (only 20 heads avaiable, and 5+6 digits represent the head graphic)
-    let gladiatorID = randomiseNumber(1000000, 9999999);
+    let gladiatorID = randomiseNumber(10000000, 99999999);
+
     while (Number(gladiatorID.toString().slice(4, 6)) >= 20) {
       //If the Head ID generated is 20 or more, then it generates new ones in a loop until one matches the wanted criteria
-      gladiatorID = randomiseNumber(1000000, 9999999);
+      gladiatorID = randomiseNumber(10000000, 99999999);
+
       if (Number(gladiatorID.toString().slice(4, 6)) <= 19) {
         //If the Head ID generated is between 00 and 19, then it keeps it and breaks the loop
 

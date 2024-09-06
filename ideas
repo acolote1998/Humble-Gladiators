@@ -36,3 +36,7 @@
 - Make damages and so to be full numbers, no comas whatsoevver
 
 - Make hero ID longer to minimize risk of saving the same hero into the DB?
+
+- Make a "shortcut" to initiate battle? (skip login and so maybe?)
+
+- Make a "podium" which will display the previously defeated enemies (for this we already need to have built the DB which will allow us to "save" and load our gladiators")
