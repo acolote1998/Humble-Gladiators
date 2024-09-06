@@ -200,6 +200,7 @@ function turnUpdate() {
 }
 
 async function turnResolution() {
+  TwitchUsersActionsBtns(true); //Deactivates the heroes buttons
   if (battleState == "ongoing") {
     document.getElementById(gameScenario + "textWhossTurn").innerText =
       "Turn Resolution";
@@ -610,21 +611,46 @@ function checkBattleState() {
   if (gladiators[0].hp >= 1 && gladiators[gameScenario].hp >= 1) {
     battleState = "ongoing";
   }
+
+  if (battleState == "victory") {
+    console.log(
+      "You have successfuly defeated " +
+        gladiators[gameScenario].name +
+        " and you will always remember it."
+    );
+    gladiators[gameScenario].diedAgainst.push(gladiators[0]); // It updates the enemys object with being killed by our hero
+    gladiators[0].defeatedEnemies.push(gladiators[gameScenario]); //It adds the defeated Gladiator to our defeated enemies list
+    gladiators[0].localvictories++; //It adds one victory to our list
+    gladiators[0].totalVictoies = //The total amount of victories is offline + online victories
+      gladiators[0].localvictories + gladiators[0].onlineVictories;
+    console.log(
+      "Your gladiator has won " + gladiators[0].totalVictoies + " battles"
+    );
+  }
+  if (battleState == "defeat") {
+    gladiators[0].diedAgainst.push(gladiators[gameScenario]); //If we lose, it adds to our gladiator who killed us
+    gladiators[gameScenario].defeatedEnemies.push(gladiators[0]); //It adds our hero to the enemies defeated gladiators list
+    gladiators[gameScenario].localvictories++; //It adds a victory for the enemy
+    gladiators[gameScenario].totalVictoies = //The total victories for the enemy are its local victories since enemies cannot play online
+      gladiators[gameScenario].localvictories;
+  }
+}
+
+function TwitchUsersActionsBtns(boolean) {
+  //If false, the buttones are active, if true the buttons are deactivated
+  document.getElementById(String(gameScenario) + "AttackButton").disabled =
+    boolean;
+  document.getElementById(String(gameScenario) + "DefendButton").disabled =
+    boolean;
+  document.getElementById(String(gameScenario) + "FocusButton").disabled =
+    boolean;
 }
 
 // Function that makes the user able to play their turn
 function usersTurn() {
   console.log("It is the Heros Turn");
 
-  document.getElementById(
-    String(gameScenario) + "AttackButton"
-  ).disabled = false;
-  document.getElementById(
-    String(gameScenario) + "DefendButton"
-  ).disabled = false;
-  document.getElementById(
-    String(gameScenario) + "FocusButton"
-  ).disabled = false;
+  TwitchUsersActionsBtns(false);
 
   document.getElementById(gameScenario + "textWhossTurn").innerText =
     "Your turn";
@@ -650,6 +676,8 @@ async function herosActionClick(target) {
   }
   console.log("Hero action", herosAction);
 
+  TwitchUsersActionsBtns(true); //Deactivates the heroe buttons
+
   await loadingEffect("transparent", 1600); //Adds a little wait
 
   WhosTurn = 1; // Gives the turn to the enemy
@@ -658,7 +686,7 @@ async function herosActionClick(target) {
 
 async function enemysTurn() {
   console.log("It is the Enemy's Turn");
-
+  TwitchUsersActionsBtns(true); //Deactivates the heroes buttons
   await loadingEffect("transparent", 1000);
 
   // Show the "thinking" icon for the enemy
@@ -666,13 +694,7 @@ async function enemysTurn() {
     "img/icons/iconThinking.png";
 
   // Disable hero's action buttons since it's the enemy's turn
-  document.getElementById(
-    String(gameScenario) + "AttackButton"
-  ).disabled = true;
-  document.getElementById(
-    String(gameScenario) + "DefendButton"
-  ).disabled = true;
-  document.getElementById(String(gameScenario) + "FocusButton").disabled = true;
+  TwitchUsersActionsBtns(true);
 
   // Indicate it's the enemy's turn
   document.getElementById(gameScenario + "textWhossTurn").innerText =
@@ -691,12 +713,12 @@ async function enemysTurn() {
     let action = randomiseNumber(0, 1); // Randomly choose between attack or defend
     EnemysAction = action === 0 ? "defend" : "attack";
   } else {
-    let action = randomiseNumber(0, 2); // Randomly choose between attack, defend, or focus
+    let action = randomiseNumber(0, 3); // Randomly choose between attack (2/4 chance), defend (1/4), or focus (1/4)
     if (action === 0) {
       EnemysAction = "defend";
-    } else if (action === 1) {
+    } else if (action === 1 || action === 2) {
       EnemysAction = "attack";
-    } else if (action === 2) {
+    } else if (action === 3) {
       EnemysAction = "focus";
       gladiators[gameScenario].focused = true;
     }
@@ -750,28 +772,12 @@ function whoStartsCombat() {
 
   if (WhosTurn == 0) {
     //If the hero starts combat, his turn actions are enabled, otherwise disabled
-    document.getElementById(
-      String(gameScenario) + "AttackButton"
-    ).disabled = false;
-    document.getElementById(
-      String(gameScenario) + "DefendButton"
-    ).disabled = false;
-    document.getElementById(
-      String(gameScenario) + "FocusButton"
-    ).disabled = false;
+    TwitchUsersActionsBtns(false);
 
     document.getElementById(gameScenario + "textWhossTurn").innerText =
       "Your turn";
   } else if (WhosTurn == 1) {
-    document.getElementById(
-      String(gameScenario) + "AttackButton"
-    ).disabled = true;
-    document.getElementById(
-      String(gameScenario) + "DefendButton"
-    ).disabled = true;
-    document.getElementById(
-      String(gameScenario) + "FocusButton"
-    ).disabled = true;
+    TwitchUsersActionsBtns(true);
 
     document.getElementById(gameScenario + "EnemyActionIcon").src =
       "img/icons/iconThinking.png"; //Sets the action icon
@@ -939,7 +945,8 @@ function createRandomGladiator(name) {
     randomiseNumber(12, 18),
     calculateRandomGladiatorsLuck(),
     calculateGladiatorsSpeed(somatotype),
-    username
+    username,
+    gameScenario
   );
   gladiators.push(newGladiator);
 }
@@ -1106,7 +1113,8 @@ async function forgeHeroGladiator() {
         gladiatorsConstitution,
         gladiatorsLuck,
         gladiatorsSpeed,
-        username
+        username,
+        gameScenario
       );
 
       // Add the new gladiator to the array
@@ -1435,7 +1443,8 @@ class Gladiator {
     constitution,
     luck,
     speed,
-    username
+    username,
+    level
   ) {
     // Initialize instance properties
     this.name = String(name); // Name of the gladiator
@@ -1449,10 +1458,14 @@ class Gladiator {
     this.username = String(username); // Username of who is using the gladiator
     this.focused = false; //Initialize the gladiators focus as false
     this.critic = false; //Initialize the crit as false. When hitting a crit, it will be turned to TRUE and then back to false by the battleground
-
+    this.level = Number(level); //The gladiator starts being level 1 usually by default, unless created differently
+    this.localvictories = 0; //The gladiator starts with zero victories by default
+    this.onlineVictories = 0; //The gladiator starts with zero online victories by default
+    this.totalVictoies = 0; //The gladiator starts with zero total victories by default
+    this.defeatedEnemies = []; //The gladiator has not defeated any other gladiator when it is created yet, later on we push gladiators into this  property
+    this.diedAgainst = []; //When we lose combat, we can see who is the gladiator who killed us
     // Calculate and assign attributes based on methods
     this.id = this.generateGladiatorID(); // Unique Gladiator ID
-    this.level = 1; // All Gladiators aree created by default at level 1
     this.bodyURL = this.drawGladiatorBodyURL(); //Calls the method that assigns the matching body depending on the last digit of the Gladiator ID
     this.headURL = this.drawGladiatorHeadURL(); //Calls the method that assigns the matching head depending on the digit 5 + 6 of the Gladiator ID
     this.weaponURL = this.drawWeaponURL(); // Calls the method that returns the url of the weapons image
@@ -1465,9 +1478,9 @@ class Gladiator {
     this.dexterity = this.calculateDexterity(); // Dexterity
   }
 
-  //Healing due to defending function
+  //Healing due to defending function scaling with constitution and the gladiators level
   healDefending() {
-    let heal = this.constitution * gameScenario;
+    let heal = this.constitution * this.level;
     return heal;
   }
 
@@ -1504,21 +1517,9 @@ class Gladiator {
       //And we indicate to our battlefield, that our character just hit a crit
       this.critic = true;
     } else {
-      /*
-
       //Otherwise, if the number is bigger than our crit chance, then we hit "normal" damage
       finalDmg = modifier + weaponDmg;
       this.critic = false;
-
-
-*/
-
-      ///////////ALWAYS CRIT TEST      //If the crit chance indicator (from 0 to 100) is equal or smaller than the crit chance, the final damage is times 1,5
-      finalDmg = modifier + weaponDmg;
-      finalDmg = finalDmg * 1.5;
-      //And we indicate to our battlefield, that our character just hit a crit
-      this.critic = true;
-      /////////////
     }
 
     return finalDmg;

@@ -1,6 +1,16 @@
--Characters seem to have a looot of hp when just created lv 1, update the formula so they start with lower hp?
-        - Modified the formula that calculates HP, now it is lower
+- Added new attributes to the gladiators:
+        Now the constructor includes the desired gladiators level
+        localvictories
+        onlineVictories
+        totalVictoies
+        defeatedEnemies (array of Gladiators)
+        diedAgainst (array of Gladiators)
 
-- Implemented Crit Hit System
+-Modified checkBattleState()
+        -Now we have a victory counter
+        -This function manages our gladiator to keep track of our previous enemies and so
+        -This function will show who killed our gladiator if we lose a battle
 
--Added victory system function checkBattleState()
+- Added new logic for enemys behavior, they are now more likely to attack
+
+- New function to activate/deactivate users action buttons in a more organised way

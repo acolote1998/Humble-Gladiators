@@ -13,7 +13,8 @@
   -> Luck : It affects the crit % chance
   -> Strenght: It affecks the attack value of the weapons modified by strength
   -> Dexterity: It affects the attack value of the weapons modified by dexterity
-  -> Speed: The gladiator with the highest speed will act first in the combat
+  -> Speed: The gladiator with the highest speed will act first in the combat. Also, if two gladiators were to give each other the "final hit", the
+  faster one will be declared the winner. In case that they both have the same speed, at the moment the hero wins by default
 
 - Have to add "animations" during the battle resolution
 
@@ -21,13 +22,17 @@
 
 - Make the "waiting" functions a bit of random waiting times during the turns (to create dynamism effect)
 
-- Implement Crit Hit System
-
--Implement the modification the "focused" state has when one is attacking (more dmg and more crit chance maybe?)
-
 - Make a way to "find" and "start" the battles? (The "Find Oponent" button seems a very basic idea.)
 
-- Maybe make a little "presentation" scene / animation before a battle will start? (maybe put both gladiators next to each other, with a similar 
-BG image of the one the game scenario represents and so, and then kick off the battle by adding the overlays and so? maybe?)
+- Maybe make a little "presentation" scene / animation before a battle will start? (maybe put both gladiators next to each other, with a similar
+  BG image of the one the game scenario represents and so, and then kick off the battle by adding the overlays and so? maybe?)
 
 - Add unique DMG values for differnt type of weapons (variable weaponDmg in dealdamage() in the gladiators class)
+
+- Make it playable online 1 vs 1?
+
+- Make a SAVE and LOAD option -> - We should be able to load our gladiator and this should show his exact stats (probably save to a DB the gladiators ID + the object itself) - We should be able to see together with our gladiator his battle history (previously defeated oponents) and so on
+
+- Make damages and so to be full numbers, no comas whatsoevver
+
+- Make hero ID longer to minimize risk of saving the same hero into the DB?
