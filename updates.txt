@@ -1,5 +1,5 @@
-- Made the gladiator ID longer to minimize the chances of two IDs being the same
+- Added some dynamism to the battle by making the loading times random
 
-- Made a levelUp method in the gladitors class that increases stats
+- Added battle log documenting the battle
 
-- Whenever we create a gladiator, it will automatically level up stats as many times as we would need depending on the created level
+- New battle log styling (changed width, height, font size and style)

@@ -40,3 +40,5 @@
 - Make a "shortcut" to initiate battle? (skip login and so maybe?)
 
 - Make a "podium" which will display the previously defeated enemies (for this we already need to have built the DB which will allow us to "save" and load our gladiators")
+
+- Make that the initial dice change color once we have rolled them the first time (and they are not for free anymore)
