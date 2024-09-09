@@ -1,0 +1,1 @@
+Fixed bug that heals due to defending were not working

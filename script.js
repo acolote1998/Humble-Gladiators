@@ -584,76 +584,69 @@ async function turnResolution() {
           }
         }
       }
+    }
 
-      if (herosAction != "attack" && EnemysAction != "attack") {
-        if (herosAction == "defend") {
-          console.log("The hero will heal from his defending position");
+    if (herosAction != "attack" && EnemysAction != "attack") {
+      console.log("paso por aca");
+      if (herosAction == "defend") {
+        console.log("The hero will heal from his defending position");
+        battlelog.value =
+          "The hero will heal from his defending position\n" + battlelog.value;
+
+        let heal = gladiators[0].healDefending();
+        //  let focusModifier = 1;
+
+        if (gladiators[0].focused == true) {
+          console.log("The hero will use his focus to heal more");
           battlelog.value =
-            "The hero will heal from his defending position\n" +
-            battlelog.value;
+            "The hero will use his focus to heal more\n" + battlelog.value;
 
-          let heal = gladiators[0].healDefending();
-          let focusModifier = 1;
-
-          if (gladiators[0].focused == true) {
-            console.log("The hero will use his focus to heal more");
-            battlelog.value =
-              "The hero will use his focus to heal more\n" + battlelog.value;
-
-            focusModifier = 2;
-            gladiators[0].focused = false;
-          }
-          console.log("The hero will heal", heal * focusModifier);
-          battlelog.value =
-            "The hero will heal: " +
-            heal * focusModifier +
-            "\n" +
-            battlelog.value;
-
-          if (gladiators[0].hp > gladiators[0].maxHP) {
-            console.log("The hero has now Max HP!");
-            battlelog.value = "The hero has now Max HP!\n" + battlelog.value;
-          }
-          console.log("The hero HP is now ", gladiators[0].hp);
-          battlelog.value =
-            "The hero HP is now " + gladiators[0].hp + "\n" + battlelog.value;
+          //     focusModifier = 2;
+          gladiators[0].focused = false;
         }
+        console.log("The hero will heal", heal);
+        battlelog.value =
+          "The hero will heal: " + heal + "\n" + battlelog.value;
 
-        if (EnemysAction == "defend") {
-          console.log("The enemy will heal from his defending position");
-          battlelog.value =
-            "The enemy will heal from his defending position\n" +
-            battlelog.value;
-
-          let heal = gladiators[gameScenario].healDefending();
-          let focusModifier = 1;
-
-          if (gladiators[gameScenario].focused == true) {
-            console.log("The enemy will use his focus to heal more");
-            battlelog.value =
-              "The enemy will use his focus to heal more\n" + battlelog.value;
-
-            focusModifier = 2;
-            gladiators[gameScenario].focused = false;
-          }
-          console.log("The enemy will heal", heal * focusModifier);
-          battlelog.value =
-            "The enemy will heal: " +
-            heal * focusModifier +
-            "\n" +
-            battlelog.value;
-
-          if (gladiators[gameScenario].hp > gladiators[gameScenario].maxHP) {
-            console.log("The enemy has now Max HP!");
-            battlelog.value = "The enemy has now Max HP!\n" + battlelog.value;
-          }
-          console.log("The enemy HP is now ", gladiators[gameScenario].hp);
-          battlelog.value =
-            "The enemy HP is now " +
-            gladiators[gameScenario].hp +
-            "\n" +
-            battlelog.value;
+        if (gladiators[0].hp >= gladiators[0].maxHP) {
+          console.log("The hero has now Max HP!");
+          battlelog.value = "The hero has now Max HP!\n" + battlelog.value;
         }
+        console.log("The hero HP is now ", gladiators[0].hp);
+        battlelog.value =
+          "The hero HP is now " + gladiators[0].hp + "\n" + battlelog.value;
+      }
+
+      if (EnemysAction == "defend") {
+        console.log("The enemy will heal from his defending position");
+        battlelog.value =
+          "The enemy will heal from his defending position\n" + battlelog.value;
+
+        let heal = gladiators[gameScenario].healDefending();
+        //   let focusModifier = 1;
+
+        if (gladiators[gameScenario].focused == true) {
+          console.log("The enemy will use his focus to heal more");
+          battlelog.value =
+            "The enemy will use his focus to heal more\n" + battlelog.value;
+
+          //  focusModifier = 2;
+          gladiators[gameScenario].focused = false;
+        }
+        console.log("The enemy will heal", heal);
+        battlelog.value =
+          "The enemy will heal: " + heal + "\n" + battlelog.value;
+
+        if (gladiators[gameScenario].hp >= gladiators[gameScenario].maxHP) {
+          console.log("The enemy has now Max HP!");
+          battlelog.value = "The enemy has now Max HP!\n" + battlelog.value;
+        }
+        console.log("The enemy HP is now ", gladiators[gameScenario].hp);
+        battlelog.value =
+          "The enemy HP is now " +
+          gladiators[gameScenario].hp +
+          "\n" +
+          battlelog.value;
       }
     }
 
@@ -1677,7 +1670,20 @@ class Gladiator {
 
   //Healing due to defending function scaling with constitution and the gladiators level
   healDefending() {
-    let heal = this.constitution * this.level;
+    console.log("llamo a la funcion de heal");
+
+    let focusmodifier = 1;
+    if (this.focused) {
+      focusmodifier = 2;
+    } else if (this.focused == false) {
+      focusmodifier = 1;
+    }
+    let heal = this.constitution * this.level * focusmodifier;
+
+    this.hp = this.hp + heal;
+    if (this.hp > this.maxHP) {
+      this.hp = this.maxHP;
+    }
     return heal;
   }
 
