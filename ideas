@@ -18,10 +18,6 @@
 
 - Have to add "animations" during the battle resolution
 
-- Make the battle actions log a text into the "battle log"
-
-- Make the "waiting" functions a bit of random waiting times during the turns (to create dynamism effect)
-
 - Make a way to "find" and "start" the battles? (The "Find Oponent" button seems a very basic idea.)
 
 - Maybe make a little "presentation" scene / animation before a battle will start? (maybe put both gladiators next to each other, with a similar

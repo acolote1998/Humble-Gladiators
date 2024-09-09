@@ -1,5 +1,0 @@
-- Added some dynamism to the battle by making the loading times random
-
-- Added battle log documenting the battle
-
-- New battle log styling (changed width, height, font size and style)

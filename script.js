@@ -1727,12 +1727,12 @@ class Gladiator {
     //Generates a pretty much "unique" gladiator ID. If the 5th and 6th digit are >19, then it re-rolls again (only 20 heads avaiable, and 5+6 digits represent the head graphic)
     let gladiatorID = randomiseNumber(10000000, 99999999);
 
-    while (Number(gladiatorID.toString().slice(4, 6)) >= 20) {
-      //If the Head ID generated is 20 or more, then it generates new ones in a loop until one matches the wanted criteria
+    while (Number(gladiatorID.toString().slice(4, 6)) >= 30) {
+      //If the Head ID generated is 30 or more, then it generates new ones in a loop until one matches the wanted criteria
       gladiatorID = randomiseNumber(10000000, 99999999);
 
-      if (Number(gladiatorID.toString().slice(4, 6)) <= 19) {
-        //If the Head ID generated is between 00 and 19, then it keeps it and breaks the loop
+      if (Number(gladiatorID.toString().slice(4, 6)) <= 29) {
+        //If the Head ID generated is between 00 and 29, then it keeps it and breaks the loop
 
         break;
       }
