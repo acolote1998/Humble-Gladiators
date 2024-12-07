@@ -147,6 +147,119 @@ var randomNames = [
 // Functions
 // ---------------------------
 
+function createHeroGladiatorToDb() {
+  let hero = gladiators[0];
+  let data = {
+    id: hero.id,
+    username: hero.username,
+    name: hero.name,
+    level: hero.level,
+    somatotype: hero.somatotype,
+    height: hero.height,
+    weight: hero.weight,
+    constitution: hero.constitution,
+    dexterity: hero.dexterity,
+    strenght: hero.strenght,
+    speed: hero.speed,
+    luck: hero.luck,
+    max_hp: hero.maxHP,
+    hp: hero.hp,
+    local_victories: hero.localvictories,
+    online_victories: hero.onlineVictories,
+    total_victories: hero.totalVictories,
+    defeated_enemies: hero.defeatedEnemies,
+    died_against: hero.diedAgainst,
+    critic: hero.critic,
+    focused: hero.focused,
+    weapon: hero.weapon,
+    weaponSRC: hero.weaponSRC,
+    bodySRC: hero.bodySRC,
+    headSRC: hero.headSRC,
+    weaponURL: hero.weaponURL,
+    bodyURL: hero.bodyURL,
+    headURL: hero.headURL,
+  };
+
+  var xhr = new XMLHttpRequest();
+  xhr.open(
+    "POST",
+    "http://127.0.0.1/21-HumbleGladiators/sql/createHero.php",
+    true
+  );
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  // Prepare URL-encoded data
+  let urlencodedData =
+    "id=" +
+    encodeURIComponent(data.id) +
+    "&username=" +
+    encodeURIComponent(data.username) +
+    "&name=" +
+    encodeURIComponent(data.name) +
+    "&level=" +
+    encodeURIComponent(data.level) +
+    "&somatotype=" +
+    encodeURIComponent(data.somatotype) +
+    "&height=" +
+    encodeURIComponent(data.height) +
+    "&weight=" +
+    encodeURIComponent(data.weight) +
+    "&constitution=" +
+    encodeURIComponent(data.constitution) +
+    "&dexterity=" +
+    encodeURIComponent(data.dexterity) +
+    "&strenght=" +
+    encodeURIComponent(data.strenght) +
+    "&speed=" +
+    encodeURIComponent(data.speed) +
+    "&luck=" +
+    encodeURIComponent(data.luck) +
+    "&max_hp=" +
+    encodeURIComponent(data.max_hp) +
+    "&hp=" +
+    encodeURIComponent(data.hp) +
+    "&local_victories=" +
+    encodeURIComponent(data.local_victories) +
+    "&online_victories=" +
+    encodeURIComponent(data.online_victories) +
+    "&total_victories=" +
+    encodeURIComponent(data.total_victories) +
+    "&defeated_enemies=" +
+    encodeURIComponent(data.defeated_enemies) +
+    "&died_against=" +
+    encodeURIComponent(data.died_against) +
+    "&critic=" +
+    encodeURIComponent(data.critic) +
+    "&focused=" +
+    encodeURIComponent(data.focused) +
+    "&weapon=" +
+    encodeURIComponent(data.weapon) +
+    "&weaponSRC=" +
+    encodeURIComponent(data.weaponSRC) +
+    "&bodySRC=" +
+    encodeURIComponent(data.bodySRC) +
+    "&headSRC=" +
+    encodeURIComponent(data.headSRC) +
+    "&weaponURL=" +
+    encodeURIComponent(data.weaponURL) +
+    "&bodyURL=" +
+    encodeURIComponent(data.bodyURL) +
+    "&headURL=" +
+    encodeURIComponent(data.headURL);
+
+  console.log("encoded data: ", urlencodedData);
+  // Handle server response
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      console.log("Server Response:", xhr.responseText);
+      alert("Success: " + xhr.responseText); //update game here
+    }
+  };
+
+  // Send the request with data
+  xhr.send(urlencodedData);
+}
+
 async function settingBattlefield() {
   document.getElementById(gameScenario + "BtnStartBattle").outerHTML = ""; //Removes the "Find Oponent" button from the battle scene
   createRandomGladiator(randomNames[randomiseNumber(0, 99)]); // Creates a Random Gladiator that will be the enemy of the player. Gets a random name from the randomNames array (100 random names)

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gladiator Forge</title>
+
+    <!-- Bootstrap CSS for styling and responsive layout -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS for additional styling -->
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Stes up the header image  -->
+    <div
+      id="imageHeader"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: solid 2px black;
+      "
+    >
+      <img
+        src="img/header.png"
+        alt="Header Image"
+        style="max-width: 100%; max-height: 100%"
+      />
+    </div>
+
+    <!-- Character Creation Screen -->
+    <div
+      id="characterCreationScreen"
+      class="container"
+      style="padding-top: 25px"
+    >
+      <!-- Row for gladiator input fields and stats -->
+      <div class="row">
+        <!-- Column for gladiator stats 
+        <div
+          id="gladiatorStats"
+          class="col d-flex flex-column justify-content-center align-items-center"
+        >
+          <h2>Gladiator's Stats:</h2>
+
+          <h3>Strength:</h3>
+          <div>
+            <input class="inputs" readonly id="heroStrength" />
+          </div>
+
+          <h3>Dexterity:</h3>
+          <div>
+            <input class="inputs" readonly id="heroDexterity" />
+          </div>
+
+          <h3>HP:</h3>
+          <div>
+            <input class="inputs" readonly id="heroHP" />
+          </div>
+        </div>
+        -->
+
+        <!-- Column for displaying the gladiator's visual result -->
+        <div
+          id="gladiatorResult"
+          class="col d-flex flex-column justify-content-center align-items-center niceBorder"
+        >
+          <!-- Row for gladiator's HP bar -->
+          <div
+            class="row"
+            id="divheroHPBarCreationScreen"
+            style="
+              background-size: cover;
+              background-size: 100% 100%;
+              padding: 10px;
+            "
+          >
+            <input
+              id="heroHPBarCreationScreen"
+              style="
+                background-color: lightcoral;
+                text-align: center;
+                font-family: fantasy;
+                font-size: 30px;
+              "
+              class=""
+              readonly
+            />
+            <br />
+          </div>
+
+          <!-- Row for gladiator's face -->
+          <div
+            class="row"
+            id="heroFace"
+            style="background-size: cover; background-size: 100% 100%"
+          ></div>
+
+          <!-- Row for gladiator's body -->
+          <div
+            class="row"
+            id="heroBody"
+            style="background-size: cover; background-size: 100% 100%"
+          ></div>
+          <!-- Row for Gladiators stats-->
+          <div
+            class="row niceBorder"
+            id="heroStats"
+            style="
+              background-size: cover;
+              background-size: 100% 100%;
+              width: 95%;
+            "
+          >
+            <div class="col-sm" style="display: flex" id="heroWeaponScreen">
+              <div class="creatingScreenStats">WPN:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroWeaponCreationScrenText"
+                style="background-size: cover"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroStrenghtScreen">
+              <div class="creatingScreenStats">STR:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroStrenghtCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroDexterityScreen">
+              <div class="creatingScreenStats">DEX:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroDexterityCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroConstScreen">
+              <div class="creatingScreenStats">CNS:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroConstitutionCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroLuckScreen">
+              <div class="creatingScreenStats">LCK:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroLuckCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-sm" style="display: flex" id="heroSpeedScreen">
+              <div class="creatingScreenStats">SPD:</div>
+              <div
+                class="creatingScreenStats"
+                id="heroSpeedCreationScrenText"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom JavaScript for functionality -->
+    <script src=""></script>
+
+    <!-- Bootstrap JS and dependencies for additional functionality -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
