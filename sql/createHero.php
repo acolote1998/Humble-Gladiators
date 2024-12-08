@@ -10,16 +10,16 @@ if (isset($_POST["id"]) &&
     isset($_POST["weight"]) &&
     isset($_POST["constitution"]) &&
     isset($_POST["dexterity"]) &&
-    isset($_POST["strenght"]) &&
+    isset($_POST["strength"]) &&
     isset($_POST["speed"]) &&
     isset($_POST["luck"]) &&
-    isset($_POST["max_hp"]) &&
+    isset($_POST["maxHP"]) &&
     isset($_POST["hp"]) &&
-    isset($_POST["local_victories"]) &&
-    isset($_POST["online_victories"]) &&
-    isset($_POST["total_victories"]) &&
-    isset($_POST["defeated_enemies"]) &&
-    isset($_POST["died_against"]) &&
+    isset($_POST["localvictories"]) &&
+    isset($_POST["onlineVictories"]) &&
+    isset($_POST["totalVictories"]) &&
+    isset($_POST["defeatedEnemies"]) &&
+    isset($_POST["diedAgainst"]) &&
     isset($_POST["critic"]) &&
     isset($_POST["focused"]) &&
     isset($_POST["weapon"]) &&
@@ -39,22 +39,22 @@ if (isset($_POST["id"]) &&
     $weight = (int)$_POST["weight"];
     $constitution = (int)$_POST["constitution"];
     $dexterity = (int)$_POST["dexterity"];
-    $strenght = (int)$_POST["strenght"];
+    $strength = (int)$_POST["strength"];
     $speed = (int)$_POST["speed"];
     $luck = (int)$_POST["luck"];
-    $max_hp = (float)$_POST["max_hp"];
+    $maxHP = (float)$_POST["maxHP"];
     $hp = (float)$_POST["hp"];
-    $local_victories = (int)$_POST["local_victories"];
-    $online_victories = (int)$_POST["online_victories"];
-    $total_victories = (int)$_POST["total_victories"];
+    $localvictories = (int)$_POST["localvictories"];
+    $onlineVictories = (int)$_POST["onlineVictories"];
+    $totalVictories = (int)$_POST["totalVictories"];
     
     // Decode JSON strings into PHP arrays
-    $defeated_enemies = json_decode($_POST["defeated_enemies"], true);
-    $died_against = json_decode($_POST["died_against"], true);
+    $defeatedEnemies = json_decode($_POST["defeatedEnemies"], true);
+    $diedAgainst = json_decode($_POST["diedAgainst"], true);
     
     // Encode PHP arrays back to JSON strings for database storage
-    $defeated_enemies_json = json_encode($defeated_enemies);
-    $died_against_json = json_encode($died_against);
+    $defeatedEnemies_json = json_encode($defeatedEnemies);
+    $diedAgainst_json = json_encode($diedAgainst);
 
     $critic = filter_var($_POST["critic"], FILTER_VALIDATE_BOOLEAN);
     $focused = filter_var($_POST["focused"], FILTER_VALIDATE_BOOLEAN);
@@ -68,7 +68,7 @@ if (isset($_POST["id"]) &&
 
     // Prepare the SQL statement
     $stmt = $conn->prepare("INSERT INTO gladiators 
-    (id, username, name, level, somatotype, height, weight, constitution, dexterity, strength, speed, luck, max_hp, hp, local_victories, online_victories, total_victories, defeated_enemies, died_against, critic, focused, weapon, weaponSRC, bodySRC, headSRC, weaponURL, bodyURL, headURL) 
+    (id, username, name, level, somatotype, height, weight, constitution, dexterity, strength, speed, luck, maxHP, hp, localvictories, onlineVictories, totalVictories, defeatedEnemies, diedAgainst, critic, focused, weapon, weaponSRC, bodySRC, headSRC, weaponURL, bodyURL, headURL) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");
 
     $stmt->bind_param(
@@ -82,16 +82,16 @@ if (isset($_POST["id"]) &&
         $weight, 
         $constitution, 
         $dexterity, 
-        $strenght, 
+        $strength, 
         $speed, 
         $luck, 
-        $max_hp, 
+        $maxHP, 
         $hp, 
-        $local_victories, 
-        $online_victories, 
-        $total_victories, 
-        $defeated_enemies_json, // JSON string of defeated enemies
-        $died_against_json,    // JSON string of died against
+        $localvictories, 
+        $onlineVictories, 
+        $totalVictories, 
+        $defeatedEnemies_json, // JSON string of defeated enemies
+        $diedAgainst_json,    // JSON string of died against
         $critic, 
         $focused, 
         $weapon, 
@@ -112,6 +112,8 @@ if (isset($_POST["id"]) &&
     $stmt->close();
 } else {
     echo "Missing data";
+    var_dump($_POST); // Debug missing data
+    die(); // Stop execution to inspect the output
 }
 
 $conn->close();

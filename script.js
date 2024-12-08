@@ -165,16 +165,16 @@ async function createHeroGladiatorToDb() {
     weight: hero.weight,
     constitution: hero.constitution,
     dexterity: hero.dexterity,
-    strenght: hero.strenght,
+    strength: hero.strength,
     speed: hero.speed,
     luck: hero.luck,
-    max_hp: hero.maxHP,
+    maxHP: hero.maxHP,
     hp: hero.hp,
-    local_victories: hero.localvictories,
-    online_victories: hero.onlineVictories,
-    total_victories: hero.totalVictories,
-    defeated_enemies: JSON.stringify(hero.defeatedEnemies),
-    died_against: JSON.stringify(hero.diedAgainst),
+    localvictories: hero.localvictories,
+    onlineVictories: hero.onlineVictories,
+    totalVictories: hero.totalVictories,
+    defeatedEnemies: JSON.stringify(hero.defeatedEnemies),
+    diedAgainst: JSON.stringify(hero.diedAgainst),
     critic: hero.critic,
     focused: hero.focused,
     weapon: hero.weapon,
@@ -214,26 +214,26 @@ async function createHeroGladiatorToDb() {
     encodeURIComponent(data.constitution) +
     "&dexterity=" +
     encodeURIComponent(data.dexterity) +
-    "&strenght=" +
-    encodeURIComponent(data.strenght) +
+    "&strength=" +
+    encodeURIComponent(data.strength) +
     "&speed=" +
     encodeURIComponent(data.speed) +
     "&luck=" +
     encodeURIComponent(data.luck) +
-    "&max_hp=" +
-    encodeURIComponent(data.max_hp) +
+    "&maxHP=" +
+    encodeURIComponent(data.maxHP) +
     "&hp=" +
     encodeURIComponent(data.hp) +
-    "&local_victories=" +
-    encodeURIComponent(data.local_victories) +
-    "&online_victories=" +
-    encodeURIComponent(data.online_victories) +
-    "&total_victories=" +
-    encodeURIComponent(data.total_victories) +
-    "&defeated_enemies=" +
-    encodeURIComponent(data.defeated_enemies) +
-    "&died_against=" +
-    encodeURIComponent(data.died_against) +
+    "&localvictories=" +
+    encodeURIComponent(data.localvictories) +
+    "&onlineVictories=" +
+    encodeURIComponent(data.onlineVictories) +
+    "&totalVictories=" +
+    encodeURIComponent(data.totalVictories) +
+    "&defeatedEnemies=" +
+    encodeURIComponent(data.defeatedEnemies) +
+    "&diedAgainst=" +
+    encodeURIComponent(data.diedAgainst) +
     "&critic=" +
     encodeURIComponent(data.critic) +
     "&focused=" +
@@ -828,7 +828,7 @@ function battleResultsContent() {
     strength: gladiators[0].strength,
     speed: gladiators[0].speed,
     luck: gladiators[0].luck,
-    max_hp: gladiators[0].maxHP,
+    maxHP: gladiators[0].maxHP,
     hp: gladiators[0].hp,
     localvictories: gladiators[0].localvictories,
     onlineVictories: gladiators[0].onlineVictories,
@@ -858,7 +858,7 @@ function battleResultsContent() {
     strength: gladiators[gameScenario].strength,
     speed: gladiators[gameScenario].speed,
     luck: gladiators[gameScenario].luck,
-    max_hp: gladiators[gameScenario].maxHP,
+    maxHP: gladiators[gameScenario].maxHP,
     hp: gladiators[gameScenario].hp,
     localvictories: gladiators[gameScenario].localvictories,
     onlineVictories: gladiators[gameScenario].onlineVictories,
