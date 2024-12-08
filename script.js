@@ -149,6 +149,8 @@ var randomNames = [
 
 function createHeroGladiatorToDb() {
   let hero = gladiators[0];
+  console.log("Hero Died Against:", hero.diedAgainst);
+  console.log("Hero Defeated:", hero.defeatedEnemies);
   let data = {
     id: hero.id,
     username: hero.username,
@@ -167,8 +169,8 @@ function createHeroGladiatorToDb() {
     local_victories: hero.localvictories,
     online_victories: hero.onlineVictories,
     total_victories: hero.totalVictories,
-    defeated_enemies: hero.defeatedEnemies,
-    died_against: hero.diedAgainst,
+    defeated_enemies: JSON.stringify(hero.defeatedEnemies),
+    died_against: JSON.stringify(hero.diedAgainst),
     critic: hero.critic,
     focused: hero.focused,
     weapon: hero.weapon,
@@ -808,6 +810,69 @@ function checkBattleState() {
 }
 
 function battleResultsContent() {
+  //creating OBJS
+  let HeroData = {
+    id: gladiators[0].id,
+    username: gladiators[0].username,
+    name: gladiators[0].name,
+    level: gladiators[0].level,
+    somatotype: gladiators[0].somatotype,
+    height: gladiators[0].height,
+    weight: gladiators[0].weight,
+    constitution: gladiators[0].constitution,
+    dexterity: gladiators[0].dexterity,
+    strength: gladiators[0].strength,
+    speed: gladiators[0].speed,
+    luck: gladiators[0].luck,
+    max_hp: gladiators[0].maxHP,
+    hp: gladiators[0].hp,
+    localvictories: gladiators[0].localvictories,
+    onlineVictories: gladiators[0].onlineVictories,
+    totalVictories: gladiators[0].totalVictories,
+    //avoiding circular reference defeatedEnemies: gladiators[0].defeatedEnemies,
+    //avoiding circular reference diedAgainst: gladiators[0].diedAgainst,
+    critic: gladiators[0].critic,
+    focused: gladiators[0].focused,
+    weapon: gladiators[0].weapon,
+    weaponSRC: gladiators[0].weaponSRC,
+    bodySRC: gladiators[0].bodySRC,
+    headSRC: gladiators[0].headSRC,
+    weaponURL: gladiators[0].weaponURL,
+    bodyURL: gladiators[0].bodyURL,
+    headURL: gladiators[0].headURL,
+  };
+  let EnemyData = {
+    id: gladiators[gameScenario].id,
+    username: gladiators[gameScenario].username,
+    name: gladiators[gameScenario].name,
+    level: gladiators[gameScenario].level,
+    somatotype: gladiators[gameScenario].somatotype,
+    height: gladiators[gameScenario].height,
+    weight: gladiators[gameScenario].weight,
+    constitution: gladiators[gameScenario].constitution,
+    dexterity: gladiators[gameScenario].dexterity,
+    strength: gladiators[gameScenario].strength,
+    speed: gladiators[gameScenario].speed,
+    luck: gladiators[gameScenario].luck,
+    max_hp: gladiators[gameScenario].maxHP,
+    hp: gladiators[gameScenario].hp,
+    localvictories: gladiators[gameScenario].localvictories,
+    onlineVictories: gladiators[gameScenario].onlineVictories,
+    totalVictories: gladiators[gameScenario].totalVictories,
+    //avoiding circular reference defeatedEnemies: gladiators[gameScenario].defeatedEnemies,
+    //avoiding circular reference diedAgainst: gladiators[gameScenario].diedAgainst,
+    critic: gladiators[gameScenario].critic,
+    focused: gladiators[gameScenario].focused,
+    weapon: gladiators[gameScenario].weapon,
+    weaponSRC: gladiators[gameScenario].weaponSRC,
+    bodySRC: gladiators[gameScenario].bodySRC,
+    headSRC: gladiators[gameScenario].headSRC,
+    weaponURL: gladiators[gameScenario].weaponURL,
+    bodyURL: gladiators[gameScenario].bodyURL,
+    headURL: gladiators[gameScenario].headURL,
+  };
+
+  //creating OBJS
   let battlelog = document.getElementById(gameScenario + "battleLog");
   if (battleState == "victory") {
     console.log(
@@ -822,17 +887,17 @@ function battleResultsContent() {
       "\n" +
       battlelog.value;
 
-    gladiators[gameScenario].diedAgainst.push(gladiators[0]); // It updates the enemys object with being killed by our hero
-    gladiators[0].defeatedEnemies.push(gladiators[gameScenario]); //It adds the defeated Gladiator to our defeated enemies list
+    gladiators[gameScenario].diedAgainst.push(HeroData); // It updates the enemys object with being killed by our hero
+    gladiators[0].defeatedEnemies.push(EnemyData); //It adds the defeated Gladiator to our defeated enemies list
     gladiators[0].localvictories++; //It adds one victory to our list
-    gladiators[0].totalVictoies = //The total amount of victories is offline + online victories
+    gladiators[0].totalVictories = //The total amount of victories is offline + online victories
       gladiators[0].localvictories + gladiators[0].onlineVictories;
     console.log(
-      "Your gladiator has won " + gladiators[0].totalVictoies + " battles"
+      "Your gladiator has won " + gladiators[0].totalVictories + " battles"
     );
     battlelog.value =
       "Your gladiator has won " +
-      gladiators[0].totalVictoies +
+      gladiators[0].totalVictories +
       " battles" +
       "\n" +
       battlelog.value;
@@ -842,10 +907,10 @@ function battleResultsContent() {
     gladiators[0].levelingUpStats();
   }
   if (battleState == "defeat") {
-    gladiators[0].diedAgainst.push(gladiators[gameScenario]); //If we lose, it adds to our gladiator who killed us
-    gladiators[gameScenario].defeatedEnemies.push(gladiators[0]); //It adds our hero to the enemies defeated gladiators list
+    gladiators[0].diedAgainst.push(EnemyData); //If we lose, it adds to our gladiator who killed us
+    gladiators[gameScenario].defeatedEnemies.push(HeroData); //It adds our hero to the enemies defeated gladiators list
     gladiators[gameScenario].localvictories++; //It adds a victory for the enemy
-    gladiators[gameScenario].totalVictoies = //The total victories for the enemy are its local victories since enemies cannot play online
+    gladiators[gameScenario].totalVictories = //The total victories for the enemy are its local victories since enemies cannot play online
       gladiators[gameScenario].localvictories;
 
     console.log("You have been defeated by " + gladiators[gameScenario].name);
@@ -1718,7 +1783,7 @@ class Gladiator {
     this.level = Number(level); //The gladiator starts being level 1 usually by default, unless created differently
     this.localvictories = 0; //The gladiator starts with zero victories by default
     this.onlineVictories = 0; //The gladiator starts with zero online victories by default
-    this.totalVictoies = 0; //The gladiator starts with zero total victories by default
+    this.totalVictories = 0; //The gladiator starts with zero total victories by default
     this.defeatedEnemies = []; //The gladiator has not defeated any other gladiator when it is created yet, later on we push gladiators into this  property
     this.diedAgainst = []; //When we lose combat, we can see who is the gladiator who killed us
     // Calculate and assign attributes based on methods
