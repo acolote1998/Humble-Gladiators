@@ -70,6 +70,10 @@
           id="gladiatorResult"
           class="col d-flex flex-column justify-content-center align-items-center niceBorder"
         >
+          <!-- Row for gladiator's Name -->
+          <div class="row" id="divheroName">
+            <h3 id="heroName" style="padding: 5px">Test</h3>
+          </div>
           <!-- Row for gladiator's HP bar -->
           <div
             class="row"
@@ -87,8 +91,10 @@
                 text-align: center;
                 font-family: fantasy;
                 font-size: 30px;
+                pointer-events: none;
               "
               class=""
+              placeholder=""
               readonly
             />
             <br />
@@ -161,6 +167,15 @@
               ></div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          id="homeButtons"
+          class="col d-flex flex-row justify-content-center align-items-center niceBorder"
+        >
+          <button>Battle</button>
+          <button>Podium</button>
         </div>
       </div>
     </div>
