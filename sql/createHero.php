@@ -104,7 +104,7 @@ if (isset($_POST["id"]) &&
     );
 
     if ($stmt->execute()){
-        echo "Data inserted successfully!";
+        echo "Gladiator Created!";
     } else {
         echo "Error inserting data: ".$stmt->error;
     }

@@ -147,7 +147,11 @@ var randomNames = [
 // Functions
 // ---------------------------
 
-function createHeroGladiatorToDb() {
+async function goingHome() {
+  window.location.href = `home.html?id=${gladiators[0].id}`; //goes to the home screen
+}
+
+async function createHeroGladiatorToDb() {
   let hero = gladiators[0];
   console.log("Hero Died Against:", hero.diedAgainst);
   console.log("Hero Defeated:", hero.defeatedEnemies);
@@ -1487,6 +1491,8 @@ async function forgeHeroGladiator() {
       document
         .getElementById("startPlayingColumn")
         .classList.remove("notDisplaying"); // Shows the row that provides the button that allows the player start the game
+
+      await createHeroGladiatorToDb(); //creates the gladiator in the DB
     } else {
       alert("Please generate all the attributes before forging the gladiator.");
     }
