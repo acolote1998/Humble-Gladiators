@@ -16,6 +16,10 @@
   -> Speed: The gladiator with the highest speed will act first in the combat. Also, if two gladiators were to give each other the "final hit", the
   faster one will be declared the winner. In case that they both have the same speed, at the moment the hero wins by default
 
+- Show characters level in the home screen
+
+- Save characters progression after a battle
+
 - Make sure that the gladiator does not get new stats generated every time it gets pulled from the DB
 
 - Add a button before (and after) the battle started that allows the user to go back to a "player menu" where you can see your gladiator's stats,

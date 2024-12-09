@@ -221,6 +221,16 @@ async function getHeroFromDB() {
   );
 
   // Add additional properties to the gladiator
+  newGladiator.name = data.name;
+  newGladiator.height = data.height;
+  newGladiator.weight = data.weight;
+  newGladiator.somatotype = data.somatotype;
+  newGladiator.weapon = data.weapon;
+  newGladiator.constitution = data.constitution;
+  newGladiator.luck = data.luck;
+  newGladiator.speed = data.speed;
+  newGladiator.username = data.username;
+  newGladiator.level = data.level;
   newGladiator.id = data.id;
   newGladiator.localvictories = data.localvictories;
   newGladiator.onlineVictories = data.onlineVictories;
@@ -235,6 +245,8 @@ async function getHeroFromDB() {
   newGladiator.weaponURL = data.weaponURL;
   newGladiator.bodyURL = data.bodyURL;
   newGladiator.headURL = data.headURL;
+  newGladiator.maxHP = data.maxHP;
+  newGladiator.hp = data.hp;
 
   // Push the gladiator to the gladiators array
   gladiators.push(newGladiator);
