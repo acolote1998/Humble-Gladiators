@@ -15,12 +15,20 @@ var battleState = ""; // Detects if one of the gladiators dies. Can be "ongoing"
 // ---------------------------
 // Functions
 // ---------------------------
-getHeroFromDB(); //As soon as the site loads, retreive hero from DB and create an enemy
 
+settingBattlefield();
 async function settingBattlefield() {
-  document.getElementById(gameScenario + "BtnStartBattle").outerHTML = ""; //Removes the "Find Oponent" button from the battle scene
+  await getHeroFromDB(); //As soon as the site loads, retreive hero from DB and create an enemy
+
   createRandomGladiator(randomNames[randomiseNumber(0, 99)], "CPU"); // Creates a Random Gladiator that will be the enemy of the player. Gets a random name from the randomNames array (100 random names)
   whoStartsCombat(); //Designate Whoses turn it is
+
+  updateGraphicsBattle(0, gameScenario, "hero"); //Puts up the Heros graphic in the current game scenario
+  updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); //Puts up the Enemie graphic in the current game scenario
+}
+
+async function startBattle() {
+  document.getElementById(gameScenario + "BtnStartBattle").outerHTML = ""; //Removes the "Find Oponent" button from the battle scene
   updateGraphicsBattle(0, gameScenario, "hero"); //Puts up the Heros graphic in the current game scenario
   updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); //Puts up the Enemie graphic in the current game scenario
 

@@ -204,10 +204,14 @@
           <div class="row">
             <textarea class="battleLog" id="1battleLog" readonly></textarea>
           </div>
-          <div class="row" id="1BtnStartBattle">
+          <div class="row">
             <button style="margin-top: 15px" onclick="goingHome()">Home</button>
-            <button style="margin-top: 15px" onclick="settingBattlefield()">
-              Find Oponent
+            <button
+              id="1BtnStartBattle"
+              style="margin-top: 15px"
+              onclick="startBattle()"
+            >
+              Start Battle
             </button>
           </div>
         </div>
