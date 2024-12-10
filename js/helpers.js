@@ -114,7 +114,7 @@ var gladiators = []; // List of created gladiators
 // ---------------------------
 
 async function goingHome() {
-  window.location.href = `home.html?id=${gladiators[0].id}`; //goes to the home screen
+  window.location.href = `home.html?id=${gladiators[0].id}&level=${gladiators[0].level}`; //goes to the home screen
 }
 
 function getHeroIDfromURL(param) {
@@ -237,8 +237,8 @@ async function getHeroFromDB() {
   newGladiator.totalVictories = Number(data.totalVictories);
   newGladiator.defeatedEnemies = data.defeatedEnemies;
   newGladiator.diedAgainst = data.diedAgainst;
-  newGladiator.critic = Boolean(data.critic);
-  newGladiator.focused = Boolean(data.focused);
+  newGladiator.critic = data.critic;
+  newGladiator.focused = data.focused;
   newGladiator.weaponSRC = data.weaponSRC;
   newGladiator.bodySRC = data.bodySRC;
   newGladiator.headSRC = data.headSRC;
@@ -272,4 +272,118 @@ async function getHeroFromDB() {
   } catch (e) {
     console.error("Failed to parse diedAgainst:", e);
   }
+}
+
+// Function to update hero to the DB
+async function updateHeroToDB() {
+  let hero = gladiators[0];
+
+  let data = {
+    id: hero.id,
+    username: hero.username,
+    name: hero.name,
+    level: hero.level,
+    somatotype: hero.somatotype,
+    height: hero.height,
+    weight: hero.weight,
+    constitution: hero.constitution,
+    dexterity: hero.dexterity,
+    strength: hero.strength,
+    speed: hero.speed,
+    luck: hero.luck,
+    maxHP: hero.maxHP,
+    hp: hero.hp,
+    localvictories: hero.localvictories,
+    onlineVictories: hero.onlineVictories,
+    totalVictories: hero.totalVictories,
+    defeatedEnemies: JSON.stringify(hero.defeatedEnemies),
+    diedAgainst: JSON.stringify(hero.diedAgainst),
+    critic: hero.critic,
+    focused: hero.focused,
+    weapon: hero.weapon,
+    weaponSRC: hero.weaponSRC,
+    bodySRC: hero.bodySRC,
+    headSRC: hero.headSRC,
+    weaponURL: hero.weaponURL,
+    bodyURL: hero.bodyURL,
+    headURL: hero.headURL,
+  };
+
+  var xhr = new XMLHttpRequest();
+  xhr.open(
+    "POST",
+    "http://127.0.0.1/21-HumbleGladiators/sql/updateHero.php",
+    true
+  );
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+  // Prepare URL-encoded data
+  let urlencodedData =
+    "id=" +
+    encodeURIComponent(data.id) +
+    "&username=" +
+    encodeURIComponent(data.username) +
+    "&name=" +
+    encodeURIComponent(data.name) +
+    "&level=" +
+    encodeURIComponent(data.level) +
+    "&somatotype=" +
+    encodeURIComponent(data.somatotype) +
+    "&height=" +
+    encodeURIComponent(data.height) +
+    "&weight=" +
+    encodeURIComponent(data.weight) +
+    "&constitution=" +
+    encodeURIComponent(data.constitution) +
+    "&dexterity=" +
+    encodeURIComponent(data.dexterity) +
+    "&strength=" +
+    encodeURIComponent(data.strength) +
+    "&speed=" +
+    encodeURIComponent(data.speed) +
+    "&luck=" +
+    encodeURIComponent(data.luck) +
+    "&maxHP=" +
+    encodeURIComponent(data.maxHP) +
+    "&hp=" +
+    encodeURIComponent(data.hp) +
+    "&localvictories=" +
+    encodeURIComponent(data.localvictories) +
+    "&onlineVictories=" +
+    encodeURIComponent(data.onlineVictories) +
+    "&totalVictories=" +
+    encodeURIComponent(data.totalVictories) +
+    "&defeatedEnemies=" +
+    encodeURIComponent(data.defeatedEnemies) +
+    "&diedAgainst=" +
+    encodeURIComponent(data.diedAgainst) +
+    "&critic=" +
+    encodeURIComponent(data.critic) +
+    "&focused=" +
+    encodeURIComponent(data.focused) +
+    "&weapon=" +
+    encodeURIComponent(data.weapon) +
+    "&weaponSRC=" +
+    encodeURIComponent(data.weaponSRC) +
+    "&bodySRC=" +
+    encodeURIComponent(data.bodySRC) +
+    "&headSRC=" +
+    encodeURIComponent(data.headSRC) +
+    "&weaponURL=" +
+    encodeURIComponent(data.weaponURL) +
+    "&bodyURL=" +
+    encodeURIComponent(data.bodyURL) +
+    "&headURL=" +
+    encodeURIComponent(data.headURL);
+
+  // Handle server response
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      console.log("Server Response:", xhr.responseText);
+      console.log("Success: " + xhr.responseText); //update game here
+    }
+  };
+
+  // Send the request with data
+  xhr.send(urlencodedData);
 }

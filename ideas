@@ -20,9 +20,7 @@
 
 - Save characters progression after a battle
 
-- Add a button before (and after) the battle started that allows the user to go back to a "player menu" where you can see your gladiator's stats,
-  and where there is a button that says "podium" that shows your gladiators victories so far (displaying defeated enemies), also another one that allows
-  you to save your gladiator, and also another one that allows you to delete your gladiator for ever. All this connected to a mariadb
+- Add a button that says "podium" on the home screen that shows your gladiators victories so far (displaying defeated enemies), also another one that allows a button that allows you to delete your gladiator for ever. All this connected to a mariadb
 
 - Have to add "animations" during the battle resolution
 

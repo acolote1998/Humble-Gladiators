@@ -64,16 +64,18 @@ class Gladiator {
   }
 
   setUpCorrectLevel() {
-    //Sets up the correct stats of the gladiator when it is created
-    for (let i = 1; i < this.level; i++) {
-      this.levelingUpStats();
-      console.log("Level " + (i + 1));
+    if (this.username == "CPU") {
+      //Sets up the correct stats of the gladiator when it is created
+      for (let i = 1; i < this.level; i++) {
+        this.levelingUpStats();
+        console.log("Level " + (i + 1));
+      }
     }
   }
 
   //Function that updates the stats upon the gladiators leveling up
   levelingUpStats() {
-    let battlelog = document.getElementById(gameScenario - 1 + "battleLog");
+    let battlelog = document.getElementById("1" + "battleLog");
     battlelog.value =
       "New level achieved, increased stats based on the new gladiator's level \n" +
       battlelog.value;
