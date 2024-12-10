@@ -16,7 +16,8 @@ var battleState = ""; // Detects if one of the gladiators dies. Can be "ongoing"
 // Functions
 // ---------------------------
 
-settingBattlefield();
+settingBattlefield(); //retrieves the hero from the DB
+
 async function settingBattlefield() {
   await getHeroFromDB(); //As soon as the site loads, retreive hero from DB and create an enemy
 
@@ -25,6 +26,8 @@ async function settingBattlefield() {
 
   updateGraphicsBattle(0, gameScenario, "hero"); //Puts up the Heros graphic in the current game scenario
   updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); //Puts up the Enemie graphic in the current game scenario
+
+  TwitchUsersActionsBtns(true); //turns off the action buttons
 }
 
 async function startBattle() {
@@ -32,13 +35,17 @@ async function startBattle() {
   updateGraphicsBattle(0, gameScenario, "hero"); //Puts up the Heros graphic in the current game scenario
   updateGraphicsBattle(gameScenario, gameScenario, "Enemy"); //Puts up the Enemie graphic in the current game scenario
 
-  await loadingEffect("transparent", 3000); // Waiting 3 seconds for the battle to start
+  await loadingEffect("transparent", 2500); // Waiting 2,5 seconds for the battle to start
 
   battleState = "ongoing";
 
   if (WhosTurn == 1) {
     // if it is the Enemys turn, then call it
     enemysTurn();
+
+    TwitchUsersActionsBtns(true); //turns off the action buttons when the site loads
+  } else {
+    TwitchUsersActionsBtns(false); //turns on the action buttons when the site loads
   }
 }
 
@@ -773,7 +780,7 @@ async function enemysTurn() {
 
   console.log("It is the Enemy's Turn");
   battlelog.value = "It is the enemy's turn\n" + battlelog.value;
-  TwitchUsersActionsBtns(true); // Deactivates the heroes buttons
+
   await randomWaitForTurn(); // Adds a little wait
 
   // Show the "thinking" icon for the enemy

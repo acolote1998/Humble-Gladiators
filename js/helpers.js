@@ -222,34 +222,39 @@ async function getHeroFromDB() {
 
   // Add additional properties to the gladiator
   newGladiator.name = data.name;
-  newGladiator.height = data.height;
-  newGladiator.weight = data.weight;
+  newGladiator.height = Number(data.height);
+  newGladiator.weight = Number(data.weight);
   newGladiator.somatotype = data.somatotype;
   newGladiator.weapon = data.weapon;
-  newGladiator.constitution = data.constitution;
-  newGladiator.luck = data.luck;
-  newGladiator.speed = data.speed;
+  newGladiator.constitution = Number(data.constitution);
+  newGladiator.luck = Number(data.luck);
+  newGladiator.speed = Number(data.speed);
   newGladiator.username = data.username;
-  newGladiator.level = data.level;
-  newGladiator.id = data.id;
-  newGladiator.localvictories = data.localvictories;
-  newGladiator.onlineVictories = data.onlineVictories;
-  newGladiator.totalVictories = data.totalVictories;
+  newGladiator.level = Number(data.level);
+  newGladiator.id = Number(data.id);
+  newGladiator.localvictories = Number(data.localvictories);
+  newGladiator.onlineVictories = Number(data.onlineVictories);
+  newGladiator.totalVictories = Number(data.totalVictories);
   newGladiator.defeatedEnemies = data.defeatedEnemies;
   newGladiator.diedAgainst = data.diedAgainst;
-  newGladiator.critic = data.critic;
-  newGladiator.focused = data.focused;
+  newGladiator.critic = Boolean(data.critic);
+  newGladiator.focused = Boolean(data.focused);
   newGladiator.weaponSRC = data.weaponSRC;
   newGladiator.bodySRC = data.bodySRC;
   newGladiator.headSRC = data.headSRC;
   newGladiator.weaponURL = data.weaponURL;
   newGladiator.bodyURL = data.bodyURL;
   newGladiator.headURL = data.headURL;
-  newGladiator.maxHP = data.maxHP;
-  newGladiator.hp = data.hp;
-
+  newGladiator.maxHP = Number(data.maxHP);
+  newGladiator.hp = Number(data.hp);
+  newGladiator.dexterity = Number(data.dexterity);
+  newGladiator.strength = Number(data.strength);
   // Push the gladiator to the gladiators array
+
   gladiators.push(newGladiator);
+
+  console.log(data);
+  console.log(gladiators[0]);
 
   // Parse the defeatedEnemies and diedAgainst attributes if they exist
   try {
