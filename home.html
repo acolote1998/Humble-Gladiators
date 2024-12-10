@@ -67,12 +67,15 @@
 
         <!-- Column for displaying the gladiator's visual result -->
         <div
-          id="gladiatorResult"
+          id="heroImgDiv"
           class="col d-flex flex-column justify-content-center align-items-center niceBorder"
         >
           <!-- Row for gladiator's Name -->
           <div class="row" id="divheroName">
-            <h3 id="heroName" style="padding: 5px">Test</h3>
+            <h1 id="heroName" style="padding: 5px">Test</h1>
+          </div>
+          <div class="row" id="divheroLevel">
+            <h3 id="heroLevel" style="padding: 5px">Test</h3>
           </div>
           <!-- Row for gladiator's HP bar -->
           <div
@@ -113,14 +116,49 @@
             id="heroBody"
             style="background-size: cover; background-size: 100% 100%"
           ></div>
+        </div>
+        <!--                  -->
+
+        <div
+          id="heroRightColumnDiv"
+          class="col d-flex flex-column justify-content-top align-items-center niceBorder"
+          style="padding-top: 20px"
+        >
           <!-- Row for Gladiators stats-->
           <div
-            class="row niceBorder"
-            id="heroStats"
+            class="row"
+            id="heroHeightWeightSomtatotypeStats"
             style="
               background-size: cover;
               background-size: 100% 100%;
               width: 95%;
+              padding-bottom: 20px;
+            "
+          >
+            <div class="col-4" style="display: flex" id="heroHeight">
+              <div class="creatingScreenStats" style="width: 100%">
+                <span id="heroHeightText"></span>
+              </div>
+            </div>
+            <div class="col-4" style="display: flex" id="heroWeight">
+              <div class="creatingScreenStats" style="width: 100%">
+                <span id="heroWeightText"></span>
+              </div>
+            </div>
+            <div class="col-4" style="display: flex" id="heroSomatotype">
+              <div class="creatingScreenStats" style="width: 100%">
+                <span id="heroSomatotypeText"></span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+            id="heroSkillsStats"
+            style="
+              background-size: cover;
+              background-size: 100% 100%;
+              width: 95%;
+              padding-bottom: 20px;
             "
           >
             <div class="col-sm" style="display: flex" id="heroWeaponScreen">
@@ -167,7 +205,81 @@
               ></div>
             </div>
           </div>
+          <div
+            class="row"
+            id="heroVictories"
+            style="
+              background-size: cover;
+              background-size: 100% 100%;
+              width: 95%;
+              padding-bottom: 20px;
+            "
+          >
+            <div class="col-4" style="display: flex" id="heroTotalVictories">
+              <div class="creatingScreenStats" style="width: 100%">
+                <span id="heroTotalVictoriesText"></span>
+              </div>
+            </div>
+            <div class="col-4" style="display: flex" id="heroLocalVictories">
+              <div class="creatingScreenStats" style="width: 100%">
+                <span id="heroLocalVictoriesText"></span>
+              </div>
+            </div>
+            <div class="col-4" style="display: flex" id="heroOnlineVictories">
+              <div class="creatingScreenStats" style="width: 100%">
+                <span id="heroOnlineVictoriesText"></span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+            id="heroLastBattle"
+            style="
+              background-size: cover;
+              background-size: 100% 100%;
+              width: 95%;
+            "
+          >
+            <div class="col-12" style="display: flex" id="heroTotalVictories">
+              <div
+                class="creatingScreenStats"
+                style="width: 100%; display: flex; height: 100%"
+              >
+                <!-- Columna izquierda -->
+                <div class="col-6" style="padding: 5%">
+                  <div
+                    class="row"
+                    id="heroFaceLastEnemyDefeated"
+                    style="background-size: cover; background-size: 100% 100%"
+                  ></div>
+                </div>
+                <!-- Columna derecha -->
+                <div
+                  class="col-6"
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                  "
+                >
+                  <div class="row">
+                    <h2>Last Enemy:</h2>
+                  </div>
+                  <div class="row">
+                    <span id="heroLastBattleName"></span>
+                  </div>
+                  <div class="row">
+                    <span id="heroLastBattleLevel"></span>
+                  </div>
+                  <div class="row">
+                    <span id="heroLastHP"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        <!-- Column for displaying the gladiator's visual result -->
       </div>
       <div class="row">
         <div

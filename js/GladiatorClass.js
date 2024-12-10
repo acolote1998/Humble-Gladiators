@@ -51,16 +51,37 @@ class Gladiator {
   }
 
   showStats() {
+    console.group("Gladiator: ", this.name);
+    //
+    console.group("Character Info");
+    console.log("Name: ", this.name);
+    console.log("ID: ", this.id);
+    console.log("Level: ", this.level);
+    console.log("Victories: ", this.totalVictories);
+    console.groupEnd();
+
+    console.group("Health");
     console.log("MAX HP: ", this.maxHP);
     console.log("HP: ", this.hp);
-    console.log("Weapon: ", this.weapon);
+    console.groupEnd();
+
+    console.group("Attributes");
+    console.log("Str: ", this.strength);
+    console.log("Dex: ", this.dexterity);
+    console.log("Cons: ", this.constitution);
+    console.log("Luck: ", this.luck);
+    console.log("Speed: ", this.speed);
     console.log("Height: ", this.height);
     console.log("Weight: ", this.weight);
-    console.log("Speed: ", this.speed);
-    console.log("Strenght: ", this.strength);
-    console.log("Dexterity: ", this.dexterity);
-    console.log("Constitution: ", this.constitution);
-    console.log("Luck: ", this.luck);
+    console.log("Somatotype: ", this.somatotype);
+
+    console.groupEnd();
+
+    console.group("Equipment");
+    console.log("Weapon: ", this.weapon);
+    console.groupEnd();
+    //
+    console.groupEnd();
   }
 
   setUpCorrectLevel() {

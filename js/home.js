@@ -9,6 +9,8 @@ async function loadHeroToDocument() {
   await getHeroFromDB();
 
   document.getElementById("heroName").innerText = gladiators[0].name;
+  document.getElementById("heroLevel").innerText =
+    "Level: " + gladiators[0].level;
 
   document.getElementById("heroHPBarCreationScreen").value =
     gladiators[0].hp + " / " + gladiators[0].maxHP;
@@ -31,6 +33,13 @@ async function loadHeroToDocument() {
   heroBody.style.width = gladiators[0].weight * 2 + "px"; // Body width
   heroBody.style.backgroundImage = "url(" + gladiators[0].bodySRC + ")";
 
+  document.getElementById("heroHeightText").innerText =
+    "HGT: " + gladiators[0].height + " cm";
+  document.getElementById("heroWeightText").innerText =
+    "WGT: " + gladiators[0].height + " kg";
+  document.getElementById("heroSomatotypeText").innerText =
+    gladiators[0].somatotype;
+
   document.getElementById("heroWeaponCreationScrenText").style.backgroundImage =
     "url(" + gladiators[0].weaponSRC + ")";
   document.getElementById("heroStrenghtCreationScrenText").innerText =
@@ -43,6 +52,27 @@ async function loadHeroToDocument() {
     gladiators[0].luck;
   document.getElementById("heroSpeedCreationScrenText").innerText =
     gladiators[0].speed;
+
+  document.getElementById("heroTotalVictoriesText").innerText =
+    "Victories: " + gladiators[0].totalVictories;
+  document.getElementById("heroLocalVictoriesText").innerText =
+    "Local: " + gladiators[0].localvictories;
+  document.getElementById("heroOnlineVictoriesText").innerText =
+    "Online: " + gladiators[0].onlineVictories;
+
+  document.getElementById("heroLastBattleName").innerText =
+    "Name: " + gladiators[0]?.defeatedEnemies?.at(-1)?.name;
+
+  document.getElementById("heroLastBattleLevel").innerText =
+    "Level: " + gladiators[0]?.defeatedEnemies?.at(-1)?.level;
+
+  document.getElementById("heroLastHP").innerText =
+    "HP: " + gladiators[0]?.defeatedEnemies?.at(-1)?.maxHP;
+
+  document.getElementById("heroFaceLastEnemyDefeated").style.backgroundImage =
+    "url(" + gladiators[0]?.defeatedEnemies?.at(-1)?.headSRC + ")";
+  document.getElementById("heroFaceLastEnemyDefeated").style.height = "170px";
+  document.getElementById("heroFaceLastEnemyDefeated").style.width = "170px";
 }
 
 async function goingBattle() {

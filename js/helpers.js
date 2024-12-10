@@ -253,8 +253,8 @@ async function getHeroFromDB() {
 
   gladiators.push(newGladiator);
 
-  console.log(data);
-  console.log(gladiators[0]);
+  //console.log(data);
+  //console.log(gladiators[0]);
 
   // Parse the defeatedEnemies and diedAgainst attributes if they exist
   try {
