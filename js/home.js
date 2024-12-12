@@ -53,26 +53,44 @@ async function loadHeroToDocument() {
   document.getElementById("heroSpeedCreationScrenText").innerText =
     gladiators[0].speed;
 
-  document.getElementById("heroTotalVictoriesText").innerText =
-    "Victories: " + gladiators[0].totalVictories;
-  document.getElementById("heroLocalVictoriesText").innerText =
-    "Local: " + gladiators[0].localvictories;
-  document.getElementById("heroOnlineVictoriesText").innerText =
-    "Online: " + gladiators[0].onlineVictories;
+  if (gladiators[0].localvictories == 0) {
+    document.getElementById("heroLastBattle").style.display = "none";
+    document.getElementById("heroVictories").style.display = "none";
+  } else {
+    document.getElementById("heroLastBattle").style.display = "";
+    document.getElementById("heroVictories").style.display = "";
 
-  document.getElementById("heroLastBattleName").innerText =
-    "Name: " + gladiators[0]?.defeatedEnemies?.at(-1)?.name;
+    document.getElementById("heroTotalVictoriesText").innerText =
+      "Victories: " + gladiators[0].totalVictories;
+    document.getElementById("heroLocalVictoriesText").innerText =
+      "Local: " + gladiators[0].localvictories;
+    document.getElementById("heroOnlineVictoriesText").innerText =
+      "Online: " + gladiators[0].onlineVictories;
 
-  document.getElementById("heroLastBattleLevel").innerText =
-    "Level: " + gladiators[0]?.defeatedEnemies?.at(-1)?.level;
+    document.getElementById("heroLastBattleName").innerText =
+      "Name: " + gladiators[0]?.defeatedEnemies?.at(-1)?.name;
 
-  document.getElementById("heroLastHP").innerText =
-    "HP: " + gladiators[0]?.defeatedEnemies?.at(-1)?.maxHP;
+    document.getElementById("heroLastBattleLevel").innerText =
+      "Level: " + gladiators[0]?.defeatedEnemies?.at(-1)?.level;
 
-  document.getElementById("heroFaceLastEnemyDefeated").style.backgroundImage =
-    "url(" + gladiators[0]?.defeatedEnemies?.at(-1)?.headSRC + ")";
-  document.getElementById("heroFaceLastEnemyDefeated").style.height = "170px";
-  document.getElementById("heroFaceLastEnemyDefeated").style.width = "170px";
+    document.getElementById("heroLastHP").innerText =
+      "HP: " + gladiators[0]?.defeatedEnemies?.at(-1)?.maxHP;
+
+    document.getElementById("heroBodyLastEnemyDefeated").style.backgroundImage =
+      "url(" + gladiators[0]?.defeatedEnemies?.at(-1)?.bodySRC + ")";
+    document.getElementById("heroBodyLastEnemyDefeated").style.height =
+      gladiators[0]?.defeatedEnemies?.at(-1)?.height / 2 + "px";
+    document.getElementById("heroBodyLastEnemyDefeated").style.width =
+      gladiators[0]?.defeatedEnemies?.at(-1)?.weight / 2.3 + "px";
+    //
+    document.getElementById("heroFaceLastEnemyDefeated").style.backgroundImage =
+      "url(" + gladiators[0]?.defeatedEnemies?.at(-1)?.headSRC + ")";
+    document.getElementById("heroFaceLastEnemyDefeated").style.width =
+      gladiators[0]?.defeatedEnemies?.at(-1)?.weight / 4.3 + "px";
+    document.getElementById("heroFaceLastEnemyDefeated").style.height =
+      ((3.75 * gladiators[0]?.defeatedEnemies?.at(-1)?.height) / 22, 5) * 3.8 +
+      "px";
+  }
 }
 
 async function goingBattle() {

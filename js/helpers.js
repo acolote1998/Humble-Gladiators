@@ -117,6 +117,10 @@ async function goingHome() {
   window.location.href = `home.html?id=${gladiators[0].id}&level=${gladiators[0].level}`; //goes to the home screen
 }
 
+async function goingPodium() {
+  window.location.href = `podium.html?id=${gladiators[0].id}&level=${gladiators[0].level}`; //goes to the podium screen
+}
+
 function getHeroIDfromURL(param) {
   let urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);

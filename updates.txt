@@ -1,3 +1,0 @@
-- Now the hero gets updated on the database after a battle is finished, either is win or lose it will update.
-
-- Home Screen Update: Now displaying hero stats, last enemy defeated stats. Better organisation in general

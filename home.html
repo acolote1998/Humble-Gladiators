@@ -240,17 +240,55 @@
               width: 95%;
             "
           >
-            <div class="col-12" style="display: flex" id="heroTotalVictories">
+            <div
+              class="col-12"
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+              id="heroTotalVictories"
+            >
               <div
                 class="creatingScreenStats"
                 style="width: 100%; display: flex; height: 100%"
               >
                 <!-- Columna izquierda -->
-                <div class="col-6" style="padding: 5%">
+                <div
+                  class="col-6"
+                  style="
+                    padding: 5%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <!-- Hero Face -->
                   <div
-                    class="row"
                     id="heroFaceLastEnemyDefeated"
-                    style="background-size: cover; background-size: 100% 100%"
+                    style="
+                      background-size: cover;
+                      background-size: 100% 100%;
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                    "
+                  ></div>
+                  <!-- Hero Body -->
+                  <div
+                    id="heroBodyLastEnemyDefeated"
+                    style="
+                      background-size: cover;
+                      background-size: 100% 100%;
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                    "
                   ></div>
                 </div>
                 <!-- Columna derecha -->
@@ -262,18 +300,10 @@
                     justify-content: space-between;
                   "
                 >
-                  <div class="row">
-                    <h2>Last Enemy:</h2>
-                  </div>
-                  <div class="row">
-                    <span id="heroLastBattleName"></span>
-                  </div>
-                  <div class="row">
-                    <span id="heroLastBattleLevel"></span>
-                  </div>
-                  <div class="row">
-                    <span id="heroLastHP"></span>
-                  </div>
+                  <div class="row"><h2>Last Enemy:</h2></div>
+                  <div class="row"><span id="heroLastBattleName"></span></div>
+                  <div class="row"><span id="heroLastBattleLevel"></span></div>
+                  <div class="row"><span id="heroLastHP"></span></div>
                 </div>
               </div>
             </div>
@@ -286,8 +316,8 @@
           id="homeButtons"
           class="col d-flex flex-row justify-content-center align-items-center niceBorder"
         >
+          <button onclick="goingPodium()">Podium</button>
           <button onclick="goingBattle()">Battle</button>
-          <button>Podium</button>
         </div>
       </div>
     </div>

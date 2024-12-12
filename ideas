@@ -17,8 +17,17 @@
   faster one will be declared the winner. In case that they both have the same speed, at the moment the hero wins by default
 
 - Make the hero stats and level update after the battle is finished (or maybe create a level up screen??? showing the improvements? after the battle)
+  In this scene, make sure the player sees in which stats their gladiator improved and so.
 
-- Add a button that says "podium" on the home screen that shows your gladiators victories so far (displaying defeated enemies), also another one that allows a button that allows you to delete your gladiator for ever. All this connected to a mariadb
+- Fix bug: sometimes when the hero attacks (or enemy) no damage is dealt? functions seems to execute and battlelog updates?
+
+- Find a way to see if you can add animations to the battle? (png to 3d render? AI? whatever?)
+
+- Add different game scenarios?
+
+- Make sure that the "critic" and "focused" stats do not save to database. They should always be false in DB, only triggered during battle but then set to zero again
+
+- Remove the possibility of going back home during a battle
 
 - Have to add "animations" during the battle resolution
 
