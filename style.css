@@ -53,6 +53,18 @@
   font-size: 22px;
   font-family: fantasy;
 }
+.levelingUpStats {
+  background-color: rgb(233, 233, 233);
+  border-style: outset;
+  border-radius: 15px;
+  height: 60px;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-family: fantasy;
+}
 .niceBorder {
   border-style: solid;
   border-radius: 30px;

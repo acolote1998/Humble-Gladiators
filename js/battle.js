@@ -965,3 +965,19 @@ function updateGraphicsBattle(gladiatorIndex, currentlevel, heroorEnemy) {
     "1" + String(heroorEnemy) + "LuckBattleStat"
   ).innerHTML = gladiators[gladiatorIndex].luck; //Updates the Luck in HTML for the provided gladiator
 }
+
+function goingLevelUp() {
+  // Get the current query string (everything after the `?` in the URL)
+  const currentQuery = window.location.search;
+
+  // Navigate to the new page, keeping the query parameters intact
+  window.location.href = `levelup.html${currentQuery}`;
+}
+
+async function goingHomeFromBattle() {
+  if (battleState == "victory") {
+    goingLevelUp();
+  } else {
+    window.location.href = `home.html?id=${gladiators[0].id}&level=${gladiators[0].level}`; //goes to the home screen
+  }
+}

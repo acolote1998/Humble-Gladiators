@@ -94,5 +94,5 @@ async function loadHeroToDocument() {
 }
 
 async function goingBattle() {
-  window.location.href = `battle.html?id=${gladiators[0].id}&level=${gladiators[0].level}`; //goes to the battle screen
+  window.location.href = `battle.html?id=${gladiators[0].id}&level=${gladiators[0].level}&strength=${gladiators[0].strength}&dexterity=${gladiators[0].dexterity}&constitution=${gladiators[0].constitution}&luck=${gladiators[0].luck}&speed=${gladiators[0].speed}&maxHP=${gladiators[0].maxHP}`;
 }

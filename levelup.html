@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gladiator Forge</title>
+
+    <!-- Bootstrap CSS for styling and responsive layout -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS for additional styling -->
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Stes up the header image  -->
+    <div
+      id="imageHeader"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: solid 2px black;
+      "
+    >
+      <img
+        src="img/header.png"
+        alt="Header Image"
+        style="max-width: 100%; max-height: 100%"
+      />
+    </div>
+
+    <!-- Character Creation Screen -->
+    <div
+      id="characterCreationScreen"
+      class="container"
+      style="padding-top: 15px"
+    >
+      <div
+        class="row"
+        style="display: flex; justify-content: center; align-items: center"
+      >
+        <h1>Level up!</h1>
+      </div>
+
+      <!-- Row for gladiator input fields and stats -->
+      <div class="row">
+        <!-- Column for gladiator stats 
+        <div
+          id="gladiatorStats"
+          class="col d-flex flex-column justify-content-center align-items-center"
+        >
+          <h2>Gladiator's Stats:</h2>
+
+          <h3>Strength:</h3>
+          <div>
+            <input class="inputs" readonly id="heroStrength" />
+          </div>
+
+          <h3>Dexterity:</h3>
+          <div>
+            <input class="inputs" readonly id="heroDexterity" />
+          </div>
+
+          <h3>HP:</h3>
+          <div>
+            <input class="inputs" readonly id="heroHP" />
+          </div>
+        </div>
+        -->
+
+        <!-- Column for displaying the gladiator's visual result -->
+        <div
+          id="heroImgDiv"
+          class="col d-flex flex-column justify-content-center align-items-center niceBorder"
+        >
+          <!-- Row for gladiator's Name -->
+          <div class="row" id="divheroName">
+            <h1 id="heroName" style="padding: 5px">Test</h1>
+          </div>
+          <div class="row" id="divheroLevel">
+            <h3 id="heroLevel" style="padding: 5px">Test</h3>
+          </div>
+          <!-- Row for gladiator's HP bar -->
+          <div
+            class="row"
+            id="divheroHPBarCreationScreen"
+            style="
+              background-size: cover;
+              background-size: 100% 100%;
+              padding: 10px;
+            "
+          >
+            <input
+              id="heroHPBarCreationScreen"
+              style="
+                background-color: lightcoral;
+                text-align: center;
+                font-family: fantasy;
+                font-size: 30px;
+                pointer-events: none;
+              "
+              class=""
+              placeholder=""
+              readonly
+            />
+            <br />
+          </div>
+
+          <!-- Row for gladiator's face -->
+          <div
+            class="row"
+            id="heroFace"
+            style="background-size: cover; background-size: 100% 100%"
+          ></div>
+
+          <!-- Row for gladiator's body -->
+          <div
+            class="row"
+            id="heroBody"
+            style="background-size: cover; background-size: 100% 100%"
+          ></div>
+        </div>
+        <!--                  -->
+
+        <div
+          id="heroRightColumnDiv"
+          class="col d-flex flex-column justify-content-top align-items-center niceBorder"
+          style="padding-top: 20px"
+        >
+          <!-- Row for Gladiators stats-->
+
+          <div
+            class="row"
+            id="heroSkillsStats"
+            style="
+              background-size: cover;
+              background-size: 100% 100%;
+              width: 95%;
+              padding-bottom: 20px;
+            "
+          >
+            <div class="col-12" style="display: flex" id="heroStrenghtScreen">
+              <div class="levelingUpStats">STR:</div>
+              <div
+                class="levelingUpStats"
+                id="heroStrenghtCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-12" style="display: flex" id="heroDexterityScreen">
+              <div class="levelingUpStats">DEX:</div>
+              <div
+                class="levelingUpStats"
+                id="heroDexterityCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-12" style="display: flex" id="heroConstScreen">
+              <div class="levelingUpStats">CNS:</div>
+              <div
+                class="levelingUpStats"
+                id="heroConstitutionCreationScrenText"
+              ></div>
+            </div>
+            <div class="col-12" style="display: flex" id="heroLuckScreen">
+              <div class="levelingUpStats">LCK:</div>
+              <div class="levelingUpStats" id="heroLuckCreationScrenText"></div>
+            </div>
+            <div class="col-12" style="display: flex" id="heroSpeedScreen">
+              <div class="levelingUpStats">SPD:</div>
+              <div
+                class="levelingUpStats"
+                id="heroSpeedCreationScrenText"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <!-- Column for displaying the gladiator's visual result -->
+      </div>
+      <div class="row">
+        <div
+          id="homeButtons"
+          class="col d-flex flex-row justify-content-center align-items-center niceBorder"
+        >
+          <button onclick="goingHome()">Home</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom JavaScript for functionality -->
+    <script src="js/helpers.js"></script>
+    <script src="js/levelup.js"></script>
+    <script src="js/GladiatorClass.js"></script>
+
+    <!-- Bootstrap JS and dependencies for additional functionality -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
