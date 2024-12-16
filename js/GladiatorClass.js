@@ -89,7 +89,7 @@ class Gladiator {
       //Sets up the correct stats of the gladiator when it is created
       for (let i = 1; i < this.level; i++) {
         this.levelingUpStats();
-        console.log("Level " + (i + 1));
+        //console.log("Level " + (i + 1));
       }
     }
   }
@@ -100,8 +100,8 @@ class Gladiator {
     battlelog.value =
       "New level achieved, increased stats based on the new gladiator's level \n" +
       battlelog.value;
-    console.log("Leveling up Executed");
-    console.log("Increased stats based on gladiators level");
+    // console.log("Leveling up Executed");
+    // console.log("Increased stats based on gladiators level");
     let hpModifier = randomiseNumber(110, 115); //The HP grows from a 10 to 15 % every time we level up
     let spdModifier = randomiseNumber(2, 6); //The Speed grows from 2 to 6 points every time we level up
     let strModifier = randomiseNumber(2, 6); //The strength grows from 2 to 6 points every time we level up

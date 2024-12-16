@@ -32,6 +32,10 @@ var username = "";
 // Functions
 // ---------------------------
 
+function goingLoadCharacters() {
+  window.location.href = `loadcharacter.html?username=` + username;
+}
+
 async function createHeroGladiatorToDb() {
   let hero = gladiators[0];
   console.log("Hero Died Against:", hero.diedAgainst);

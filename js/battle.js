@@ -23,7 +23,7 @@ async function settingBattlefield() {
   await getHeroFromDB(); //As soon as the site loads, retreive hero from DB and create an enemy
 
   createRandomGladiator(randomNames[randomiseNumber(0, 99)], "CPU"); // Creates a Random Gladiator that will be the enemy of the player. Gets a random name from the randomNames array (100 random names)
-  console.log(gladiators[1]);
+
   whoStartsCombat(); //Designate Whoses turn it is
 
   updateGraphicsBattle(0, "1", "hero"); //Puts up the Heros graphic in the current game scenario
