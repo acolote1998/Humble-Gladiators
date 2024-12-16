@@ -16,8 +16,7 @@
   -> Speed: The gladiator with the highest speed will act first in the combat. Also, if two gladiators were to give each other the "final hit", the
   faster one will be declared the winner. In case that they both have the same speed, at the moment the hero wins by default
 
-- Make the hero stats and level update after the battle is finished (or maybe create a level up screen??? showing the improvements? after the battle)
-  In this scene, make sure the player sees in which stats their gladiator improved and so.
+- Fix bug: once in a victory or defeat, stop the gif from repeating over and over and over
 
 - Fix bug: sometimes when the hero attacks (or enemy) no damage is dealt? functions seems to execute and battlelog updates?
 
@@ -43,8 +42,6 @@
 - Make damages and so to be full numbers, no comas whatsoevver
 
 - Make hero ID longer to minimize risk of saving the same hero into the DB?
-
-- Make a "podium" which will display the previously defeated enemies (for this we already need to have built the DB which will allow us to "save" and load our gladiators")
 
 - Make that the initial dice change color once we have rolled them the first time (and they are not for free anymore)
 

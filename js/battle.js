@@ -147,7 +147,16 @@ async function turnResolution() {
       "\n" +
       battlelog.value;
 
+    showBattleGifs(); //function that updates the gifs of the battle
+
     await loadingEffect("transparent", 3000); //Takes time to resolve the turn
+
+    // Only reset the background after the delay
+    document.getElementById("1EnemyAnimationCombatDiv").style.backgroundImage =
+      "";
+    document.getElementById("1HeroAnimationCombatDiv").style.backgroundImage =
+      "";
+
     // Function that resolves the turn
     var actsFirst = 0; // Default to hero acting first
     var actsNow = 0;
@@ -503,7 +512,6 @@ async function turnResolution() {
     }
 
     if (herosAction != "attack" && EnemysAction != "attack") {
-      console.log("paso por aca");
       if (herosAction == "defend") {
         console.log("The hero will heal from his defending position");
         battlelog.value =
@@ -604,9 +612,52 @@ function checkBattleState() {
 
   if (battleState == "victory" || battleState == "defeat") {
     battleResultsContent();
+    showBattleGifs();
   }
 }
 
+async function showBattleGifs() {
+  console.log("called");
+
+  if (battleState == "victory") {
+    document.getElementById("1HeroAnimationCombatDiv").style.backgroundImage =
+      "url('img/gifs/heroVictory.gif')";
+    document.getElementById("1EnemyAnimationCombatDiv").style.backgroundImage =
+      "url('img/gifs/enemyDefeat.gif')";
+  } else if (battleState == "defeat") {
+    document.getElementById("1HeroAnimationCombatDiv").style.backgroundImage =
+      "url('img/gifs/heroDefeat.gif')";
+    document.getElementById("1EnemyAnimationCombatDiv").style.backgroundImage =
+      "url('img/gifs/enemyVictory.gif')";
+  } else {
+    // Set hero's action GIF
+    if (herosAction == "attack") {
+      document.getElementById("1HeroAnimationCombatDiv").style.backgroundImage =
+        "url('img/gifs/heroAttack.gif')";
+    } else if (herosAction == "defend") {
+      document.getElementById("1HeroAnimationCombatDiv").style.backgroundImage =
+        "url('img/gifs/heroDefend.gif')";
+    } else if (herosAction == "focus") {
+      document.getElementById("1HeroAnimationCombatDiv").style.backgroundImage =
+        "url('img/gifs/heroFocus.gif')";
+    }
+
+    // Set enemy's action GIF
+    if (EnemysAction == "attack") {
+      document.getElementById(
+        "1EnemyAnimationCombatDiv"
+      ).style.backgroundImage = "url('img/gifs/enemyAttack.gif')";
+    } else if (EnemysAction == "defend") {
+      document.getElementById(
+        "1EnemyAnimationCombatDiv"
+      ).style.backgroundImage = "url('img/gifs/enemyDefend.gif')";
+    } else if (EnemysAction == "focus") {
+      document.getElementById(
+        "1EnemyAnimationCombatDiv"
+      ).style.backgroundImage = "url('img/gifs/enemyFocus.gif')";
+    }
+  }
+}
 function battleResultsContent() {
   //creating OBJS
   let HeroData = {
