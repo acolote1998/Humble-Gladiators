@@ -33,7 +33,9 @@ async function settingBattlefield() {
 }
 
 async function startBattle() {
-  document.getElementById("1BtnStartBattle").outerHTML = ""; //Removes the "Find Oponent" button from the battle scene
+  document.getElementById("1BtnStartBattle").classList.add("notDisplaying"); //Removes the "Find Oponent" button from the battle scene
+  document.getElementById("1BtnHomeFromBattle").classList.add("notDisplaying"); //Removes the "Home" button from the battle scene
+
   updateGraphicsBattle(0, "1", "hero"); //Puts up the Heros graphic in the current game scenario
   updateGraphicsBattle(1, "1", "Enemy"); //Puts up the Enemie graphic in the current game scenario
 
@@ -192,14 +194,14 @@ async function turnResolution() {
             // Enemy is focused and defending
             if (isCritical) {
               // Critical hit on focused and defending enemy
-              gladiators[1].hp -= damage / 2;
+              gladiators[1].hp -= Math.floor(damage / 2);
               console.log(
                 "Enemy was defending and focused, but the hero hit a critical blow. Enemy takes reduced damage:",
-                damage / 2
+                Math.floor(damage / 2)
               );
               battlelog.value =
                 "Enemy was defending and focused, but the hero hit a critical blow. Enemy takes reduced damage: " +
-                damage / 2 +
+                Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
               gladiators[0].focused = false; // Removes the attackers focused state
@@ -231,14 +233,14 @@ async function turnResolution() {
               gladiators[0].focused = false; // Removes the attackers focused state
             } else {
               // Normal hit on defending but not focused enemy
-              gladiators[1].hp -= damage / 2;
+              gladiators[1].hp -= Math.floor(damage / 2);
               console.log(
                 "Enemy was defending but not focused. Enemy takes reduced damage:",
-                damage / 2
+                Math.floor(damage / 2)
               );
               battlelog.value =
                 "Enemy was defending but not focused. Enemy takes reduced damage: " +
-                damage / 2 +
+                Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
             }
@@ -286,15 +288,15 @@ async function turnResolution() {
             // Hero is focused and defending
             if (isCritical) {
               // Critical hit on focused and defending hero
-              gladiators[0].hp -= damage / 2;
+              gladiators[0].hp -= Math.floor(damage / 2);
               console.log(
                 "Hero is defending and focused, but the enemy hit a critical blow. Hero takes reduced damage:",
-                damage / 2
+                Math.floor(damage / 2)
               );
 
               battlelog.value =
                 "The hero is defending and focused, but the enemy hit a critical blow. The hero takes reduced damage: " +
-                damage / 2 +
+                Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
 
@@ -328,14 +330,14 @@ async function turnResolution() {
               gladiators[1].focused = false; // Removes the attackers focused state
             } else {
               // Normal hit on defending but not focused hero
-              gladiators[0].hp -= damage / 2;
+              gladiators[0].hp -= Math.floor(damage / 2);
               console.log(
                 "Hero is defending but not focused. Hero takes reduced damage:",
-                damage / 2
+                Math.floor(damage / 2)
               );
               battlelog.value =
                 "The hero is defending but not focused. The hero takes reduced damage: " +
-                damage / 2 +
+                Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
             }
@@ -377,13 +379,14 @@ async function turnResolution() {
         if (herosAction == "defend") {
           if (gladiators[0].focused) {
             if (isCritical) {
+              gladiators[0].hp -= Math.floor(damage / 2);
               console.log(
                 "Hero is defending and focused, but the enemy hit a critical blow. Hero takes reduced damage:",
-                damage / 2
+                Math.floor(damage / 2)
               );
               battlelog.value =
                 "Hero is defending and focused, but the enemy hit a critical blow. Hero takes reduced damage: " +
-                damage / 2 +
+                Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
             } else {
@@ -397,6 +400,7 @@ async function turnResolution() {
             }
           } else {
             if (isCritical) {
+              gladiators[0].hp -= damage;
               console.log(
                 "Hero is defending, but the enemy hit a critical blow. Hero takes full damage:",
                 damage
@@ -407,19 +411,21 @@ async function turnResolution() {
                 "\n" +
                 battlelog.value;
             } else {
+              gladiators[0].hp -= Math.floor(damage / 2);
               console.log(
                 "Hero is defending but not focused. Hero takes reduced damage:",
-                damage / 2
+                Math.floor(damage / 2)
               );
               battlelog.value =
                 "Hero is defending but not focused. Hero takes reduced damage: " +
-                damage / 2 +
+                Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
             }
           }
         } else {
           if (isCritical) {
+            gladiators[0].hp -= damage;
             console.log(
               "Enemy is hitting a critical blow. Hero takes full damage:",
               damage
@@ -430,6 +436,7 @@ async function turnResolution() {
               "\n" +
               battlelog.value;
           } else {
+            gladiators[0].hp -= damage;
             console.log("Hero takes full damage:", damage);
             battlelog.value =
               "Hero takes full damage: " + damage + "\n" + battlelog.value;
@@ -450,13 +457,14 @@ async function turnResolution() {
         if (EnemysAction == "defend") {
           if (gladiators[1].focused) {
             if (isCritical) {
+              gladiators[1].hp -= Math.floor(damage / 2);
               console.log(
                 "Enemy was defending and focused, but the hero hit a critical blow. Enemy takes reduced damage:",
-                damage / 2
+                Math.floor(damage / 2)
               );
               battlelog.value =
                 "Enemy was defending and focused, but the hero hit a critical blow. Enemy takes reduced damage: " +
-                damage / 2 +
+                Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
             } else {
@@ -470,6 +478,7 @@ async function turnResolution() {
             }
           } else {
             if (isCritical) {
+              gladiators[1].hp -= damage;
               console.log(
                 "Enemy was defending, but the hero hit a critical blow. Enemy takes full damage:",
                 damage
@@ -480,19 +489,21 @@ async function turnResolution() {
                 "\n" +
                 battlelog.value;
             } else {
+              gladiators[1].hp -= Math.floor(damage / 2);
               console.log(
                 "Enemy was defending but not focused. Enemy takes reduced damage:",
-                damage / 2
+                Math.floor(damage / 2)
               );
               battlelog.value =
                 "Enemy was defending but not focused. Enemy takes reduced damage: " +
-                damage / 2 +
+                Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
             }
           }
         } else {
           if (isCritical) {
+            gladiators[1].hp -= damage;
             console.log(
               "Hero is hitting a critical blow. Enemy takes full damage:",
               damage
@@ -503,6 +514,7 @@ async function turnResolution() {
               "\n" +
               battlelog.value;
           } else {
+            gladiators[1].hp -= damage;
             console.log("Enemy takes full damage:", damage);
             battlelog.value =
               "Enemy takes full damage: " + damage + "\n" + battlelog.value;
@@ -612,6 +624,9 @@ function checkBattleState() {
 
   if (battleState == "victory" || battleState == "defeat") {
     battleResultsContent();
+    document
+      .getElementById("1BtnHomeFromBattle")
+      .classList.remove("notDisplaying"); //Adds the "Home" button from the battle scene
     showBattleGifs();
   }
 }
@@ -768,6 +783,8 @@ function battleResultsContent() {
       "\n" +
       battlelog.value;
   }
+  gladiators[0].focused = false; //Makes sure that we do not save a state into the DB
+  gladiators[0].critic = false; //Makes sure that we do not save a state into the DB
   updateHeroToDB();
 }
 

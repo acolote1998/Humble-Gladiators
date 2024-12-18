@@ -120,8 +120,6 @@ class Gladiator {
 
   //Healing due to defending function scaling with constitution and the gladiators level
   healDefending() {
-    console.log("llamo a la funcion de heal");
-
     let focusmodifier = 1;
     if (this.focused) {
       focusmodifier = 2;
@@ -175,7 +173,7 @@ class Gladiator {
       this.critic = false;
     }
 
-    return finalDmg;
+    return Math.floor(finalDmg);
   }
 
   //Calculate Gladiator id

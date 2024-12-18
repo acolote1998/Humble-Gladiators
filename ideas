@@ -1,34 +1,8 @@
-- Combat System:
-
-  - Attack
-    -> Performs an attack with the eqquiped weapon
-  - Deffend
-    -> If the enemy attacks the user while the user is defending, the user will only lose 50% of the HP that would initiall lose due to this attack
-    -> If the enemy attacks thile the user is defending, block 50% of the damage. If the enemy does not attack while the user is defending, the user will also recover HP equal to it's constitution X its level
-  - Focus
-    -> Charges energy, pases turn, becomes focused. When attacking while focused = 50% extra chance of crit. When deffending while focused, either block 100% of the damage received, or recover hp equal to constitution X 2 X its level
-
-  -Attribute modifiers:
-
-  -> Luck : It affects the crit % chance
-  -> Strenght: It affecks the attack value of the weapons modified by strength
-  -> Dexterity: It affects the attack value of the weapons modified by dexterity
-  -> Speed: The gladiator with the highest speed will act first in the combat. Also, if two gladiators were to give each other the "final hit", the
-  faster one will be declared the winner. In case that they both have the same speed, at the moment the hero wins by default
-
 - Fix bug: once in a victory or defeat, stop the gif from repeating over and over and over
-
-- Fix bug: sometimes when the hero attacks (or enemy) no damage is dealt? functions seems to execute and battlelog updates?
-
-- Find a way to see if you can add animations to the battle? (png to 3d render? AI? whatever?)
 
 - Add different game scenarios?
 
-- Make sure that the "critic" and "focused" stats do not save to database. They should always be false in DB, only triggered during battle but then set to zero again
-
-- Remove the possibility of going back home during a battle
-
-- Have to add "animations" during the battle resolution
+- Make the Layouts prettier
 
 - Make a way to "find" and "start" the battles? (The "Find Oponent" button seems a very basic idea.)
 
@@ -39,10 +13,4 @@
 
 - Make it playable online 1 vs 1?
 
-- Make damages and so to be full numbers, no comas whatsoevver
-
-- Make hero ID longer to minimize risk of saving the same hero into the DB?
-
 - Make that the initial dice change color once we have rolled them the first time (and they are not for free anymore)
-
-- Fix bug that when the hero starts defending, there is some sort of "double turn" from the enemy until it gets fixed on its own after some turns?

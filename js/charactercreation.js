@@ -349,12 +349,55 @@ async function forgeHeroGladiator() {
         .getElementById("startPlayingColumn")
         .classList.remove("notDisplaying"); // Shows the row that provides the button that allows the player start the game
 
-      await createHeroGladiatorToDb(); //creates the gladiator in the DB
+      //TEST FUNCTION
+      gladiators[0].id = 92530654;
+
+      //If we are creating an unique gladiator ID, then
+      if (await heroDoesNotExistInDB()) {
+        await createHeroGladiatorToDb(); // creates the gladiator in the DB
+      }
+
       goingHome(); //Goes to the home screen
     } else {
       alert("Please generate all the attributes before forging the gladiator.");
     }
   }
+}
+
+async function heroDoesNotExistInDB() {
+  // Initially get the response for the current gladiator ID
+  let response = await fetch("sql/homeLoadHero.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "id=" + gladiators[0].id, // Pass the ID in the POST body
+  });
+
+  let data = await response.json(); // Parse the response as JSON
+
+  // Loop until we generate an ID that doesn't exist in the DB
+  console.log("Checking if the Gladiator ID already exists in the DB");
+  while (data.id == gladiators[0].id) {
+    console.log("Gladiator already existed in DB, generating new ID");
+    gladiators[0].id = gladiators[0].generateGladiatorID(); // Generate a new ID
+    console.log(gladiators[0].id);
+
+    // Now, check if the new generated ID exists in the DB
+    response = await fetch("sql/homeLoadHero.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "id=" + gladiators[0].id, // Pass the new generated ID
+    });
+
+    data = await response.json(); // Check if the new ID exists in the DB
+  }
+
+  console.log("Unique gladiator successfully generated");
+  // If the ID is unique (doesn't exist in the DB), return true
+  return true;
 }
 
 // Function to validate and update the state of randomizing dice
