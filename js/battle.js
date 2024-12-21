@@ -81,6 +81,112 @@ function createRandomGladiator(name, username) {
     gameScenario
   );
   gladiators.push(newGladiator);
+
+  improveEnemysGladiator(); //Calls a function that will make the enemy gladiator a bit better, making the fight more fair/difficult
+}
+
+// Improve Enemy's Gladiator
+// The Enemy has a 33% chance of inheriting its stats from either the last enemy defeated by the hero, or the hero himself
+function improveEnemysGladiator() {
+  //First checks if the Gladiator has defeated someone already, if not; it does not do anything
+  if (gladiators[0].defeatedEnemies[gladiators[0].defeatedEnemies.length - 1]) {
+    let lastDefeatedEnemy =
+      gladiators[0].defeatedEnemies[gladiators[0].defeatedEnemies.length - 1];
+    let inheritHP = randomiseNumber(0, 2);
+    let inheritStrength = randomiseNumber(0, 2);
+    let inheritDexterity = randomiseNumber(0, 2);
+    let inheritConstitution = randomiseNumber(0, 2);
+    let inheritSpeed = randomiseNumber(0, 2);
+    let inheritLuck = randomiseNumber(0, 2);
+
+    if (inheritHP != 0) {
+      if (lastDefeatedEnemy.maxHP.valueOf() > gladiators[1].maxHP.valueOf()) {
+        gladiators[1].maxHP = lastDefeatedEnemy.maxHP.valueOf();
+        gladiators[1].hp = gladiators[1].maxHP.valueOf();
+
+        console.log("The enemy inherited HP from the last enemy");
+      } else if (
+        gladiators[0].maxHP.valueOf() > gladiators[1].maxHP.valueOf()
+      ) {
+        gladiators[1].maxHP = gladiators[0].maxHP.valueOf();
+        gladiators[1].hp = gladiators[1].maxHP.valueOf();
+
+        console.log("The enemy inherited HP from the hero enemy");
+      }
+    }
+    if (inheritStrength != 0) {
+      if (
+        lastDefeatedEnemy.strength.valueOf() > gladiators[1].strength.valueOf()
+      ) {
+        gladiators[1].strength = lastDefeatedEnemy.strength.valueOf();
+
+        console.log("The enemy inherited strength from the last enemy");
+      } else if (
+        gladiators[0].strength.valueOf() > gladiators[1].strength.valueOf()
+      ) {
+        gladiators[1].strength = gladiators[0].strength.valueOf();
+
+        console.log("The enemy inherited strength from the hero enemy");
+      }
+    }
+    if (inheritDexterity != 0) {
+      if (
+        lastDefeatedEnemy.dexterity.valueOf() >
+        gladiators[1].dexterity.valueOf()
+      ) {
+        gladiators[1].dexterity = lastDefeatedEnemy.dexterity.valueOf();
+
+        console.log("The enemy inherited dexterity from the last enemy");
+      } else if (
+        gladiators[0].dexterity.valueOf() > gladiators[1].dexterity.valueOf()
+      ) {
+        gladiators[1].dexterity = gladiators[0].dexterity.valueOf();
+
+        console.log("The enemy inherited dexterity from the hero enemy");
+      }
+    }
+    if (inheritConstitution != 0) {
+      if (
+        lastDefeatedEnemy.constitution.valueOf() >
+        gladiators[1].constitution.valueOf()
+      ) {
+        gladiators[1].constitution = lastDefeatedEnemy.constitution.valueOf();
+
+        console.log("The enemy inherited constitution from the last enemy");
+      } else if (
+        gladiators[0].constitution.valueOf() >
+        gladiators[1].constitution.valueOf()
+      ) {
+        gladiators[1].constitution = gladiators[0].constitution.valueOf();
+
+        console.log("The enemy inherited constitution from the hero enemy");
+      }
+    }
+    if (inheritSpeed != 0) {
+      if (lastDefeatedEnemy.speed.valueOf() > gladiators[1].speed.valueOf()) {
+        gladiators[1].speed = lastDefeatedEnemy.speed.valueOf();
+
+        console.log("The enemy inherited speed from the last enemy");
+      } else if (
+        gladiators[0].speed.valueOf() > gladiators[1].speed.valueOf()
+      ) {
+        gladiators[1].speed = gladiators[0].speed.valueOf();
+
+        console.log("The enemy inherited speed from the hero enemy");
+      }
+    }
+    if (inheritLuck != 0) {
+      if (lastDefeatedEnemy.luck.valueOf() > gladiators[1].luck.valueOf()) {
+        gladiators[1].luck = lastDefeatedEnemy.luck.valueOf();
+
+        console.log("The enemy inherited luck from the last enemy");
+      } else if (gladiators[0].luck.valueOf() > gladiators[1].luck.valueOf()) {
+        gladiators[1].luck = gladiators[0].luck.valueOf();
+
+        console.log("The enemy inherited luck from the hero enemy");
+      }
+    }
+  }
 }
 
 // Function that makes the turns update and eventually resolve into battle
@@ -109,6 +215,7 @@ async function turnResolution() {
 
     console.log("Time to resolve the actions");
     battlelog.value = "Time to resolve the actions" + "\n" + battlelog.value;
+    battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
 
     //Sets the action icon to blank for a moment
     document.getElementById("1heroActionIcon").src = "";
@@ -148,6 +255,8 @@ async function turnResolution() {
       EnemysAction +
       "\n" +
       battlelog.value;
+
+    battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
 
     showBattleGifs(); //function that updates the gifs of the battle
 
@@ -586,6 +695,7 @@ async function turnResolution() {
     EnemysAction = ""; //Resets the Enemys Action
     herosAction = ""; // Resets the Heros Action
     turnNumber++; // Adds one more turn
+    battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
     updateGraphicsBattle(0, "1", "hero"); //Updates graphics and hp bars of the hero
     updateGraphicsBattle(1, "1", "Enemy"); // Update graphics and hp bars of the enemy
 
@@ -798,9 +908,10 @@ function TwitchUsersActionsBtns(boolean) {
 // Function that makes the user able to play their turn
 function usersTurn() {
   let battlelog = document.getElementById("1battleLog");
+
   console.log("It is the Heros Turn");
   battlelog.value = "It is the hero's turn\n" + battlelog.value;
-
+  battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
   TwitchUsersActionsBtns(false);
 
   document.getElementById("1textWhossTurn").innerText = "Your turn";
@@ -824,7 +935,7 @@ async function herosActionClick(target) {
     document.getElementById("1heroActionIcon").src = "img/icons/iconFocus.png"; //Sets the users action icon
   }
   console.log("Hero action", herosAction);
-  battlelog.value = "The hero will " + herosAction + "\n" + battlelog.value;
+  //  battlelog.value = "The hero will " + herosAction + "\n" + battlelog.value;
 
   TwitchUsersActionsBtns(true); //Deactivates the heroe buttons
 
@@ -839,7 +950,7 @@ async function enemysTurn() {
 
   console.log("It is the Enemy's Turn");
   battlelog.value = "It is the enemy's turn\n" + battlelog.value;
-
+  battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
   await randomWaitForTurn(); // Adds a little wait
 
   // Show the "thinking" icon for the enemy
@@ -868,8 +979,7 @@ async function enemysTurn() {
   } else if (gladiators[1].focused) {
     let action = randomiseNumber(0, 1); // Randomly choose between attack or defend
     EnemysAction = action === 0 ? "defend" : "attack";
-    battlelog.value =
-      "The enemy chooses to " + EnemysAction + "\n" + battlelog.value;
+    //    battlelog.value =     "The enemy chooses to " + EnemysAction + "\n" + battlelog.value;
   } else {
     let action = randomiseNumber(0, 3); // Randomly choose between attack (2/4 chance), defend (1/4), or focus (1/4)
     if (action === 0) {
@@ -880,12 +990,11 @@ async function enemysTurn() {
       EnemysAction = "focus";
       gladiators[1].focused = true;
     }
-    battlelog.value =
-      "The enemy chooses to " + EnemysAction + "\n" + battlelog.value;
+    // battlelog.value =  "The enemy chooses to " + EnemysAction + "\n" + battlelog.value;
   }
 
   console.log("Enemy's action", EnemysAction);
-  battlelog.value = "Enemy's action: " + EnemysAction + "\n" + battlelog.value;
+  // battlelog.value = "Enemy's action: " + EnemysAction + "\n" + battlelog.value;
 
   document.getElementById("1EnemyActionIcon").src =
     "img/icons/iconActionTaken.png";
@@ -953,6 +1062,7 @@ function whoStartsCombat() {
 
     document.getElementById("1textWhossTurn").innerText = "Your turn";
     battlelog.value = "Hero's turn \n" + battlelog.value;
+    battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
   } else if (WhosTurn == 1) {
     TwitchUsersActionsBtns(true);
 
@@ -961,6 +1071,7 @@ function whoStartsCombat() {
 
     document.getElementById("1textWhossTurn").innerText = "Enemy's turn";
     battlelog.value = "Enemy's turn \n" + battlelog.value;
+    battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
   }
 }
 

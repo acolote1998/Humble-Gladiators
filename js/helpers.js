@@ -241,8 +241,8 @@ async function getHeroFromDB() {
   newGladiator.totalVictories = Number(data.totalVictories);
   newGladiator.defeatedEnemies = data.defeatedEnemies;
   newGladiator.diedAgainst = data.diedAgainst;
-  newGladiator.critic = data.critic;
-  newGladiator.focused = data.focused;
+  newGladiator.critic = Number(data.critic);
+  newGladiator.focused = Number(data.focused);
   newGladiator.weaponSRC = data.weaponSRC;
   newGladiator.bodySRC = data.bodySRC;
   newGladiator.headSRC = data.headSRC;

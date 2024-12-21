@@ -1,6 +1,4 @@
-- Solved: The Critic and Focused state do not save to DB now
-- Solved: Remove the possibility of going back home during a battle
-- Solved: When the enemy was faster than the hero, no damage was dealt
-- Solved: Combat actions will not generate float number anymore. Only integers
-- Solved: Made sure that the generated gladiator would never be the same in the DB. If so, then it generates a new one and checks again
-- Added: Created a read.me with a basic explanation of the project
+- Added a function improveEnemysGladiator() that balances the battle better. Now the enemies will be a bit stronger by inheriting stats from either the hero, or the heros last defeated enemy
+- Fixed a bug that would count the hero as "focused" all the time for first time just straight after being pulled from the DB. this is because the "focused" state was 0 as a string, now it is validated as a number and it works fine.
+- Increased the size of the battle log
+- Increased the size of the battle background
