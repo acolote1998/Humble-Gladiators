@@ -41,7 +41,7 @@
         id="firstLevel"
         style="
           height: 83vh;
-          background-image: url(img/arenabg.png);
+          background-image: url(img/backgrounds/0.png);
           background-size: cover;
         "
       >
@@ -52,7 +52,7 @@
           <!-- Level and HP Bar Row -->
           <div class="row w-100 my-2">
             <div class="col text-center">
-              <div class="lvlbattleStats">
+              <div class="lvlbattleStats textShadow">
                 <span id="1heroLevel">---</span>
               </div>
             </div>
@@ -60,7 +60,7 @@
               <input
                 id="1HPBarhero"
                 readonly
-                class="hpBarBattle crimsonFont"
+                class="hpBarBattle crimsonFont textShadow"
                 value="XXX"
                 type="text"
               />
@@ -72,7 +72,9 @@
             class="row battleGladiatorsName w-100 text-center d-flex align-items-center justify-content-center"
             id="1nameHero"
           >
-            <span id="1heroName" class="titulo crimsonFont">HERO'S NAME</span>
+            <span id="1heroName" class="titulo crimsonFont textShadow"
+              >HERO'S NAME</span
+            >
           </div>
           <!-- Heros Turn Action Icon Row-->
           <div class="row" style="height: 40px">
@@ -115,14 +117,24 @@
                   class="headBattleGraphic"
                   id="1heroImgHead"
                   src="img/heads/00.png"
-                  style="height: 40px; width: 40px"
+                  style="
+                    height: 40px;
+                    width: 40px;
+                    pointer-events: none;
+                    user-select: none;
+                  "
                 />
               </div>
               <div class="row">
                 <img
                   id="1heroImgBody"
                   src="img/bodies/ectomorph/0.png"
-                  style="height: 130px; width: 40px"
+                  style="
+                    height: 130px;
+                    width: 40px;
+                    pointer-events: none;
+                    user-select: none;
+                  "
                 />
               </div>
             </div>
@@ -153,7 +165,10 @@
           class="col d-flex flex-column justify-content-center align-items-center"
         >
           <div class="row">
-            <span id="1textWhossTurn" class="textWhossTurn titulo crimsonFont"
+            <span
+              id="1textWhossTurn"
+              class="textWhossTurn titulo crimsonFont textShadow"
+              style="pointer-events: none; user-select: none"
               >XXX's Turn</span
             >
           </div>
@@ -233,7 +248,7 @@
           <!-- Level and HP Bar Row -->
           <div class="row w-100 my-2">
             <div class="col text-center">
-              <div class="lvlbattleStats">
+              <div class="lvlbattleStats textShadow">
                 <span id="1EnemyLevel">---</span>
               </div>
             </div>
@@ -241,7 +256,7 @@
               <input
                 id="1HPBarEnemy"
                 readonly
-                class="hpBarBattle crimsonFont"
+                class="hpBarBattle crimsonFont textShadow"
                 value="XXX"
                 type="text"
               />
@@ -253,7 +268,9 @@
             class="row battleGladiatorsName w-100 text-center d-flex align-items-center justify-content-center"
             id="1nameEnemy"
           >
-            <span id="1EnemyName" class="titulo crimsonFont">ENEMY'S NAME</span>
+            <span id="1EnemyName" class="titulo crimsonFont textShadow"
+              >ENEMY'S NAME</span
+            >
           </div>
           <!-- Enemy Turn Action Icon Row-->
           <div class="row" style="height: 40px">
@@ -296,14 +313,24 @@
                   class="headBattleGraphic"
                   id="1EnemyImgHead"
                   src="img/heads/01.png"
-                  style="height: 40px; width: 40px"
+                  style="
+                    height: 40px;
+                    width: 40px;
+                    pointer-events: none;
+                    user-select: none;
+                  "
                 />
               </div>
               <div class="row">
                 <img
                   id="1EnemyImgBody"
                   src="img/bodies/ectomorph/1.png"
-                  style="height: 130px; width: 40px"
+                  style="
+                    height: 130px;
+                    width: 40px;
+                    pointer-events: none;
+                    user-select: none;
+                  "
                 />
               </div>
             </div>

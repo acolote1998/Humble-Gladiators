@@ -20,6 +20,8 @@ var battleState = ""; // Detects if one of the gladiators dies. Can be "ongoing"
 settingBattlefield(); //retrieves the hero from the DB
 
 async function settingBattlefield() {
+  generateBattleGround(); //Chose a random battleground image
+
   await getHeroFromDB(); //As soon as the site loads, retreive hero from DB and create an enemy
 
   createRandomGladiator(randomNames[randomiseNumber(0, 99)], "CPU"); // Creates a Random Gladiator that will be the enemy of the player. Gets a random name from the randomNames array (100 random names)
@@ -30,6 +32,24 @@ async function settingBattlefield() {
   updateGraphicsBattle(1, "1", "Enemy"); //Puts up the Enemie graphic in the current game scenario
 
   TwitchUsersActionsBtns(true); //turns off the action buttons
+}
+
+//This function assigns a random battleground among the ones existing to the battleGrounds array
+function generateBattleGround() {
+  let battleGrounds = [];
+  battleGrounds.push("img/backgrounds/0.png");
+  battleGrounds.push("img/backgrounds/1.png");
+  battleGrounds.push("img/backgrounds/2.png");
+  battleGrounds.push("img/backgrounds/3.png");
+  battleGrounds.push("img/backgrounds/4.png");
+  battleGrounds.push("img/backgrounds/5.png");
+  battleGrounds.push("img/backgrounds/6.png");
+  battleGrounds.push("img/backgrounds/7.png");
+  battleGrounds.push("img/backgrounds/8.png");
+
+  document.getElementById("firstLevel").style.backgroundImage = `url(${
+    battleGrounds[randomiseNumber(0, battleGrounds.length - 1)]
+  })`;
 }
 
 async function startBattle() {
@@ -737,6 +757,7 @@ function checkBattleState() {
     document
       .getElementById("1BtnHomeFromBattle")
       .classList.remove("notDisplaying"); //Adds the "Home" button from the battle scene
+    document.getElementById("1BtnHomeFromBattle").innerText = "Continue"; //Changes the text of the "Home" button so it continues to the level up screen
     showBattleGifs();
   }
 }
@@ -866,15 +887,6 @@ function battleResultsContent() {
     gladiators[0].localvictories++; //It adds one victory to our list
     gladiators[0].totalVictories = //The total amount of victories is offline + online victories
       gladiators[0].localvictories + gladiators[0].onlineVictories;
-    console.log(
-      "Your gladiator has won " + gladiators[0].totalVictories + " battles"
-    );
-    battlelog.value =
-      "Your gladiator has won " +
-      gladiators[0].totalVictories +
-      " battles" +
-      "\n" +
-      battlelog.value;
 
     gameScenario++; //It moves the player to the next scenario
     gladiators[0].level = gameScenario;

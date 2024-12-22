@@ -97,9 +97,7 @@ class Gladiator {
   //Function that updates the stats upon the gladiators leveling up
   levelingUpStats() {
     let battlelog = document.getElementById("1" + "battleLog");
-    battlelog.value =
-      "New level achieved, increased stats based on the new gladiator's level \n" +
-      battlelog.value;
+    battlelog.value = "New level achieved \n" + battlelog.value;
     // console.log("Leveling up Executed");
     // console.log("Increased stats based on gladiators level");
     let hpModifier = randomiseNumber(110, 115); //The HP grows from a 10 to 15 % every time we level up

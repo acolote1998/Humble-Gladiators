@@ -1,0 +1,2 @@
+- Removing unnecessary info from battle log after a victory.
+- Fixing small css bug at the level up screen
