@@ -1,4 +1,0 @@
-- Added a function improveEnemysGladiator() that balances the battle better. Now the enemies will be a bit stronger by inheriting stats from either the hero, or the heros last defeated enemy
-- Fixed a bug that would count the hero as "focused" all the time for first time just straight after being pulled from the DB. this is because the "focused" state was 0 as a string, now it is validated as a number and it works fine.
-- Increased the size of the battle log
-- Increased the size of the battle background

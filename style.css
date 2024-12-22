@@ -1,3 +1,95 @@
+@font-face {
+  font-family: "TrajanPro"; /* Nombre que usarás en tu CSS */
+  src: url("fonts/TrajanPro-Bold.otf") format("truetype");
+  font-weight: bolder; /* Opcional: Define estilos específicos */
+  font-style: normal; /* Opcional: Define estilos específicos */
+}
+@font-face {
+  font-family: "CrimsonTextBold"; /* Nombre que usarás en tu CSS */
+  src: url("fonts/CrimsonText-Bold.ttf") format("truetype");
+  font-weight: normal; /* Opcional: Define estilos específicos */
+  font-style: normal; /* Opcional: Define estilos específicos */
+}
+@font-face {
+  font-family: "CrimsonText"; /* Nombre que usarás en tu CSS */
+  src: url("fonts/CrimsonText-Regular.ttf") format("truetype");
+  font-weight: normal; /* Opcional: Define estilos específicos */
+  font-style: normal; /* Opcional: Define estilos específicos */
+}
+
+.crimsonFontBold {
+  font-family: "CrimsonTextBold", Arial, Helvetica, sans-serif;
+}
+
+.crimsonFont {
+  font-family: "CrimsonText", Arial, Helvetica, sans-serif;
+}
+
+#heroLevel.crimsonFont {
+  font-size: 33px;
+}
+
+.tituloChico.crimsonFont {
+  font-size: 32px;
+}
+.titulo.crimsonFont {
+  font-size: 45px;
+}
+
+.subtitulo.crimsonFont {
+  font-size: 25px;
+}
+
+.subtitulo.crimsonFont .inputs {
+  font-size: 15px;
+}
+
+input.hpBarBattle.crimsonFont {
+  font-size: 25px;
+}
+
+.mainMenuOption.crimsonFont {
+  font-size: 35px;
+  padding-top: 60px;
+  height: 28vh;
+  align-items: center;
+}
+.mainMenuOption.crimsonFont:hover {
+  transform: scale(1.2); /* Scale up instead of increasing font size */
+}
+
+button.crimsonFont {
+  font-size: 20px;
+  border-radius: 8px;
+}
+
+button.titulo.crimsonFont {
+  margin-top: 10px;
+  font-size: 30px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.letrasRomanasTitle {
+  font-family: "TrajanPro", Arial, Helvetica, sans-serif;
+}
+
+#HeaderText.letrasRomanasTitle {
+  font-size: 60px;
+  pointer-events: none;
+  user-select: none;
+}
+
+#imageHeader {
+  background-image: url(img/textures/goldTexture.jpg);
+  background-size: 100% 100%;
+}
+
+body {
+  background-image: url(img/textures/bricktexture.jpg);
+  background-size: 40% 60%;
+}
+
 /* Styling for input elements */
 .inputs {
   width: 200px; /* Sets the width of input fields to 200 pixels */
@@ -6,22 +98,30 @@
 
 /* Styling for dice elements that are available to use */
 .extraDie {
-  width: 100px;
-  height: 100px;
-  background-size: 50% 100%;
+  width: 50px;
+  height: 50px;
+  background-size: contain; /* Ensure the image scales proportionally */
+  background-position: center; /* Center the image horizontally and vertically */
   background-repeat: no-repeat;
   background-image: url(img/extraDieOn.png);
   border: none;
+  display: flex; /* Flexbox to align content within the container */
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
 }
 
 /* Styling for dice elements that are out of use */
 .outExtraDie {
-  width: 100px;
-  height: 100px;
-  background-size: 50% 100%;
+  width: 50px;
+  height: 50px;
+  background-size: contain; /* Ensure the image scales proportionally */
+  background-position: center; /* Center the image horizontally and vertically */
   background-repeat: no-repeat;
   background-image: url(img/extraDieOff.png);
   border: none;
+  display: flex; /* Flexbox to align content within the container */
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
 }
 
 .randomizerDie {
@@ -68,8 +168,16 @@
 .niceBorder {
   border-style: solid;
   border-radius: 30px;
+  background-color: lightgray;
 }
 
+input#userNameInput.crimsonFont {
+  font-size: 20px;
+}
+
+.niceBorder.crimsonFont.mainMenuOption {
+  padding: 10px;
+}
 .battleStats {
   background-color: rgb(233, 233, 233);
   border-style: outset;

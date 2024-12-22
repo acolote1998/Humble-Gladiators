@@ -26,11 +26,7 @@
         border-bottom: solid 2px black;
       "
     >
-      <img
-        src="img/header.png"
-        alt="Header Image"
-        style="max-width: 100%; max-height: 100%"
-      />
+      <h1 class="letrasRomanasTitle" id="HeaderText">Humble Gladiators</h1>
     </div>
     <!-- Home Screen -->
     <div id="homeScreen" class="container">
@@ -39,33 +35,53 @@
           class="col d-flex flex-column justify-content-center align-items-center"
         >
           <!-- Game selection options -->
-          <div id="homeScreenSelections">
+          <div id="homeScreenSelections" style="text-align: right">
             <!-- Will be automatically hidden by rungameStarting() when game is starting -->
-            <div class="row" onclick="startGame()">
-              <h2>New Game</h2>
+            <div class="row crimsonFont mainMenuOption" onclick="startGame()">
+              <span style="padding: 12px" class="niceBorder"> New Game</span>
             </div>
-            <div class="row" onclick="goingLoadCharacters()">
-              <h2>Load Game</h2>
+            <div
+              class="row crimsonFont mainMenuOption"
+              onclick="goingLoadCharacters()"
+            >
+              <span style="padding: 12px" class="niceBorder"> Load Game</span>
             </div>
-            <div class="row">
-              <h2>How to play</h2>
+            <div class="row crimsonFont mainMenuOption">
+              <span style="padding: 12px" class="niceBorder">How to play</span>
             </div>
           </div>
 
           <!-- Login Section -->
+          <br />
           <div
             id="login"
-            class="col d-flex flex-column justify-content-center align-items-center"
+            class="col d-flex flex-column justify-content-center align-items-center niceBorder"
           >
-            <div class="row" style="text-align: center">
-              <h3>
-                Username<br />
-                <input id="userNameInput" type="text" value="Test" />
-              </h3>
+            <div class="row crimsonFont" style="text-align: center">
+              <span class="tituloChico crimsonFont"
+                ><br />
+                Username
+
+                <br />
+                <input
+                  id="userNameInput"
+                  class="crimsonFont"
+                  style="text-align: center"
+                  type="text"
+                  value="Test"
+                />
+              </span>
             </div>
 
             <!-- Button to create a gladiator -->
-            <button onclick="loginFunction()" id="btnLogin">Start Game</button>
+            <br /><button
+              onclick="loginFunction()"
+              class="tituloChico crimsonFont"
+              id="btnLogin"
+            >
+              Start Game
+            </button>
+            <br />
           </div>
         </div>
       </div>
@@ -77,76 +93,78 @@
       class="container"
       style="padding-top: 25px"
     >
-      <!-- Row for displaying randomizer dice -->
-      <div class="row text-center" id="extraDieContainerRow">
-        <div id="extraDie1" class="col-sm extraDie"></div>
-        <div id="extraDie2" class="col-sm extraDie"></div>
-        <div id="extraDie3" class="col-sm extraDie"></div>
-      </div>
-
       <!-- Row for gladiator input fields and stats -->
       <div class="row">
         <!-- Column for gladiator input fields -->
         <div
           id="gladiatorInputs"
-          class="col d-flex flex-column justify-content-center align-items-center"
+          class="col d-flex flex-column justify-content-center align-items-center niceBorder"
         >
-          <h2>Gladiator's Core</h2>
+          <span class="titulo crimsonFont">Create your Gladiator</span>
+          <div class="subtitulo crimsonFont">
+            <!-- Input fields for gladiator properties -->
+            <span>Name:</span><br />
+            <input class="inputs" id="heroName" value="Random" />
+            <br />
+            <span>Height:</span>
+            <div>
+              <input class="inputs" readonly id="heroHeight" value="200" />
+              <button id="heroHeightDie" class="randomizerDie"></button>
+            </div>
 
-          <!-- Input fields for gladiator properties -->
-          <h3>Name:</h3>
-          <input class="inputs" id="heroName" value="Random" />
+            <span>Weight:</span>
+            <div>
+              <input class="inputs" readonly id="heroWeight" value="100" />
+              <button id="heroWeightDie" class="randomizerDie"></button>
+            </div>
 
-          <h3>Height:</h3>
-          <div>
-            <input class="inputs" readonly id="heroHeight" value="200" />
-            <button id="heroHeightDie" class="randomizerDie"></button>
+            <span>Somatotype:</span>
+            <div>
+              <input
+                class="inputs"
+                readonly
+                id="heroSomatotype"
+                value="Mesomorph"
+              />
+              <button id="heroSomatotypeDie" class="randomizerDie"></button>
+            </div>
+
+            <span>Weapon:</span>
+            <div>
+              <input class="inputs" readonly id="heroWeapon" value="Sword" />
+              <button id="heroWeaponDie" class="randomizerDie"></button>
+            </div>
+
+            <span>Constitution:</span>
+            <div>
+              <input class="inputs" readonly id="heroConstitution" value="18" />
+              <button id="heroConstitutionDie" class="randomizerDie"></button>
+            </div>
+
+            <span>Luck:</span>
+            <div>
+              <input class="inputs" readonly id="heroLuck" value="18" />
+              <button id="heroLuckDie" class="randomizerDie"></button>
+            </div>
+
+            <span>Speed:</span>
+            <div>
+              <input class="inputs" readonly id="heroSpeed" value="18" />
+              <button id="heroSpeedDie" class="randomizerDie"></button>
+            </div>
+
+            <!-- Row for displaying randomizer dice -->
+            <div class="row text-center" id="extraDieContainerRow">
+              <div id="extraDie1" class="col-4 extraDie"></div>
+              <div id="extraDie2" class="col-4 extraDie"></div>
+              <div id="extraDie3" class="col-4 extraDie"></div>
+            </div>
+            <!-- Button to forge a new gladiator -->
+
+            <button class="titulo crimsonFont" id="btnForgeGladiator">
+              Forge Gladiator
+            </button>
           </div>
-
-          <h3>Weight:</h3>
-          <div>
-            <input class="inputs" readonly id="heroWeight" value="100" />
-            <button id="heroWeightDie" class="randomizerDie"></button>
-          </div>
-
-          <h3>Somatotype:</h3>
-          <div>
-            <input
-              class="inputs"
-              readonly
-              id="heroSomatotype"
-              value="Mesomorph"
-            />
-            <button id="heroSomatotypeDie" class="randomizerDie"></button>
-          </div>
-
-          <h3>Weapon:</h3>
-          <div>
-            <input class="inputs" readonly id="heroWeapon" value="Sword" />
-            <button id="heroWeaponDie" class="randomizerDie"></button>
-          </div>
-
-          <h3>Constitution:</h3>
-          <div>
-            <input class="inputs" readonly id="heroConstitution" value="18" />
-            <button id="heroConstitutionDie" class="randomizerDie"></button>
-          </div>
-
-          <h3>Luck:</h3>
-          <div>
-            <input class="inputs" readonly id="heroLuck" value="18" />
-            <button id="heroLuckDie" class="randomizerDie"></button>
-          </div>
-
-          <h3>Speed:</h3>
-          <div>
-            <input class="inputs" readonly id="heroSpeed" value="18" />
-            <button id="heroSpeedDie" class="randomizerDie"></button>
-          </div>
-
-          <!-- Button to forge a new gladiator -->
-          <br />
-          <button id="btnForgeGladiator">Forge Gladiator</button>
         </div>
 
         <!-- Column for gladiator stats 

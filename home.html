@@ -26,11 +26,7 @@
         border-bottom: solid 2px black;
       "
     >
-      <img
-        src="img/header.png"
-        alt="Header Image"
-        style="max-width: 100%; max-height: 100%"
-      />
+      <h1 class="letrasRomanasTitle" id="HeaderText">Humble Gladiators</h1>
     </div>
 
     <!-- Character Creation Screen -->
@@ -72,10 +68,14 @@
         >
           <!-- Row for gladiator's Name -->
           <div class="row" id="divheroName">
-            <h1 id="heroName" style="padding: 5px">Test</h1>
+            <span class="titulo crimsonFont" id="heroName" style="padding: 5px"
+              >Test</span
+            >
           </div>
           <div class="row" id="divheroLevel">
-            <h3 id="heroLevel" style="padding: 5px">Test</h3>
+            <span class="crimsonFont" id="heroLevel" style="padding: 5px"
+              >Test</span
+            >
           </div>
           <!-- Row for gladiator's HP bar -->
           <div
@@ -316,11 +316,14 @@
           id="homeButtons"
           class="col d-flex flex-row justify-content-center align-items-center niceBorder"
         >
-          <button onclick="  window.location.href = `index.html`;">
+          <button
+            class="crimsonFont"
+            onclick="  window.location.href = `index.html`;"
+          >
             Main Screen
           </button>
-          <button onclick="goingPodium()">Podium</button>
-          <button onclick="goingBattle()">Battle</button>
+          <button class="crimsonFont" onclick="goingPodium()">Podium</button>
+          <button class="crimsonFont" onclick="goingBattle()">Battle</button>
         </div>
       </div>
     </div>

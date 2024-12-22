@@ -149,14 +149,14 @@ function loadAllSavedHeros() {
                 justify-content: space-between;
               "
             >
-              <div class="row"><h2 id="heroName` +
-        i +
-        `"></h2></div>
-             
-              <div class="row"><span id="heroLevel` +
+              <div class="row"><span class="tituloChico crimsonFont" id="heroName` +
         i +
         `"></span></div>
-              <div class="row"><span id="heroHP` +
+             
+              <div class="row"><span class="subtitulo crimsonFont" id="heroLevel` +
+        i +
+        `"></span></div>
+              <div class="row"><span class="subtitulo crimsonFont" id="heroHP` +
         i +
         `"></span></div>
             </div>
@@ -168,7 +168,7 @@ function loadAllSavedHeros() {
                 justify-content: space-between;
               "
             >
-<button onclick="window.location.href='home.html?id=${gladiators[i].id}'">Load Character</button>
+<button class="crimsonFont" onclick="window.location.href='home.html?id=${gladiators[i].id}'">Load Character</button>
 
 </div>
           </div>

@@ -26,11 +26,7 @@
         border-bottom: solid 2px black;
       "
     >
-      <img
-        src="img/header.png"
-        alt="Header Image"
-        style="max-width: 100%; max-height: 100%"
-      />
+      <h1 class="letrasRomanasTitle" id="HeaderText">Humble Gladiators</h1>
     </div>
 
     <!-- LEVEL CONTAINER ELEMENTS-->
@@ -64,7 +60,7 @@
               <input
                 id="1HPBarhero"
                 readonly
-                class="hpBarBattle"
+                class="hpBarBattle crimsonFont"
                 value="XXX"
                 type="text"
               />
@@ -76,7 +72,7 @@
             class="row battleGladiatorsName w-100 text-center d-flex align-items-center justify-content-center"
             id="1nameHero"
           >
-            <span id="1heroName">HERO'S NAME</span>
+            <span id="1heroName" class="titulo crimsonFont">HERO'S NAME</span>
           </div>
           <!-- Heros Turn Action Icon Row-->
           <div class="row" style="height: 40px">
@@ -157,7 +153,9 @@
           class="col d-flex flex-column justify-content-center align-items-center"
         >
           <div class="row">
-            <h2 id="1textWhossTurn" class="textWhossTurn">XXX's Turn</h2>
+            <span id="1textWhossTurn" class="textWhossTurn titulo crimsonFont"
+              >XXX's Turn</span
+            >
           </div>
 
           <div class="row">
@@ -202,10 +200,15 @@
             ></div>
           </div>
           <div class="row">
-            <textarea class="battleLog" id="1battleLog" readonly></textarea>
+            <textarea
+              class="battleLog crimsonFont"
+              id="1battleLog"
+              readonly
+            ></textarea>
           </div>
           <div class="row">
             <button
+              class="crimsonFont"
               id="1BtnHomeFromBattle"
               style="margin-top: 15px"
               onclick="goingHomeFromBattle()"
@@ -213,6 +216,7 @@
               Home
             </button>
             <button
+              class="crimsonFont"
               id="1BtnStartBattle"
               style="margin-top: 15px"
               onclick="startBattle()"
@@ -237,7 +241,7 @@
               <input
                 id="1HPBarEnemy"
                 readonly
-                class="hpBarBattle"
+                class="hpBarBattle crimsonFont"
                 value="XXX"
                 type="text"
               />
@@ -249,7 +253,7 @@
             class="row battleGladiatorsName w-100 text-center d-flex align-items-center justify-content-center"
             id="1nameEnemy"
           >
-            <span id="1EnemyName">ENEMY'S NAME</span>
+            <span id="1EnemyName" class="titulo crimsonFont">ENEMY'S NAME</span>
           </div>
           <!-- Enemy Turn Action Icon Row-->
           <div class="row" style="height: 40px">

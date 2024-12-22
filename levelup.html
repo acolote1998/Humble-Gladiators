@@ -26,11 +26,7 @@
         border-bottom: solid 2px black;
       "
     >
-      <img
-        src="img/header.png"
-        alt="Header Image"
-        style="max-width: 100%; max-height: 100%"
-      />
+      <h1 class="letrasRomanasTitle" id="HeaderText">Humble Gladiators</h1>
     </div>
 
     <!-- Character Creation Screen -->
@@ -43,7 +39,7 @@
         class="row"
         style="display: flex; justify-content: center; align-items: center"
       >
-        <h1>Level up!</h1>
+        <span class="tituloChico crimsonFont">Level up!</span>
       </div>
 
       <!-- Row for gladiator input fields and stats -->
@@ -79,10 +75,17 @@
         >
           <!-- Row for gladiator's Name -->
           <div class="row" id="divheroName">
-            <h1 id="heroName" style="padding: 5px">Test</h1>
+            <span id="heroName" class="titulo crimsonFont" style="padding: 5px"
+              >Test</span
+            >
           </div>
           <div class="row" id="divheroLevel">
-            <h3 id="heroLevel" style="padding: 5px">Test</h3>
+            <span
+              class="tituloChico crimsonFont"
+              id="heroLevel"
+              style="padding: 5px"
+              >Test</span
+            >
           </div>
           <!-- Row for gladiator's HP bar -->
           <div
@@ -184,7 +187,7 @@
           id="homeButtons"
           class="col d-flex flex-row justify-content-center align-items-center niceBorder"
         >
-          <button onclick="goingHome()">Home</button>
+          <button class="crimsonFont" onclick="goingHome()">Home</button>
         </div>
       </div>
     </div>
