@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  position: relative; /* Allows absolute positioning of child elements */
+  height: 100vh; /* Ensure the body takes the full height of the screen */
+}
+
+.bgContainer {
+  position: absolute; /* Position the divs absolutely */
+  top: 0; /* Align them to the top */
+  left: 0; /* Align them to the left */
+  border-radius: 15px;
+  height: 100%; /* Set height to 100% to fill the screen */
+  width: 100%; /* Set width to 100% to fill the screen */
+}
+
+.bgContainerLayer0 {
+  border-radius: 15px;
+  height: 756px;
+  width: 1718px;
+  margin-left: 5%;
+  margin-top: 4%;
+
+  z-index: 0; /* Controls stacking order */
+}
+
+.bgContainerLayer1 {
+  border-radius: 15px;
+  height: 756px;
+  width: 1718px;
+  margin-left: 5%;
+  margin-top: 4%;
+
+  z-index: 1; /* Controls stacking order */
+}
+
+.bgContainerLayer2 {
+  border-radius: 15px;
+  height: 756px;
+  width: 1718px;
+  margin-left: 5%;
+  margin-top: 4%;
+
+  z-index: 2; /* Controls stacking order */
+}

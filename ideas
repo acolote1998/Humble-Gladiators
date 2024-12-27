@@ -1,8 +1,7 @@
 - Fix bug: once in a victory or defeat, stop the gif from repeating over and over and over
 
-- Add different game scenarios?
-
-- Make the Layouts prettier
+- Make a "dynamic" battleground? (that builds maybe in a separate/alternate div and it changes every single time?)
+  -> Working on it! dynamicbg.html - > Make that once the bg Div is built, take a screenshot of it and update the main battle div's bg image?
 
 - Make a way to "find" and "start" the battles? (The "Find Oponent" button seems a very basic idea.)
 
@@ -18,3 +17,4 @@
 - Make a "boss" from time to time? (like every idk 3 or 4 battles, create a boss? Maybe that collects the best stats of the last 3 or 4 defeated enemies?)
 
 - Make that the initial dice change color once we have rolled them the first time (and they are not for free anymore)
+  - Make that once all 3 extra die are rolled, then all individual die disappear
