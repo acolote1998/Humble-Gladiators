@@ -1,5 +1,13 @@
-var bgTypeToFightIn = randomiseNumber(0, 0); //Choose the type of battlemap (at the moment only 1 available (it is the number zero))
-var bgSpecificToFightIn = randomiseNumber(0, 2); //Choose which map of that type of battlemap (3 available)
+var bgTypeToFightIn = randomiseNumber(0, 1); //Choose the type of battlemap (at the moment only 1 available (it is the number zero))
+var bgSpecificToFightIn = 0;
+
+//Depending on the type of battlemap, how many different maps we have
+if (bgTypeToFightIn == 0) {
+  bgSpecificToFightIn = randomiseNumber(0, 2); //For first battlemap we have 3 options
+}
+if (bgTypeToFightIn == 1) {
+  bgSpecificToFightIn = randomiseNumber(0, 1); //For first battlemap we have 2 options
+}
 
 //Updates The Graphics and Element's structure of the chosen battleground type
 if (bgTypeToFightIn == 0) {
@@ -223,5 +231,80 @@ if (bgTypeToFightIn == 0) {
           "url()";
       }
     }
+  }
+}
+
+if (bgTypeToFightIn == 1) {
+  //Sets up the structure
+
+  //////////////
+  // Layer 0
+  //////////////
+  {
+    //Row 0
+    document.getElementById("0bgWall0").style.height = "100%";
+    document.getElementById("0bgWall0").style.backgroundImage =
+      "url(img/backgrounds/battleScenarioType/" +
+      bgTypeToFightIn +
+      "/" +
+      bgSpecificToFightIn +
+      "/bg/0.png";
+
+    // Cols
+    document.getElementById("col01").classList.remove("col-1");
+    document.getElementById("col01").classList.add("col-12");
+    document.getElementById("col01").style.width = "100%";
+
+    for (let i = 2; i < 13; i++) {
+      if (i < 10) {
+        document.getElementById("col0" + i).outerHTML = "";
+      } else {
+        document.getElementById("col" + i).outerHTML = "";
+      }
+    }
+    //////////////
+    //Row 1
+    document.getElementById("0bgWall1").outerHTML = "";
+    //////////////
+    //Row 2
+    document.getElementById("0bgWall2").outerHTML = "";
+    //////////////
+    //Row 3
+    document.getElementById("0bgFloor3").outerHTML = "";
+    //////////////
+    //Row 4
+    document.getElementById("0bgFloor4").outerHTML = "";
+    //////////////
+    //Row 5
+    document.getElementById("0bgFloor5").outerHTML = "";
+  }
+  //////////////
+  // Layer 1
+  //////////////
+  {
+    document.getElementById("1bg0").outerHTML = "";
+
+    document.getElementById("1bg1").outerHTML = "";
+
+    document.getElementById("1bg2").outerHTML = "";
+
+    document.getElementById("1bg3").outerHTML = "";
+
+    document.getElementById("1bg4").style.height = "66.66%";
+    for (let i = 1; i < 13; i++) {
+      document.getElementById("1bg4-" + i).outerHTML = "";
+    }
+
+    document.getElementById("1bg5").style.height = "33.32%";
+    for (let i = 7; i < 13; i++) {
+      document.getElementById("statue" + i).outerHTML = "";
+      document.getElementById("statuegap" + i).outerHTML = "";
+    }
+    document.getElementById("1bg5").style.backgroundImage =
+      "url(img/backgrounds/battleScenarioType/" +
+      bgTypeToFightIn +
+      "/" +
+      bgSpecificToFightIn +
+      "/floors/0.png";
   }
 }
