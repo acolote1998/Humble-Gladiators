@@ -9,13 +9,12 @@ body {
   position: absolute; /* Position the divs absolutely */
   top: 0; /* Align them to the top */
   left: 0; /* Align them to the left */
-  border-radius: 15px;
+
   height: 100%; /* Set height to 100% to fill the screen */
   width: 100%; /* Set width to 100% to fill the screen */
 }
 
 .bgContainerLayer0 {
-  border-radius: 15px;
   height: 756px;
   width: 1718px;
   margin-left: 5%;
@@ -25,7 +24,6 @@ body {
 }
 
 .bgContainerLayer1 {
-  border-radius: 15px;
   height: 756px;
   width: 1718px;
   margin-left: 5%;
@@ -35,11 +33,20 @@ body {
 }
 
 .bgContainerLayer2 {
-  border-radius: 15px;
   height: 756px;
   width: 1718px;
   margin-left: 5%;
   margin-top: 4%;
 
   z-index: 2; /* Controls stacking order */
+}
+
+.bgContainerLayer3 {
+  height: 756px;
+  width: 1718px;
+  margin-left: 5%;
+  margin-top: 4%;
+
+  z-index: 3; /* Controls stacking order */
+  border-style: solid;
 }

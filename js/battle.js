@@ -20,7 +20,7 @@ var battleState = ""; // Detects if one of the gladiators dies. Can be "ongoing"
 settingBattlefield(); //retrieves the hero from the DB
 
 async function settingBattlefield() {
-  generateBattleGround(); //Chose a random battleground image
+  // generateBattleGround(); //Chose a random battleground image
 
   await getHeroFromDB(); //As soon as the site loads, retreive hero from DB and create an enemy
 
