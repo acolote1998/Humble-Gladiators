@@ -83,6 +83,13 @@ async function loadCharactersFromDB() {
 
 function loadAllSavedHeros() {
   for (let i = 0; i < gladiators.length; i++) {
+    let deadOrNot = 0;
+    if (gladiators[i].hp < 1) {
+      deadOrNot = '<img src="img/icons/deadGladiator.png">';
+    } else {
+      deadOrNot = "";
+    }
+
     document.getElementById("heroRightColumnDiv").insertAdjacentHTML(
       "afterbegin",
       `
@@ -142,7 +149,7 @@ function loadAllSavedHeros() {
             </div>
             <!-- Columna derecha -->
             <div
-              class="col-4"
+              class="col-3"
               style="
                 display: flex;
                 flex-direction: column;
@@ -160,6 +167,9 @@ function loadAllSavedHeros() {
         i +
         `"></span></div>
             </div>
+            <div class="col-1">` +
+        deadOrNot +
+        `</div>
             <div
               class="col-4"
               style="

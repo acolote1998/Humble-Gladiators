@@ -1,2 +1,1 @@
-- Fixed  bug: when both the hero and the enemy focus, there is no message in the chat log?
-- Added SFXs to the battle actions : Attack, Defend and Focus
+- Made a "dead" symbol on the load menu if a gladiator is dead?
