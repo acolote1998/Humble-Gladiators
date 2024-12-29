@@ -1,7 +1,2 @@
-- Refined AI of the enemy. Now they do not ALWAYS attack when the hero is on LOW hp, they have a chance of defending as well
-- Now when the hero is dead, it is not possible to have a combat. We can only observe the battle layout but not fighting
-- Created css folder in the project directory for better organization
-- Minor visual improvements -> Action icon has now a shadow -> Focused text has now a shadow
-    -> The enemy action icon had a bug that was showing a "loading" effect before the battle even started, fixed now.
-- The HP bars are now dynamic. Every time a Gladiator loses HP, the HP bars graphic on screen gets updated accordingly
-- Fixed a logic issue that was creating a bug where the Enemy was not losing the focused state when focused and also the focused hero was hitting a critical blow on the enemy
+- Fixed  bug: when both the hero and the enemy focus, there is no message in the chat log?
+- Added SFXs to the battle actions : Attack, Defend and Focus

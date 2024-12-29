@@ -239,6 +239,8 @@ async function turnResolution() {
     document.getElementById("1textWhossTurn").innerText = "Turn Resolution";
     WhosTurn = 3;
 
+    playSoundEffects(); //Calls a function that does the logic of playing the sound effects
+
     console.log("Time to resolve the actions");
     battlelog.value = "Time to resolve the actions" + "\n" + battlelog.value;
     battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
@@ -717,6 +719,16 @@ async function turnResolution() {
         battlelog.value =
           "The enemy HP is now " + gladiators[1].hp + "\n" + battlelog.value;
       }
+
+      if (herosAction == "focus") {
+        console.log("The hero is now focused");
+        battlelog.value = "The hero is now focused\n" + battlelog.value;
+      }
+
+      if (EnemysAction == "focus") {
+        console.log("The enemy is now focused");
+        battlelog.value = "The enemy is now focused\n" + battlelog.value;
+      }
     }
 
     EnemysAction = ""; //Resets the Enemys Action
@@ -737,6 +749,76 @@ async function turnResolution() {
         // If the enemy has higher speed, then it is the enemy's turn again
         enemysTurn();
       }
+    }
+  }
+}
+
+//Function that plays the SFXs of the battle
+async function playSoundEffects() {
+  await addingDelay(1600);
+
+  if (gladiators[0].speed >= gladiators[1].speed) {
+    if (herosAction == "attack") {
+      if (randomiseNumber(0, 1) == 0) {
+        document.getElementById("heroattack1SFX").play();
+      } else {
+        document.getElementById("heroattack2SFX").play();
+      }
+    }
+    if (herosAction == "defend") {
+      document.getElementById("herodefendingAttackSFX").play();
+    }
+    if (herosAction == "focus") {
+      document.getElementById("herofocusingSFX").play();
+    }
+    console.log("espero");
+
+    await addingDelay(1250);
+
+    console.log("yes");
+
+    if (EnemysAction == "attack") {
+      if (randomiseNumber(0, 1) == 0) {
+        document.getElementById("Enemyattack1SFX").play();
+      } else {
+        document.getElementById("Enemyattack2SFX").play();
+      }
+    }
+    if (EnemysAction == "defend") {
+      document.getElementById("EnemydefendingAttackSFX").play();
+    }
+    if (EnemysAction == "focus") {
+      document.getElementById("EnemyfocusingSFX").play();
+    }
+  } else {
+    if (EnemysAction == "attack") {
+      if (randomiseNumber(0, 1) == 0) {
+        document.getElementById("Enemyattack1SFX").play();
+      } else {
+        document.getElementById("Enemyattack2SFX").play();
+      }
+    }
+    if (EnemysAction == "defend") {
+      document.getElementById("EnemydefendingAttackSFX").play();
+    }
+    if (EnemysAction == "focus") {
+      document.getElementById("EnemyfocusingSFX").play();
+    }
+
+    await addingDelay(1250);
+
+    if (herosAction == "attack") {
+      if (randomiseNumber(0, 1) == 0) {
+        document.getElementById("heroattack1SFX").play();
+      } else {
+        document.getElementById("heroattack2SFX").play();
+      }
+    }
+    if (herosAction == "defend") {
+      document.getElementById("herodefendingAttackSFX").play();
+    }
+    if (herosAction == "focus") {
+      document.getElementById("herofocusingSFX").play();
     }
   }
 }
@@ -770,8 +852,6 @@ function checkBattleState() {
 }
 
 async function showBattleGifs() {
-  console.log("called");
-
   if (battleState == "victory") {
     document.getElementById("1HeroAnimationCombatDiv").style.backgroundImage =
       "url('img/gifs/heroVictory.gif')";
