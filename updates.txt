@@ -1,1 +1,1 @@
-- Made a "dead" symbol on the load menu if a gladiator is dead?
+- Created an extra battleground layer that will be used specifically for battle VFXs
