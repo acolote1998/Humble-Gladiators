@@ -20,6 +20,11 @@ var battleState = ""; // Detects if one of the gladiators dies. Can be "ongoing"
 settingBattlefield(); //retrieves the hero from the DB
 
 async function settingBattlefield() {
+  //Plays music
+  document.getElementById("beforebattleMusic").play();
+  document.getElementById("beforebattleMusic").volume = 0;
+  increaseSound("beforebattleMusic");
+
   // generateBattleGround(); //Chose a random battleground image
 
   await getHeroFromDB(); //As soon as the site loads, retreive hero from DB and create an enemy
@@ -59,6 +64,11 @@ function generateBattleGround() {
 }
 
 async function startBattle() {
+  await decreaseSound("beforebattleMusic"); //Removes the music before battle
+  document.getElementById("battleMusic").play(); //Plays battle music
+
+  increaseSound("battleMusic");
+
   document.getElementById("1BtnStartBattle").classList.add("notDisplaying"); //Removes the "Find Oponent" button from the battle scene
   document.getElementById("1BtnHomeFromBattle").classList.add("notDisplaying"); //Removes the "Home" button from the battle scene
 
@@ -239,8 +249,6 @@ async function turnResolution() {
     document.getElementById("1textWhossTurn").innerText = "Turn Resolution";
     WhosTurn = 3;
 
-    playSoundEffects(); //Calls a function that does the logic of playing the sound effects
-
     console.log("Time to resolve the actions");
     battlelog.value = "Time to resolve the actions" + "\n" + battlelog.value;
     battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
@@ -286,7 +294,7 @@ async function turnResolution() {
 
     battlelog.value = "_________________________________ \n" + battlelog.value; //Separator Bar for battle log legibility
 
-    showBattleGifs(); //function that updates the gifs of the battle
+    // showBattleGifs(); //function that updates the gifs of the battle
 
     await loadingEffect("transparent", 3000); //Takes time to resolve the turn
 
@@ -332,6 +340,7 @@ async function turnResolution() {
             if (isCritical) {
               // Critical hit on focused and defending enemy
               gladiators[1].hp -= Math.floor(damage / 2);
+              playVFXandSFX("enemy", "attack");
               console.log(
                 "Enemy was defending and focused, but the hero hit a critical blow. Enemy takes reduced damage:",
                 Math.floor(damage / 2)
@@ -344,6 +353,7 @@ async function turnResolution() {
               gladiators[1].focused = false; // Removes the defenders focused state
               gladiators[0].focused = false; // Removes the attackers focused state
             } else {
+              playVFXandSFX("enemy", "defend");
               // Normal hit on focused and defending enemy
               console.log(
                 "Enemy was defending and focused, and resisted the attack. No damage taken."
@@ -359,6 +369,8 @@ async function turnResolution() {
             if (isCritical) {
               // Critical hit on defending but not focused enemy
               gladiators[1].hp -= damage;
+              playVFXandSFX("enemy", "attack");
+
               console.log(
                 "Enemy was defending, but the hero hit a critical blow. Enemy takes full damage:",
                 damage
@@ -372,6 +384,8 @@ async function turnResolution() {
             } else {
               // Normal hit on defending but not focused enemy
               gladiators[1].hp -= Math.floor(damage / 2);
+              playVFXandSFX("enemy", "defend");
+
               console.log(
                 "Enemy was defending but not focused. Enemy takes reduced damage:",
                 Math.floor(damage / 2)
@@ -386,6 +400,8 @@ async function turnResolution() {
         } else {
           // Enemy is not defending
           if (isCritical) {
+            playVFXandSFX("enemy", "critical");
+
             console.log(
               "Hero is hitting a critical blow. Enemy takes full damage:",
               damage
@@ -398,6 +414,7 @@ async function turnResolution() {
 
             gladiators[0].focused = false; // Removes the attackers focused state
           } else {
+            playVFXandSFX("enemy", "attack");
             console.log("Enemy takes full damage:", damage);
             battlelog.value =
               "Enemy takes full damage: " + damage + "\n" + battlelog.value;
@@ -427,6 +444,8 @@ async function turnResolution() {
             if (isCritical) {
               // Critical hit on focused and defending hero
               gladiators[0].hp -= Math.floor(damage / 2);
+              playVFXandSFX("hero", "defend");
+
               console.log(
                 "Hero is defending and focused, but the enemy hit a critical blow. Hero takes reduced damage:",
                 Math.floor(damage / 2)
@@ -441,6 +460,8 @@ async function turnResolution() {
               gladiators[1].focused = false; // Removes the attackers focused state
             } else {
               // Normal hit on focused and defending hero
+              playVFXandSFX("hero", "defend");
+
               console.log(
                 "Hero is defending and focused, and resisted the attack. No damage taken."
               );
@@ -456,6 +477,8 @@ async function turnResolution() {
             if (isCritical) {
               // Critical hit on defending but not focused hero
               gladiators[0].hp -= damage;
+              playVFXandSFX("hero", "attack");
+
               console.log(
                 "Hero is defending, but the enemy hit a critical blow. Hero takes full damage:",
                 damage
@@ -469,6 +492,8 @@ async function turnResolution() {
             } else {
               // Normal hit on defending but not focused hero
               gladiators[0].hp -= Math.floor(damage / 2);
+              playVFXandSFX("hero", "defend");
+
               console.log(
                 "Hero is defending but not focused. Hero takes reduced damage:",
                 Math.floor(damage / 2)
@@ -483,6 +508,8 @@ async function turnResolution() {
         } else {
           // Hero is not defending
           if (isCritical) {
+            playVFXandSFX("hero", "critical");
+
             console.log(
               "Enemy is hitting a critical blow. Hero takes full damage:",
               damage
@@ -494,6 +521,8 @@ async function turnResolution() {
               battlelog.value;
             gladiators[1].focused = false; // Removes the attackers focused state
           } else {
+            playVFXandSFX("hero", "attack");
+
             console.log("Hero takes full damage:", damage);
             battlelog.value =
               "The hero takes full damage: " + damage + "\n" + battlelog.value;
@@ -518,6 +547,8 @@ async function turnResolution() {
           if (gladiators[0].focused) {
             if (isCritical) {
               gladiators[0].hp -= Math.floor(damage / 2);
+              playVFXandSFX("hero", "defend");
+
               console.log(
                 "Hero is defending and focused, but the enemy hit a critical blow. Hero takes reduced damage:",
                 Math.floor(damage / 2)
@@ -528,6 +559,8 @@ async function turnResolution() {
                 "\n" +
                 battlelog.value;
             } else {
+              playVFXandSFX("hero", "defend");
+
               console.log(
                 "Hero is defending and focused, and resisted the attack. No damage taken."
               );
@@ -539,6 +572,8 @@ async function turnResolution() {
           } else {
             if (isCritical) {
               gladiators[0].hp -= damage;
+              playVFXandSFX("hero", "attack");
+
               console.log(
                 "Hero is defending, but the enemy hit a critical blow. Hero takes full damage:",
                 damage
@@ -550,6 +585,8 @@ async function turnResolution() {
                 battlelog.value;
             } else {
               gladiators[0].hp -= Math.floor(damage / 2);
+              playVFXandSFX("hero", "defend");
+
               console.log(
                 "Hero is defending but not focused. Hero takes reduced damage:",
                 Math.floor(damage / 2)
@@ -564,6 +601,8 @@ async function turnResolution() {
         } else {
           if (isCritical) {
             gladiators[0].hp -= damage;
+            playVFXandSFX("hero", "critical");
+
             console.log(
               "Enemy is hitting a critical blow. Hero takes full damage:",
               damage
@@ -575,6 +614,8 @@ async function turnResolution() {
               battlelog.value;
           } else {
             gladiators[0].hp -= damage;
+            playVFXandSFX("hero", "attack");
+
             console.log("Hero takes full damage:", damage);
             battlelog.value =
               "Hero takes full damage: " + damage + "\n" + battlelog.value;
@@ -596,6 +637,8 @@ async function turnResolution() {
           if (gladiators[1].focused) {
             if (isCritical) {
               gladiators[1].hp -= Math.floor(damage / 2);
+              playVFXandSFX("enemy", "defend");
+
               console.log(
                 "Enemy was defending and focused, but the hero hit a critical blow. Enemy takes reduced damage:",
                 Math.floor(damage / 2)
@@ -606,6 +649,8 @@ async function turnResolution() {
                 "\n" +
                 battlelog.value;
             } else {
+              playVFXandSFX("enemy", "defend");
+
               console.log(
                 "Enemy was defending and focused, and resisted the attack. No damage taken."
               );
@@ -617,6 +662,8 @@ async function turnResolution() {
           } else {
             if (isCritical) {
               gladiators[1].hp -= damage;
+              playVFXandSFX("enemy", "attack");
+
               console.log(
                 "Enemy was defending, but the hero hit a critical blow. Enemy takes full damage:",
                 damage
@@ -628,6 +675,8 @@ async function turnResolution() {
                 battlelog.value;
             } else {
               gladiators[1].hp -= Math.floor(damage / 2);
+              playVFXandSFX("enemy", "defend");
+
               console.log(
                 "Enemy was defending but not focused. Enemy takes reduced damage:",
                 Math.floor(damage / 2)
@@ -642,6 +691,8 @@ async function turnResolution() {
         } else {
           if (isCritical) {
             gladiators[1].hp -= damage;
+            playVFXandSFX("enemy", "critical");
+
             console.log(
               "Hero is hitting a critical blow. Enemy takes full damage:",
               damage
@@ -653,6 +704,8 @@ async function turnResolution() {
               battlelog.value;
           } else {
             gladiators[1].hp -= damage;
+            playVFXandSFX("enemy", "attack");
+
             console.log("Enemy takes full damage:", damage);
             battlelog.value =
               "Enemy takes full damage: " + damage + "\n" + battlelog.value;
@@ -671,6 +724,8 @@ async function turnResolution() {
         //  let focusModifier = 1;
 
         if (gladiators[0].focused == true) {
+          playVFXandSFX("hero", "critheal");
+
           console.log("The hero will use his focus to heal more");
           battlelog.value =
             "The hero will use his focus to heal more\n" + battlelog.value;
@@ -678,6 +733,8 @@ async function turnResolution() {
           //     focusModifier = 2;
           gladiators[0].focused = false;
         }
+        playVFXandSFX("hero", "heal");
+
         console.log("The hero will heal", heal);
         battlelog.value =
           "The hero will heal: " + heal + "\n" + battlelog.value;
@@ -700,6 +757,8 @@ async function turnResolution() {
         //   let focusModifier = 1;
 
         if (gladiators[1].focused == true) {
+          playVFXandSFX("enemy", "critheal");
+
           console.log("The enemy will use his focus to heal more");
           battlelog.value =
             "The enemy will use his focus to heal more\n" + battlelog.value;
@@ -707,6 +766,8 @@ async function turnResolution() {
           //  focusModifier = 2;
           gladiators[1].focused = false;
         }
+        playVFXandSFX("enemy", "heal");
+
         console.log("The enemy will heal", heal);
         battlelog.value =
           "The enemy will heal: " + heal + "\n" + battlelog.value;
@@ -721,11 +782,15 @@ async function turnResolution() {
       }
 
       if (herosAction == "focus") {
+        playVFXandSFX("hero", "focus");
+
         console.log("The hero is now focused");
         battlelog.value = "The hero is now focused\n" + battlelog.value;
       }
 
       if (EnemysAction == "focus") {
+        playVFXandSFX("enemy", "focus");
+
         console.log("The enemy is now focused");
         battlelog.value = "The enemy is now focused\n" + battlelog.value;
       }
@@ -754,72 +819,90 @@ async function turnResolution() {
 }
 
 //Function that plays the SFXs of the battle
-async function playSoundEffects() {
-  await addingDelay(1600);
+async function playVFXandSFX(gladiator, action) {
+  // Can cal actions such as:
+  // "attack", "defend", "focus", "heal", critheal", "critical"
+  if (action == "attack") {
+    if (randomiseNumber(0, 1) == 0) {
+      document.getElementById("attack1SFX").play();
+    } else {
+      document.getElementById("attack2SFX").play();
+    }
+    await addingDelay(680);
+    document.getElementById(gladiator + "VFX").classList.add("vfxSwordSlash");
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+    document.getElementById(gladiator + "VFX").style.backgroundImage =
+      "url(img/vfxs/swordSlash.gif?n=" + randomiseNumber(0, 100000) + ")";
 
-  if (gladiators[0].speed >= gladiators[1].speed) {
-    if (herosAction == "attack") {
-      if (randomiseNumber(0, 1) == 0) {
-        document.getElementById("heroattack1SFX").play();
-      } else {
-        document.getElementById("heroattack2SFX").play();
-      }
-    }
-    if (herosAction == "defend") {
-      document.getElementById("herodefendingAttackSFX").play();
-    }
-    if (herosAction == "focus") {
-      document.getElementById("herofocusingSFX").play();
-    }
-    console.log("espero");
+    await addingDelay(1000);
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
 
-    await addingDelay(1250);
+    document
+      .getElementById(gladiator + "VFX")
+      .classList.remove("vfxSwordSlash");
+  }
+  if (action == "defend") {
+    document.getElementById("defendingAttackSFX").play();
+    await addingDelay(650);
+    document.getElementById(gladiator + "VFX").classList.add("vfxdefend");
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+    document.getElementById(gladiator + "VFX").style.backgroundImage =
+      "url(img/vfxs/defend.gif?n=" + randomiseNumber(0, 100000) + ")";
 
-    console.log("yes");
+    await addingDelay(1000);
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
 
-    if (EnemysAction == "attack") {
-      if (randomiseNumber(0, 1) == 0) {
-        document.getElementById("Enemyattack1SFX").play();
-      } else {
-        document.getElementById("Enemyattack2SFX").play();
-      }
-    }
-    if (EnemysAction == "defend") {
-      document.getElementById("EnemydefendingAttackSFX").play();
-    }
-    if (EnemysAction == "focus") {
-      document.getElementById("EnemyfocusingSFX").play();
-    }
-  } else {
-    if (EnemysAction == "attack") {
-      if (randomiseNumber(0, 1) == 0) {
-        document.getElementById("Enemyattack1SFX").play();
-      } else {
-        document.getElementById("Enemyattack2SFX").play();
-      }
-    }
-    if (EnemysAction == "defend") {
-      document.getElementById("EnemydefendingAttackSFX").play();
-    }
-    if (EnemysAction == "focus") {
-      document.getElementById("EnemyfocusingSFX").play();
-    }
+    document.getElementById(gladiator + "VFX").classList.remove("vfxdefend");
+  }
+  if (action == "focus") {
+    document.getElementById("focusingSFX").play();
+    await addingDelay(750);
 
-    await addingDelay(1250);
+    document.getElementById(gladiator + "VFX").classList.add("vfxfocus");
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+    document.getElementById(gladiator + "VFX").style.backgroundImage =
+      "url(img/vfxs/focus.gif?n=" + randomiseNumber(0, 100000) + ")";
 
-    if (herosAction == "attack") {
-      if (randomiseNumber(0, 1) == 0) {
-        document.getElementById("heroattack1SFX").play();
-      } else {
-        document.getElementById("heroattack2SFX").play();
-      }
-    }
-    if (herosAction == "defend") {
-      document.getElementById("herodefendingAttackSFX").play();
-    }
-    if (herosAction == "focus") {
-      document.getElementById("herofocusingSFX").play();
-    }
+    await addingDelay(1000);
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+
+    document.getElementById(gladiator + "VFX").classList.remove("vfxfocus");
+  }
+  if (action == "heal") {
+    document.getElementById("focusingSFX").play();
+    await addingDelay(550);
+    document.getElementById(gladiator + "VFX").classList.add("vfxheal");
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+    document.getElementById(gladiator + "VFX").style.backgroundImage =
+      "url(img/vfxs/heal.gif?n=" + randomiseNumber(0, 100000) + ")";
+    await addingDelay(1000);
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+
+    document.getElementById(gladiator + "VFX").classList.remove("vfxheal");
+  }
+  if (action == "critheal") {
+    document.getElementById("focusingSFX").play();
+    await addingDelay(550);
+    document.getElementById(gladiator + "VFX").classList.add("vfxcritHeal");
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+    document.getElementById(gladiator + "VFX").style.backgroundImage =
+      "url(img/vfxs/critHeal.gif?n=" + randomiseNumber(0, 100000) + ")";
+    await addingDelay(1000);
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+
+    document.getElementById(gladiator + "VFX").classList.remove("vfxcritHeal");
+  }
+  if (action == "critical") {
+    document.getElementById("attack2SFX").play();
+    await addingDelay(450);
+    document.getElementById(gladiator + "VFX").classList.add("vfxCritical");
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+    document.getElementById(gladiator + "VFX").style.backgroundImage =
+      "url(img/vfxs/critical.gif?n=" + randomiseNumber(0, 100000) + ")";
+    await addingDelay(1000);
+    document.getElementById(gladiator + "VFX").style.backgroundImage = "";
+
+    document.getElementById(gladiator + "VFX").classList.remove("vfxCritical");
   }
 }
 
@@ -847,11 +930,11 @@ function checkBattleState() {
       .getElementById("1BtnHomeFromBattle")
       .classList.remove("notDisplaying"); //Adds the "Home" button from the battle scene
     document.getElementById("1BtnHomeFromBattle").innerText = "Continue"; //Changes the text of the "Home" button so it continues to the level up screen
-    showBattleGifs();
+    //  showBattleGifs();
   }
 }
 
-async function showBattleGifs() {
+/* async function showBattleGifs() {
   if (battleState == "victory") {
     document.getElementById("1HeroAnimationCombatDiv").style.backgroundImage =
       "url('img/gifs/heroVictory.gif')";
@@ -890,8 +973,8 @@ async function showBattleGifs() {
       ).style.backgroundImage = "url('img/gifs/enemyFocus.gif')";
     }
   }
-}
-function battleResultsContent() {
+}*/
+async function battleResultsContent() {
   //creating OBJS
   let HeroData = {
     id: gladiators[0].id,
@@ -956,7 +1039,9 @@ function battleResultsContent() {
 
   //creating OBJS
   let battlelog = document.getElementById("1battleLog");
+  await decreaseSound("battleMusic"); //Shuts down the music and then continues
   if (battleState == "victory") {
+    document.getElementById("victorySFX").play(); //Play victory sound effect
     console.log(
       "You have successfully defeated " +
         gladiators[1].name +
@@ -980,6 +1065,8 @@ function battleResultsContent() {
     gladiators[0].levelingUpStats();
   }
   if (battleState == "defeat") {
+    document.getElementById("defeatSFX").play(); //Play defeat sound effect
+
     gladiators[0].diedAgainst.push(EnemyData); //If we lose, it adds to our gladiator who killed us
     gladiators[1].defeatedEnemies.push(HeroData); //It adds our hero to the enemies defeated gladiators list
     gladiators[1].localvictories++; //It adds a victory for the enemy

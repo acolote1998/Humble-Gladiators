@@ -277,3 +277,55 @@ input#userNameInput.crimsonFont {
 .focusText {
   color: greenyellow;
 }
+
+.vfxCritical {
+  width: 100%; /* Full width of the container */
+  height: 100%; /* Full height of the container */
+  background-image: url("../img/vfxs/critical.gif"); /* Set the background image */
+  background-size: contain; /* Ensures the image shrinks or grows to fit the container while maintaining aspect ratio */
+  background-position: center; /* Centers the image in the container */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+.vfxSwordSlash {
+  width: 80%; /* Full width of the container */
+  height: 80%; /* Full height of the container */
+  background-image: url("../img/vfxs/swordSlash.gif"); /* Set the background image */
+  background-size: contain; /* Ensures the image shrinks or grows to fit the container while maintaining aspect ratio */
+  background-position: center; /* Centers the image in the container */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+.vfxheal {
+  width: 80%; /* Full width of the container */
+  height: 80%; /* Full height of the container */
+  background-image: url("../img/vfxs/heal.gif"); /* Set the background image */
+  background-size: contain; /* Ensures the image shrinks or grows to fit the container while maintaining aspect ratio */
+  background-position: center; /* Centers the image in the container */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+.vfxdefend {
+  width: 110%; /* Full width of the container */
+  height: 110%; /* Full height of the container */
+  background-image: url("../img/vfxs/defend.gif"); /* Set the background image */
+  background-size: contain; /* Ensures the image shrinks or grows to fit the container while maintaining aspect ratio */
+  background-position: center; /* Centers the image in the container */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+.vfxcritHeal {
+  width: 80%; /* Full width of the container */
+  height: 80%; /* Full height of the container */
+  background-image: url("../img/vfxs/critHeal.gif"); /* Set the background image */
+  background-size: contain; /* Ensures the image shrinks or grows to fit the container while maintaining aspect ratio */
+  background-position: center; /* Centers the image in the container */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+.vfxfocus {
+  width: 110%; /* Full width of the container */
+  height: 110%; /* Full height of the container */
+
+  background-size: contain; /* Ensures the image shrinks or grows to fit the container while maintaining aspect ratio */
+  background-position: center; /* Centers the image in the container */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}

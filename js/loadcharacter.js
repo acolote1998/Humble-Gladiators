@@ -5,6 +5,11 @@ var gladiators = [];
 loadSavedHerosToDocument();
 
 async function loadSavedHerosToDocument() {
+  //Plays music
+  document.getElementById("loadingCharacters").play();
+  document.getElementById("loadingCharacters").volume = 0;
+  increaseSound("loadingCharacters");
+  //
   await loadCharactersFromDB();
 
   loadAllSavedHeros();

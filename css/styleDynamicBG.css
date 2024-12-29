@@ -48,6 +48,7 @@ body {
   margin-top: 4%;
 
   z-index: 3; /* Controls stacking order */
+  border-style: solid;
 }
 
 .bgContainerLayer4 {
@@ -55,8 +56,6 @@ body {
   width: 1718px;
   margin-left: 5%;
   margin-top: 4%;
-
+  pointer-events: none;
   z-index: 4; /* Controls stacking order */
-
-  border-style: solid;
 }

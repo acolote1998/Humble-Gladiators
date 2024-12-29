@@ -6,6 +6,11 @@ var gladiators = [];
 loadHeroToDocument();
 
 async function loadHeroToDocument() {
+  //Plays music
+  document.getElementById("homeMusic").play();
+  document.getElementById("homeMusic").volume = 0;
+  increaseSound("homeMusic");
+
   await getHeroFromDB();
 
   document.getElementById("heroName").innerText = gladiators[0].name;

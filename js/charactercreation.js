@@ -169,6 +169,11 @@ async function startGame() {
 
 //Login Function
 async function loginFunction() {
+  //Plays music
+  document.getElementById("indexMusic").play();
+  document.getElementById("indexMusic").volume = 0;
+  increaseSound("indexMusic");
+
   await loadingEffect("darkgray", 300);
   username = document.getElementById("userNameInput").value; //Gets the username input from the input field
 

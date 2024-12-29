@@ -113,6 +113,26 @@ var gladiators = []; // List of created gladiators
 // Functions
 // ---------------------------
 
+//Function that decreases the volume of the given audio
+async function decreaseSound(soundElement) {
+  for (let i = 0; i < 10; i++) {
+    if (document.getElementById(soundElement).volume >= 0.1) {
+      document.getElementById(soundElement).volume -= 0.1;
+      await addingDelay(100);
+    }
+  }
+}
+//Function that increases the volume of the given audio
+
+async function increaseSound(soundElement) {
+  document.getElementById(soundElement).volume = 0;
+
+  for (let i = 0; i < 6; i++) {
+    document.getElementById(soundElement).volume += 0.1;
+    await addingDelay(100);
+  }
+}
+
 async function goingHome() {
   window.location.href = `home.html?id=${gladiators[0].id}&level=${gladiators[0].level}`; //goes to the home screen
 }

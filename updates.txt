@@ -1,1 +1,3 @@
-- Created an extra battleground layer that will be used specifically for battle VFXs
+- Removed battle  gifs, they were not fitting
+- Added battle vfxs and sfxs
+- Added background music

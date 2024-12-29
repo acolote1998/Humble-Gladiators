@@ -13,6 +13,11 @@ var gladiators = [];
 levelUpScreen(); //gets hero from the DB and builds the JS of the level up screen
 
 async function levelUpScreen() {
+  //Plays music
+  document.getElementById("levelingUp").play();
+  document.getElementById("levelingUp").volume = 0;
+  increaseSound("levelingUp");
+  //
   await getHeroFromDB();
 
   document.getElementById("heroName").innerText = gladiators[0].name;

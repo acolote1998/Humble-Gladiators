@@ -1,14 +1,6 @@
 - Fix bug: once in a victory or defeat, stop the gif from repeating over and over and over
 
-- Make a visual effect when hitting a critical blow?
-
-- Make visual effects that play at the same time than the SFX on top of the heros (focus, defend, attack)
-
-- Add music
-
-- Remove gifs?
-
-- Add particle effects?
+- Make a visual "VICTORY" sign (and also defeat?) in the middle of the screen
 
 - Change the "focused" text for some .gif or some particle around the hero? (on top or on its feet?)
 
