@@ -1,0 +1,73 @@
+.herohpBarContainer {
+  position: absolute; /* Position the divs absolutely */
+  top: 0; /* Align them to the top */
+  left: 0; /* Align them to the left */
+  margin-top: 11%;
+  height: 5%; /* Set height to 100% to fill the screen */
+  width: 100%; /* Set width to 100% to fill the screen */
+}
+
+.herohpBarContainer0 {
+  position: absolute; /* Position the inputs absolutely within the container */
+  height: 100%;
+  width: 50%;
+  z-index: 0; /* Controls stacking order */
+  background-color: coral;
+}
+.herohpBarContainer1 {
+  position: absolute; /* Position the inputs absolutely within the container */
+  height: 100%;
+  width: 50%;
+  z-index: 1; /* Controls stacking order */
+  background-color: rgb(7, 255, 28);
+}
+.herohpBarContainer2 {
+  position: absolute; /* Position the inputs absolutely within the container */
+  height: 100%;
+  width: 50%;
+  z-index: 2; /* Controls stacking order */
+  background-color: transparent;
+}
+
+.EnemyhpBarContainer {
+  position: absolute; /* Position the divs absolutely */
+  top: 0; /* Align them to the top */
+  left: 0; /* Align them to the left */
+  margin-top: 11%;
+  height: 5%; /* Set height to 100% to fill the screen */
+  width: 100%; /* Set width to 100% to fill the screen */
+}
+
+.EnemyhpBarContainer0 {
+  position: absolute; /* Position the inputs absolutely within the container */
+  height: 100%;
+  width: 50%;
+  z-index: 0; /* Controls stacking order */
+  background-color: coral;
+}
+.EnemyhpBarContainer1 {
+  position: absolute; /* Position the inputs absolutely within the container */
+  height: 100%;
+  width: 50%;
+  z-index: 1; /* Controls stacking order */
+  background-color: rgb(7, 255, 28);
+}
+.EnemyhpBarContainer2 {
+  position: absolute; /* Position the inputs absolutely within the container */
+  height: 100%;
+  width: 50%;
+  z-index: 2; /* Controls stacking order */
+  background-color: transparent;
+}
+
+.hpBarGreenColor {
+  background-color: rgb(7, 255, 28);
+}
+
+.hpBarBattle {
+  margin-bottom: 20px;
+  text-align: center;
+}
+input.hpBarBattle.crimsonFont {
+  font-size: 25px;
+}

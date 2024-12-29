@@ -12,8 +12,9 @@
     />
 
     <!-- Custom CSS for additional styling -->
-    <link href="style.css" rel="stylesheet" />
-    <link href="styleDynamicBG.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/styleDynamicBG.css" rel="stylesheet" />
+    <link href="css/dynamicHPbars.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -1045,16 +1046,29 @@
                   <span id="1heroLevel">---</span>
                 </div>
               </div>
-              <div class="col d-flex justify-content-center">
+              <div class="col d-flex justify-content-center herohpBarContainer">
+                <input
+                  id="1HPBarheroRed"
+                  readonly
+                  class="hpBarBattle herohpBarContainer0 crimsonFont textShadow"
+                  value=""
+                  type="text"
+                />
+                <input
+                  id="1HPBarheroGreen"
+                  readonly
+                  class="hpBarBattle herohpBarContainer1 crimsonFont textShadow"
+                  value=""
+                  type="text"
+                />
                 <input
                   id="1HPBarhero"
                   readonly
-                  class="hpBarBattle crimsonFont textShadow"
-                  value="XXX"
+                  class="hpBarBattle herohpBarContainer2 crimsonFont textShadow"
+                  value=""
                   type="text"
                 />
               </div>
-              <div class="col"></div>
             </div>
             <!-- Hero Name Row -->
             <div
@@ -1067,7 +1081,11 @@
             </div>
             <!-- Heros Turn Action Icon Row-->
             <div class="row" style="height: 40px">
-              <img id="1heroActionIcon" src="img/icons/iconActionTaken.png" />
+              <img
+                class="iconShadow"
+                id="1heroActionIcon"
+                src="img/icons/iconActionTaken.png"
+              />
             </div>
             <!-- Stats and Image Row -->
             <div class="row w-100">
@@ -1099,7 +1117,7 @@
                 class="col d-flex flex-column justify-content-center align-items-center character-image-column"
               >
                 <div class="row" style="height: 25px">
-                  <span id="1heroFocus" class="focusText">XXX</span>
+                  <span id="1heroFocus" class="focusText textShadow">XXX</span>
                 </div>
                 <div class="row">
                   <img
@@ -1162,7 +1180,7 @@
               >
             </div>
 
-            <div class="row">
+            <div class="row" id="battleActionButtonsRow">
               <div class="col battleActionButtons">
                 <button
                   class="battleActionButtonsBTN"
@@ -1241,16 +1259,31 @@
                   <span id="1EnemyLevel">---</span>
                 </div>
               </div>
-              <div class="col d-flex justify-content-center">
+              <div
+                class="col d-flex justify-content-center EnemyhpBarContainer"
+              >
+                <input
+                  id="1HPBarEnemyRed"
+                  readonly
+                  class="hpBarBattle EnemyhpBarContainer0 crimsonFont textShadow"
+                  value=""
+                  type="text"
+                />
+                <input
+                  id="1HPBarEnemyGreen"
+                  readonly
+                  class="hpBarBattle EnemyhpBarContainer1 crimsonFont textShadow"
+                  value=""
+                  type="text"
+                />
                 <input
                   id="1HPBarEnemy"
                   readonly
-                  class="hpBarBattle crimsonFont textShadow"
-                  value="XXX"
+                  class="hpBarBattle EnemyhpBarContainer2 crimsonFont textShadow"
+                  value=""
                   type="text"
                 />
               </div>
-              <div class="col"></div>
             </div>
             <!-- Enemy Name Row -->
             <div
@@ -1263,7 +1296,11 @@
             </div>
             <!-- Enemy Turn Action Icon Row-->
             <div class="row" style="height: 40px">
-              <img id="1EnemyActionIcon" src="img/icons/iconActionTaken.png" />
+              <img
+                class="iconShadow"
+                id="1EnemyActionIcon"
+                src="img/icons/iconActionTaken.png"
+              />
             </div>
             <!-- Stats and Image Row -->
             <div class="row w-100">
@@ -1295,7 +1332,7 @@
                 class="col d-flex flex-column justify-content-center align-items-center character-image-column"
               >
                 <div class="row" style="height: 25px">
-                  <span id="1EnemyFocus" class="focusText">XXX</span>
+                  <span id="1EnemyFocus" class="focusText textShadow">XXX</span>
                 </div>
                 <div class="row">
                   <img

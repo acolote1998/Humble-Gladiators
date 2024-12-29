@@ -26,12 +26,18 @@ async function settingBattlefield() {
 
   createRandomGladiator(randomNames[randomiseNumber(0, 99)], "CPU"); // Creates a Random Gladiator that will be the enemy of the player. Gets a random name from the randomNames array (100 random names)
 
-  whoStartsCombat(); //Designate Whoses turn it is
-
   updateGraphicsBattle(0, "1", "hero"); //Puts up the Heros graphic in the current game scenario
   updateGraphicsBattle(1, "1", "Enemy"); //Puts up the Enemie graphic in the current game scenario
 
-  TwitchUsersActionsBtns(true); //turns off the action buttons
+  if (gladiators[0].hp < 1) {
+    //if the hero is dead
+    heroIsDead();
+  } else {
+    whoStartsCombat(); //Designate Whoses turn it is
+    TwitchUsersActionsBtns(true); //turns off the action buttons by default when the battle is starting
+    document.getElementById("1EnemyActionIcon").src = "";
+    document.getElementById("1heroActionIcon").src = "";
+  }
 }
 
 //This function assigns a random battleground among the ones existing to the battleGrounds array
@@ -333,6 +339,7 @@ async function turnResolution() {
                 Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
+              gladiators[1].focused = false; // Removes the defenders focused state
               gladiators[0].focused = false; // Removes the attackers focused state
             } else {
               // Normal hit on focused and defending enemy
@@ -984,10 +991,19 @@ async function enemysTurn() {
     gladiators[0].hp <= gladiators[0].maxHP / 2 &&
     gladiators[1].hp >= gladiators[1].maxHP / 2
   ) {
-    console.log("The enemy identifies your weakness and will attack!");
-    battlelog.value =
-      "The enemy identifies your weakness and will attack!\n" + battlelog.value;
-    EnemysAction = "attack";
+    if (randomiseNumber(0, 1) == 1) {
+      //If our gladiator is having low HP, 50% chance of attacking, 50% of defending
+      console.log("The enemy identifies your weakness and will attack!");
+      battlelog.value =
+        "The enemy identifies your weakness and will attack!\n" +
+        battlelog.value;
+      EnemysAction = "attack";
+    } else {
+      battlelog.value =
+        "The enemy knows you are hurting, but they are being cautious\n" +
+        battlelog.value;
+      EnemysAction = "defend";
+    }
   } else if (gladiators[1].focused) {
     let action = randomiseNumber(0, 1); // Randomly choose between attack or defend
     EnemysAction = action === 0 ? "defend" : "attack";
@@ -1036,6 +1052,9 @@ async function randomWaitForTurn() {
 // Function that calculates who starts the combat
 function whoStartsCombat() {
   let battlelog = document.getElementById("1battleLog");
+
+  // if the hero is alive, then the combat can start
+
   battlelog.value = "Start of combat";
   battlelog.value =
     gladiators[0].name +
@@ -1087,6 +1106,15 @@ function whoStartsCombat() {
   }
 }
 
+//Deactivates the battle when the hero is dead
+function heroIsDead() {
+  let battlelog = document.getElementById("1battleLog");
+  document.getElementById("1textWhossTurn").innerText = "The hero is dead";
+  battlelog.outerHTML = "";
+  document.getElementById("battleActionButtonsRow").outerHTML = "";
+  document.getElementById("1BtnStartBattle").outerHTML = "";
+}
+
 //Update Graphic Content in the Battle Scene
 function updateGraphicsBattle(gladiatorIndex, currentlevel, heroorEnemy) {
   //It moves the action icons to blank
@@ -1103,8 +1131,22 @@ function updateGraphicsBattle(gladiatorIndex, currentlevel, heroorEnemy) {
 
   document.getElementById("1" + String(heroorEnemy) + "Name").innerHTML =
     gladiators[gladiatorIndex].name; //Updates the Name in HTML for the provided gladiator
+
   document.getElementById("1" + "HPBar" + String(heroorEnemy)).value =
     gladiators[gladiatorIndex].hp + " / " + gladiators[gladiatorIndex].maxHP; //Updates the HP in HTML for the provided gladiator
+
+  //Updates the HP Bar accordingly to the Max HP and the HP % that the gladiator has left
+  if (gladiators[gladiatorIndex].hp < 1) {
+    document.getElementById(
+      "1" + "HPBar" + String(heroorEnemy) + "Green"
+    ).style.display = "none";
+  } else {
+    document.getElementById(
+      "1" + "HPBar" + String(heroorEnemy) + "Green"
+    ).style.width =
+      (gladiators[gladiatorIndex].hp * 50) / gladiators[gladiatorIndex].maxHP +
+      "%";
+  }
 
   document.getElementById(
     "1" + String(heroorEnemy) + "WeaponBattleStatIMG"

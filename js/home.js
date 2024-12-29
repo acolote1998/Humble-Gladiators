@@ -91,6 +91,11 @@ async function loadHeroToDocument() {
       ((3.75 * gladiators[0]?.defeatedEnemies?.at(-1)?.height) / 22, 5) * 3.8 +
       "px";
   }
+
+  if (gladiators[0].hp < 1) {
+    document.getElementById("heroHPBarCreationScreen").style.backgroundColor =
+      "coral";
+  }
 }
 
 async function goingBattle() {

@@ -1,18 +1,18 @@
 @font-face {
   font-family: "TrajanPro"; /* Nombre que usarás en tu CSS */
-  src: url("fonts/TrajanPro-Bold.otf") format("truetype");
+  src: url("../fonts/TrajanPro-Bold.otf") format("truetype");
   font-weight: bolder; /* Opcional: Define estilos específicos */
   font-style: normal; /* Opcional: Define estilos específicos */
 }
 @font-face {
   font-family: "CrimsonTextBold"; /* Nombre que usarás en tu CSS */
-  src: url("fonts/CrimsonText-Bold.ttf") format("truetype");
+  src: url("../fonts/CrimsonText-Bold.ttf") format("truetype");
   font-weight: normal; /* Opcional: Define estilos específicos */
   font-style: normal; /* Opcional: Define estilos específicos */
 }
 @font-face {
   font-family: "CrimsonText"; /* Nombre que usarás en tu CSS */
-  src: url("fonts/CrimsonText-Regular.ttf") format("truetype");
+  src: url("../fonts/CrimsonText-Regular.ttf") format("truetype");
   font-weight: normal; /* Opcional: Define estilos específicos */
   font-style: normal; /* Opcional: Define estilos específicos */
 }
@@ -42,10 +42,6 @@
 
 .subtitulo.crimsonFont .inputs {
   font-size: 15px;
-}
-
-input.hpBarBattle.crimsonFont {
-  font-size: 25px;
 }
 
 .mainMenuOption.crimsonFont {
@@ -81,12 +77,12 @@ button.titulo.crimsonFont {
 }
 
 #imageHeader {
-  background-image: url(img/textures/goldTexture.jpg);
+  background-image: url(../img/textures/goldTexture.jpg);
   background-size: 100% 100%;
 }
 
 body {
-  background-image: url(img/textures/bricktexture.jpg);
+  background-image: url(../img/textures/bricktexture.jpg);
   background-size: 40% 60%;
 }
 
@@ -103,7 +99,7 @@ body {
   background-size: contain; /* Ensure the image scales proportionally */
   background-position: center; /* Center the image horizontally and vertically */
   background-repeat: no-repeat;
-  background-image: url(img/extraDieOn.png);
+  background-image: url(../img/extraDieOn.png);
   border: none;
   display: flex; /* Flexbox to align content within the container */
   justify-content: center; /* Horizontally center */
@@ -117,7 +113,7 @@ body {
   background-size: contain; /* Ensure the image scales proportionally */
   background-position: center; /* Center the image horizontally and vertically */
   background-repeat: no-repeat;
-  background-image: url(img/extraDieOff.png);
+  background-image: url(../img/extraDieOff.png);
   border: none;
   display: flex; /* Flexbox to align content within the container */
   justify-content: center; /* Horizontally center */
@@ -129,7 +125,7 @@ body {
   height: 35px;
   background-size: 100% 100%;
 
-  background-image: url(img/d20.png);
+  background-image: url(../img/d20.png);
   border: none;
 }
 
@@ -194,12 +190,6 @@ input#userNameInput.crimsonFont {
   user-select: none;
 }
 
-.hpBarBattle {
-  background-color: lightcoral;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
 .battleGladiatorsName {
   font-size: 35px;
   font-style: oblique;
@@ -224,6 +214,13 @@ input#userNameInput.crimsonFont {
 .textShadow {
   text-shadow: 3px 3px 4px rgba(248, 248, 248, 0.5),
     -1px -1px 2px rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  user-select: none;
+}
+
+.iconShadow {
+  filter: drop-shadow(3px 3px 4px rgba(248, 248, 248, 0.5))
+    drop-shadow(-1px -1px 2px rgba(255, 255, 255, 0.7));
   pointer-events: none;
   user-select: none;
 }

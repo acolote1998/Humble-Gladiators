@@ -1,7 +1,10 @@
 - Fix bug: once in a victory or defeat, stop the gif from repeating over and over and over
 
-- Make a "dynamic" battleground? (that builds maybe in a separate/alternate div and it changes every single time?)
-  -> Working on it! dynamicbg.html - > Make that once the bg Div is built, take a screenshot of it and update the main battle div's bg image?
+- Make a visual effect when hitting a critical blow?
+
+- Add music?
+
+- Check that the "podium" div is a bit too short compared to the hero div ??? (not seen the bug again?)
 
 - Make a way to "find" and "start" the battles? (The "Find Oponent" button seems a very basic idea.)
 
