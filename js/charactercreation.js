@@ -177,15 +177,19 @@ async function loginFunction() {
   await loadingEffect("darkgray", 300);
   username = document.getElementById("userNameInput").value; //Gets the username input from the input field
 
-  if (username != "") {
-    //Checks that the username and gladiator ID are not blank
+  // Trim the input to remove leading/trailing whitespace
+  let trimmedUsername = username.trim();
+
+  if (trimmedUsername !== "") {
+    // Checks that the username is not blank or just spaces
     document.getElementById("login").className = ""; // Hides the inputs of the login
     document.getElementById("login").classList.add("notDisplaying"); // Hides the inputs of the login
     document
       .getElementById("homeScreenSelections")
-      .classList.remove("notDisplaying"); // Brings back the
+      .classList.remove("notDisplaying"); // Brings back the home screen selections
+    username.trim(); //Remove blank spaces
   } else {
-    alert("Username or Gladiator ID are blank!");
+    alert("Username cannot be blank");
   }
 }
 
@@ -253,119 +257,122 @@ function addEventListenerRandomizer(element) {
 
 // Function to forge a new gladiator and add them to the list
 async function forgeHeroGladiator() {
-  //
+  let wantsToGenerate = ""; // Variable to check if the user wants to generate the gladiator
 
-  let wantsToGenerate = ""; //Variable that will check if the user is sure and wants to generate the gladiator with the given stats
   if (amountRandomiserDiceLeft >= 1) {
     alert(
       "You still have at least one extra randomizer die to be used. It is wise to have an extra look to your generated attributes before forging your gladiator."
     );
   }
+
   wantsToGenerate = prompt(
     "Are you sure that you want to forge your gladiator with the generated attributes? Type 'No' to cancel the forging of the gladiator",
     "Yes"
   );
-  if (wantsToGenerate.toLowerCase() != "no") {
-    // If the user typed "no", the gladiator will not generate, otherwise it will
 
-    // Retrieve values from input fields
-    let gladiatorsName = document.getElementById("heroName").value;
-    if (gladiatorsName == "Random") {
-      gladiatorsName = randomNames[randomiseNumber(0, 99)]; //If the user left the Name input as "Random", it will pick a random name from the array
+  if (wantsToGenerate === null || wantsToGenerate.toLowerCase() === "no") {
+    // If the user clicks "Cancel" (wantsToGenerate is null) or types "No"
+    return; // Exit the function, do not proceed with forging the gladiator
+  }
+
+  // If the user clicked "OK" and typed anything other than "No"
+  // Retrieve values from input fields
+  let gladiatorsName = document.getElementById("heroName").value;
+  if (gladiatorsName == "Random") {
+    gladiatorsName = randomNames[randomiseNumber(0, 99)]; // Pick a random name
+  }
+  let gladiatorsHeight = document.getElementById("heroHeight").value;
+  let gladiatorsWeight = document.getElementById("heroWeight").value;
+  let gladiatorsSomatotype = document.getElementById("heroSomatotype").value;
+  let gladiatorsWeapon = document.getElementById("heroWeapon").value;
+  let gladiatorsConstitution =
+    document.getElementById("heroConstitution").value;
+  let gladiatorsLuck = document.getElementById("heroLuck").value;
+  let gladiatorsSpeed = document.getElementById("heroSpeed").value;
+
+  if (
+    gladiatorsName !== "" &&
+    gladiatorsHeight !== "" &&
+    gladiatorsWeight !== "" &&
+    gladiatorsSomatotype !== "" &&
+    gladiatorsWeapon !== "" &&
+    gladiatorsConstitution !== "" &&
+    gladiatorsLuck !== "" &&
+    gladiatorsSpeed !== ""
+  ) {
+    // Create a new Gladiator object
+    let gladiatorObject = new Gladiator(
+      gladiatorsName,
+      gladiatorsHeight,
+      gladiatorsWeight,
+      gladiatorsSomatotype,
+      gladiatorsWeapon,
+      gladiatorsConstitution,
+      gladiatorsLuck,
+      gladiatorsSpeed,
+      username,
+      gameScenario
+    );
+
+    // Add the new gladiator to the array
+    gladiators.push(gladiatorObject);
+
+    // Update the HTML with the new gladiator's attributes
+    document.getElementById("heroStrenghtCreationScrenText").innerText = String(
+      gladiatorObject.strength
+    );
+    document.getElementById("heroDexterityCreationScrenText").innerText =
+      String(gladiatorObject.dexterity);
+    document.getElementById("heroConstitutionCreationScrenText").innerText =
+      String(gladiatorObject.constitution);
+    document.getElementById("heroSpeedCreationScrenText").innerText = String(
+      gladiatorObject.speed
+    );
+    document.getElementById("heroLuckCreationScrenText").innerText = String(
+      gladiatorObject.luck
+    );
+
+    document.getElementById(
+      "heroWeaponCreationScrenText"
+    ).style.backgroundImage = String(gladiatorObject.weaponURL);
+
+    // Draw the gladiator on the HTML page
+    drawHero();
+
+    document.getElementById("btnForgeGladiator").classList.add("notDisplaying"); // Hides the button that allows the user to generate the Hero
+
+    await loadingEffect("white", 3000); // Waits 3s
+
+    document.getElementById("gladiatorInputs").classList = ""; // Removes all classes from the Gladiator Input Hero Column
+    document.getElementById("gladiatorInputs").classList.add("notDisplaying"); // Hides the column that allows the user to generate the Hero (generated inputs and so)
+
+    await loadingEffect("white", 2000); // Waits 2s
+
+    document
+      .getElementById("extraDieContainerRow")
+      .classList.add("notDisplaying"); // Removes the row that contains the extra dice
+
+    document.getElementById("imageHeader").classList.remove("notDisplaying"); // Brings back the header displaying "Gladiator's Forge"
+    document.getElementById("imageHeader").style =
+      "display: flex; justify-content: center;align-items: center;border-bottom: solid 2px black;";
+
+    await loadingEffect("white", 1500); // Waits 1s
+
+    document
+      .getElementById("startPlayingColumn")
+      .classList.remove("notDisplaying"); // Shows the row that provides the button that allows the player to start the game
+
+    //TEST FUNCTION
+    gladiators[0].id = 92530654;
+
+    // If we are creating a unique gladiator ID, then
+    if (await heroDoesNotExistInDB()) {
+      await createHeroGladiatorToDb(); // creates the gladiator in the DB
     }
-    let gladiatorsHeight = document.getElementById("heroHeight").value;
-    let gladiatorsWeight = document.getElementById("heroWeight").value;
-    let gladiatorsSomatotype = document.getElementById("heroSomatotype").value;
-    let gladiatorsWeapon = document.getElementById("heroWeapon").value;
-    let gladiatorsConstitution =
-      document.getElementById("heroConstitution").value;
-    let gladiatorsLuck = document.getElementById("heroLuck").value;
-    let gladiatorsSpeed = document.getElementById("heroSpeed").value;
-    if (
-      gladiatorsName != "" &&
-      gladiatorsHeight != "" &&
-      gladiatorsWeight != "" &&
-      gladiatorsSomatotype != "" &&
-      gladiatorsWeapon != "" &&
-      gladiatorsConstitution != "" &&
-      gladiatorsLuck != "" &&
-      gladiatorsSpeed != ""
-    ) {
-      // Create a new Gladiator object
-      let gladiatorObject = new Gladiator(
-        gladiatorsName,
-        gladiatorsHeight,
-        gladiatorsWeight,
-        gladiatorsSomatotype,
-        gladiatorsWeapon,
-        gladiatorsConstitution,
-        gladiatorsLuck,
-        gladiatorsSpeed,
-        username,
-        gameScenario
-      );
 
-      // Add the new gladiator to the array
-      gladiators.push(gladiatorObject);
-
-      // Update the HTML with the new gladiator's attributes
-      document.getElementById("heroStrenghtCreationScrenText").innerText =
-        String(gladiatorObject.strength);
-      document.getElementById("heroDexterityCreationScrenText").innerText =
-        String(gladiatorObject.dexterity);
-      document.getElementById("heroConstitutionCreationScrenText").innerText =
-        String(gladiatorObject.constitution);
-      document.getElementById("heroSpeedCreationScrenText").innerText = String(
-        gladiatorObject.speed
-      );
-      document.getElementById("heroLuckCreationScrenText").innerText = String(
-        gladiatorObject.luck
-      );
-
-      document.getElementById(
-        "heroWeaponCreationScrenText"
-      ).style.backgroundImage = String(gladiatorObject.weaponURL);
-
-      // Draw the gladiator on the HTML page
-      drawHero();
-
-      document
-        .getElementById("btnForgeGladiator")
-        .classList.add("notDisplaying"); // Hides the button that allows the user generate the Hero
-
-      await loadingEffect("white", 3000); // Waits 3s
-
-      document.getElementById("gladiatorInputs").classList = ""; // Removes all classes from the Gladiator Input Hero Column
-      document.getElementById("gladiatorInputs").classList.add("notDisplaying"); // Hides the column that allows the user generate the Hero (generated inputs and so)
-
-      await loadingEffect("white", 2000); // Waits 2s
-
-      document
-        .getElementById("extraDieContainerRow")
-        .classList.add("notDisplaying"); // Removes the row that contains the extra dice
-
-      document.getElementById("imageHeader").classList.remove("notDisplaying"); //Brings back the header displaying "Gladiator's Forge"
-      document.getElementById("imageHeader").style =
-        "display: flex; justify-content: center;align-items: center;border-bottom: solid 2px black;";
-
-      await loadingEffect("white", 1500); // Waits 1s
-
-      document
-        .getElementById("startPlayingColumn")
-        .classList.remove("notDisplaying"); // Shows the row that provides the button that allows the player start the game
-
-      //TEST FUNCTION
-      gladiators[0].id = 92530654;
-
-      //If we are creating an unique gladiator ID, then
-      if (await heroDoesNotExistInDB()) {
-        await createHeroGladiatorToDb(); // creates the gladiator in the DB
-      }
-
-      goingHome(); //Goes to the home screen
-    } else {
-      alert("Please generate all the attributes before forging the gladiator.");
-    }
+    goingHome(); // Goes to the home screen
+  } else {
+    alert("Please generate all the attributes before forging the gladiator.");
   }
 }
 

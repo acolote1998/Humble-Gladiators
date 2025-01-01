@@ -1050,7 +1050,10 @@
           </div>
         </div>
         <!--FIRST LEVEL -->
-        <div class="row bgContainer bgContainerLayer3" id="firstLevel">
+        <div
+          class="row bgContainer bgContainerLayer3 notClickable"
+          id="firstLevel"
+        >
           <!-- COLUMN FOR THE HERO -->
           <div
             class="col d-flex flex-column justify-content-center align-items-center h-100"
@@ -1196,7 +1199,11 @@
               >
             </div>
 
-            <div class="row" id="battleActionButtonsRow">
+            <div
+              class="row"
+              id="battleActionButtonsRow"
+              style="pointer-events: auto"
+            >
               <div class="col battleActionButtons">
                 <button
                   class="battleActionButtonsBTN"
@@ -1242,9 +1249,10 @@
                 class="battleLog crimsonFont"
                 id="1battleLog"
                 readonly
+                style="touch-action: pan-y; pointer-events: auto"
               ></textarea>
             </div>
-            <div class="row">
+            <div class="row" style="pointer-events: auto">
               <button
                 class="crimsonFont"
                 id="1BtnHomeFromBattle"

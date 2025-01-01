@@ -2,6 +2,8 @@
 
 - Make a visual "VICTORY" sign (and also defeat?) in the middle of the screen
 
+- Make sure that after rolling all the 3 extra die, a sign communicates to us we cannot roll more
+
 - Change the "focused" text for some .gif or some particle around the hero? (on top or on its feet?)
 
 - Check that the "podium" div is a bit too short compared to the hero div ??? (not seen the bug again?)
