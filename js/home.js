@@ -41,7 +41,7 @@ async function loadHeroToDocument() {
   document.getElementById("heroHeightText").innerText =
     "HGT: " + gladiators[0].height + " cm";
   document.getElementById("heroWeightText").innerText =
-    "WGT: " + gladiators[0].height + " kg";
+    "WGT: " + gladiators[0].weight + " kg";
   document.getElementById("heroSomatotypeText").innerText =
     gladiators[0].somatotype;
 

@@ -458,6 +458,7 @@ async function turnResolution() {
                 battlelog.value;
 
               gladiators[1].focused = false; // Removes the attackers focused state
+              gladiators[0].focused= false; // Remove the deffenders focused stat
             } else {
               // Normal hit on focused and defending hero
               playVFXandSFX("hero", "defend");
@@ -558,6 +559,9 @@ async function turnResolution() {
                 Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
+
+                gladiators[0].focused = false // Removes the focus from the defender
+                gladiators[1].focused = false // Removes the focus from the attacker
             } else {
               playVFXandSFX("hero", "defend");
 
@@ -583,6 +587,9 @@ async function turnResolution() {
                 damage +
                 "\n" +
                 battlelog.value;
+                
+                gladiators[1].focused=false; //Removed the focused state from the eney gladiator
+
             } else {
               gladiators[0].hp -= Math.floor(damage / 2);
               playVFXandSFX("hero", "defend");
@@ -612,6 +619,9 @@ async function turnResolution() {
               damage +
               "\n" +
               battlelog.value;
+
+              gladiators[1].focused=false; //Removed the focused state from the eney gladiator
+
           } else {
             gladiators[0].hp -= damage;
             playVFXandSFX("hero", "attack");
@@ -648,6 +658,9 @@ async function turnResolution() {
                 Math.floor(damage / 2) +
                 "\n" +
                 battlelog.value;
+
+                gladiators[0].focused=false //Remove focus from the attacker
+                gladiators[1].focused=false //Remove focus from the defender
             } else {
               playVFXandSFX("enemy", "defend");
 
@@ -673,6 +686,7 @@ async function turnResolution() {
                 damage +
                 "\n" +
                 battlelog.value;
+                gladiators[0].focused=false; // Removes the focus from the attacker
             } else {
               gladiators[1].hp -= Math.floor(damage / 2);
               playVFXandSFX("enemy", "defend");
@@ -702,6 +716,8 @@ async function turnResolution() {
               damage +
               "\n" +
               battlelog.value;
+
+              gladiators[0].focused=false //Hero loses the focus state
           } else {
             gladiators[1].hp -= damage;
             playVFXandSFX("enemy", "attack");
